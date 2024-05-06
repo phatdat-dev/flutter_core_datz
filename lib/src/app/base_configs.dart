@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../flutter_core_datz.dart';
@@ -9,6 +10,7 @@ abstract class BaseConfigs {
   GoRouter get router;
   AssetsPath get appAssetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
+  ValueChanged<AppException>? get onCreateAppException => null;
 }
 
 class AssetsPath {

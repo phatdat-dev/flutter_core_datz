@@ -6,12 +6,13 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_core_datz/src/app/base_configs.dart';
 import 'package:flutter_core_datz/src/utils/utils.dart';
 import 'package:go_router/go_router.dart';
 
 import '../app/app_globals.dart';
-import '../features/app_exception/app_exception_controller.dart';
 import '../extensions/app_extensions.dart';
+import '../features/app_exception/app_exception_controller.dart';
 import '../utils/helper.dart';
 import '../utils/helper_widget.dart';
 import 'base_model.dart';
@@ -48,6 +49,7 @@ class AppException implements Exception, BaseModel<AppException> {
     Helper.getInfoDevice().then((value) => infoDevice = value);
     route = GoRouter.of(AppGlobals.context).location;
     time = DateTime.now();
+    baseConfigs.onCreateAppException?.call(this);
   }
 
   @override
