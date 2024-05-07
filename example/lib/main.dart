@@ -12,7 +12,7 @@ class MyAppConfigs extends BaseConfigs {
   String get appTitle => "Flutter Core DatZ";
 
   @override
-  GoRouter get router => goRouter;
+  GoRouter router(BuildContext context) => goRouter;
 
   @override
   ThemeState get themeState => ThemeState(

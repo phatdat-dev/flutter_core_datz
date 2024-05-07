@@ -7,7 +7,7 @@ late BaseConfigs baseConfigs;
 
 abstract class BaseConfigs {
   String get appTitle;
-  GoRouter get router;
+  GoRouter router(BuildContext context);
   AssetsPath get appAssetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
   ValueChanged<AppException>? get onCreateAppException => null;
