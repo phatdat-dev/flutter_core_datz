@@ -39,7 +39,7 @@ To set up this application on your local machine, follow these steps:
 
 2. Install project dependencies:
    ```bash
-   flutter pub get
+   flutter clean & flutter pub cache clean --force & rm pubspec.lock & flutter pub get --no-example
    ```
 3. Generate necessary code using `build_runner`:
    ```bash
