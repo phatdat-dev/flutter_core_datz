@@ -10,7 +10,7 @@ export 'src/datasource/network/network.dart';
 export 'src/extensions/app_extensions.dart';
 export 'src/features/app_exception/app_exception_controller.dart';
 export 'src/features/theme/theme_controller.dart';
-export 'src/features/translation/app_translation_controller.dart';
+export 'src/features/translation/translation_controller.dart';
 export 'src/models/app_exception.dart';
 export 'src/models/base_model.dart';
 export 'src/routes/app_route.dart';

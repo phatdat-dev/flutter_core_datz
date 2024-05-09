@@ -9,20 +9,23 @@ import '../../app/app_globals.dart';
 import '../../app/app_storage_constants.dart';
 import '../../datasource/local/storage_service.dart';
 
-final appTranslationController = AppTranslationController();
-
-final class AppTranslationController {
-  final _sharedPrefs = GetIt.instance.get<StorageService>().sharedPreferences!;
-
+final class TranslationController {
   // fallbackLocale là locale default nếu locale được set không nằm trong những Locale support
-  final fallbackLocale = const Locale('en', 'US');
-  static const startLocale = Locale('vi', 'VN');
+  final Locale fallbackLocale;
+  final Locale startLocale;
   // các Locale được support
-  final locales = [
-    const Locale('en', 'US'),
-    const Locale('vi', 'VN'),
-    const Locale('ja', 'JP'),
-  ];
+  final List<Locale> locales;
+  TranslationController({
+    this.fallbackLocale = const Locale('en', 'US'),
+    this.startLocale = const Locale('vi', 'VN'),
+    this.locales = const [
+      Locale('en', 'US'),
+      Locale('vi', 'VN'),
+      Locale('ja', 'JP'),
+    ],
+  });
+
+  final _sharedPrefs = GetIt.instance.get<StorageService>().sharedPreferences!;
 
   // function change language
   void changeLocale(Locale localeee) {
@@ -43,7 +46,7 @@ final class AppTranslationController {
     return context.deviceLocale;
   }
 
-  static Future<void> initLocale() async {
+  Future<void> init() async {
     final String name = (startLocale.countryCode?.isEmpty ?? true) ? startLocale.languageCode : startLocale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 

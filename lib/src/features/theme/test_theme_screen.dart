@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 
 import 'theme_controller.dart';
 
@@ -16,6 +17,7 @@ class _TestThemeScreenState extends State<TestThemeScreen> with SingleTickerProv
   void initState() {
     tabbarController = TabController(length: 2, vsync: this);
     tabbarController.addListener(() {
+      final themeController = GetIt.instance<ThemeController>();
       switch (tabbarController.index) {
         case 0:
           if (themeController.state.themeMode != ThemeMode.light) {

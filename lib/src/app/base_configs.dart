@@ -11,6 +11,7 @@ abstract class BaseConfigs {
   AssetsPath get appAssetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
   ValueChanged<AppException>? get onCreateAppException => null;
+  TranslationController get appTranslationController => TranslationController();
 }
 
 class AssetsPath {

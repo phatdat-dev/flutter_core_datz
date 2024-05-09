@@ -7,8 +7,6 @@ import 'package:get_it/get_it.dart';
 import '../../app/app_storage_constants.dart';
 import '../../datasource/local/storage_service.dart';
 
-final themeController = ThemeController();
-
 class ThemeController extends ChangeNotifier {
   late ThemeState _state;
 

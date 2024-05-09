@@ -4,13 +4,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:flutter_core_datz/src/app/base_configs.dart';
-import 'package:flutter_core_datz/src/features/translation/app_translation_controller.dart';
 import 'package:get_it/get_it.dart';
 
-import '../src/app/app_globals.dart';
-import '../src/datasource/local/storage_service.dart';
-import '../src/datasource/network/network_connectivity_service.dart';
 import 'my_app.dart';
 
 Future<void> runMain({
@@ -23,7 +20,6 @@ Future<void> runMain({
   await Future.wait([
     EasyLocalization.ensureInitialized(),
     _initSingletons(),
-    AppTranslationController.initLocale(),
   ]);
 
   // Setting Device Orientation
@@ -57,10 +53,15 @@ void errorWidget() {
 }
 
 Future<void> _initSingletons() async {
-  //Services
+  // Services
   GetIt.instance.registerLazySingleton<StorageService>(() => StorageService());
   GetIt.instance.registerLazySingleton<NetworkConnectivityService>(() => NetworkConnectivityService());
+  // Controllers
+  GetIt.instance.registerLazySingleton<TranslationController>(() => baseConfigs.appTranslationController);
+  GetIt.instance.registerLazySingleton<ThemeController>(() => ThemeController());
 
-  //initiating db
+  // initiating db
   await GetIt.instance<StorageService>().init();
+  // initiating Translation
+  await GetIt.instance<TranslationController>().init();
 }
