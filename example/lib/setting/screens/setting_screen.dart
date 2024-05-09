@@ -1,6 +1,7 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, depend_on_referenced_packages
 
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
+import 'package:example/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:get_it/get_it.dart';
@@ -17,7 +18,7 @@ class SettingScreen extends StatelessWidget {
     const String devMode = "Dev mode";
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cài đặt ứng dụng".tr()),
+        title: const Text("Cài đặt ứng dụng"),
       ),
       body: SafeArea(
         child: Stack(
@@ -42,7 +43,7 @@ class SettingScreen extends StatelessWidget {
                     Builder(builder: (context) {
                       final translationController = GetIt.instance<TranslationController>();
                       return ExpansionTitleSettingMenuWidget(
-                        title: "Language".tr(),
+                        title: LocaleKeys.Language.tr(),
                         subTitle: devMode,
                         iconData: Icons.translate_outlined,
                         iconColor: Colors.blue,
@@ -62,7 +63,7 @@ class SettingScreen extends StatelessWidget {
                     Builder(builder: (context) {
                       final themeController = GetIt.instance<ThemeController>();
                       return ExpansionTitleSettingMenuWidget(
-                        title: "Chủ đề".tr(),
+                        title: "Chủ đề",
                         subTitle: devMode,
                         iconData: Icons.color_lens_outlined,
                         iconColor: Colors.green,
@@ -87,7 +88,7 @@ class SettingScreen extends StatelessWidget {
                           ),
                           ListTile(
                             onTap: () => const TestThemeRoute().push(context),
-                            title: Text("Xem mã màu hiện tại".tr()),
+                            title: const Text("Xem mã màu hiện tại"),
                             trailing: Icon(Icons.keyboard_arrow_right, color: Theme.of(context).hintColor),
                           ),
                           Wrap(
@@ -119,7 +120,7 @@ class SettingScreen extends StatelessWidget {
                       );
                     }),
                     SettingMenuWidget(
-                      title: "Xem lỗi".tr(),
+                      title: "Xem lỗi",
                       subTitle: devMode,
                       iconData: Icons.error_outline,
                       iconColor: Colors.red,
@@ -128,7 +129,7 @@ class SettingScreen extends StatelessWidget {
                       },
                     ),
                     // SettingMenuWidget(
-                    //   title: "Test".tr(),
+                    //   title: "Test",
                     //   subTitle: devMode,
                     //   iconData: Icons.developer_mode_outlined,
                     //   iconColor: Colors.purple,

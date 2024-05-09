@@ -9,6 +9,7 @@ import '../../app/app_globals.dart';
 import '../../app/app_storage_constants.dart';
 import '../../datasource/local/storage_service.dart';
 
+/// flutter pub run easy_localization:generate -S assets/translations -f keys -o locale_keys.g.dart
 final class TranslationController {
   // fallbackLocale là locale default nếu locale được set không nằm trong những Locale support
   final Locale fallbackLocale;

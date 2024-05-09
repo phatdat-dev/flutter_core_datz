@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'app_exception_controller.dart';
@@ -18,7 +17,7 @@ class AppExceptionScreen extends StatelessWidget {
           //resizeToAvoidBottomInset: false,
           //backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text('Xem lỗi'.tr()),
+            title: const Text('Xem lỗi'),
             actions: const [
               Text(
                 'filter here...(update later)',
