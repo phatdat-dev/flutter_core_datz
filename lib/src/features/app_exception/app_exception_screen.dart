@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'app_exception_controller.dart';
 import 'widgets/task_animate_design_widget.dart';
@@ -8,6 +9,7 @@ class AppExceptionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appExceptionController = GetIt.instance<AppExceptionController>();
     return GestureDetector(
       //unforcus keyboard
       onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),

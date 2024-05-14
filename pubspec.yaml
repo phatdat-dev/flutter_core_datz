@@ -25,7 +25,7 @@ dependencies:
   device_info_plus: any #get device infocollection: any #array, List method
   path_provider: any
   connectivity_plus: any
-  #LocalDB
+  # LocalDB
   isar: ^4.0.0-dev.14
   isar_flutter_libs: any
   shared_preferences: any

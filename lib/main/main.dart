@@ -59,6 +59,7 @@ Future<void> _initSingletons() async {
   // Controllers
   GetIt.instance.registerLazySingleton<TranslationController>(() => baseConfigs.appTranslationController);
   GetIt.instance.registerLazySingleton<ThemeController>(() => ThemeController());
+  GetIt.instance.registerLazySingleton<AppExceptionController>(() => AppExceptionController());
 
   // initiating db
   await GetIt.instance<StorageService>().init();

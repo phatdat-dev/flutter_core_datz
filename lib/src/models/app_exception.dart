@@ -8,6 +8,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_core_datz/src/app/base_configs.dart';
 import 'package:flutter_core_datz/src/utils/utils.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../app/app_globals.dart';
@@ -102,7 +103,7 @@ class AppException implements Exception, BaseModel<AppException> {
       return Right(val);
     } catch (ex) {
       // khi có lỗi tạo ra thì lưu lại
-      appExceptionController.state.insert(0, this);
+      GetIt.instance<AppExceptionController>().state.insert(0, this);
       //
       if (ex is TimeoutException) {
         message = ex.message.toString();
@@ -147,7 +148,7 @@ class AppException implements Exception, BaseModel<AppException> {
       return Right(val);
     } catch (ex) {
       // khi có lỗi tạo ra thì lưu lại
-      appExceptionController.state.insert(0, this);
+      GetIt.instance<AppExceptionController>().state.insert(0, this);
       message = ex.toString();
       statusCode = -1;
       urlApi = AppGlobals.lastCallUrlApi;

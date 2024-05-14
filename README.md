@@ -39,9 +39,15 @@ To set up this application on your local machine, follow these steps:
 
 2. Install project dependencies:
    ```bash
-   flutter clean & flutter pub cache clean --force & rm pubspec.lock & flutter pub get --no-example
+   flutter clean && flutter pub cache clean --force && rm pubspec.lock && flutter pub get --no-example
    ```
-3. Generate necessary code using `build_runner`:
+3. Generate LocaleKeys:
+
+   ```bash
+   flutter pub run easy_localization:generate -S assets/translations -f keys -o locale_keys.g.dart
+   ```
+
+4. Generate necessary code using `build_runner`:
    ```bash
    flutter pub run build_runner build --delete-conflicting-outputs
    ```
@@ -57,6 +63,26 @@ Contributions are welcome! If you want to contribute to the Flutter Movie Applic
 5. Open a pull request against the `master` branch of the original repository.
 
 Your contributions help enhance the FilmKu Flutter Movie Application. Feel free to propose new features, improve existing ones, or fix bugs. Together, we can make FilmKu even better!
+
+### Generate model
+
+Sometime you need generate model from tool [GetCLI](https://github.com/phatdat-dev/get_cli_basemodel_generator)
+
+```bash
+get generate model on models/response with assets/import_response.json --copyWith
+# or
+get generate model with assets/import_response.json
+```
+
+#### Install GETCLI
+
+After clone [GetCLI](https://github.com/phatdat-dev/get_cli_basemodel_generator) you need run command below
+
+```bash
+dart pub global activate --source path .
+```
+
+get file .bat from `%USERPROFILE%\AppData\Local\Pub\Cache\bin`
 
 ### Commit message
 
