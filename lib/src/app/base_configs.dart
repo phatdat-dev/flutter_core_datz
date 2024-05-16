@@ -22,8 +22,23 @@ class AssetsPath {
 
   AssetsPath({
     this.localization = 'assets/translations',
-    this.loadding = 'assets/images/loading.gif',
+    this.loadding = 'assets/images/loading/loading.gif',
     this.errorWidget = 'assets/gif/error_widget.gif',
     this.imageError = 'assets/images/error.png',
   });
+
+  // copyWith
+  AssetsPath copyWith({
+    String? localization,
+    String? loadding,
+    String? errorWidget,
+    String? imageError,
+  }) {
+    return AssetsPath(
+      localization: localization ?? this.localization,
+      loadding: loadding ?? this.loadding,
+      errorWidget: errorWidget ?? this.errorWidget,
+      imageError: imageError ?? this.imageError,
+    );
+  }
 }

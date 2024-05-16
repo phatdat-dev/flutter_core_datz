@@ -1,15 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:toastification/toastification.dart';
 
-import '..//app/app_globals.dart';
-import '..//extensions/app_extensions.dart';
 import '../app/base_configs.dart';
-import '../models/base_model.dart';
-import '../routes/app_route.dart';
 import '../widgets/my_cached_network_image.dart';
-import 'helper_reflect.dart';
 
 final class HelperWidget {
   static void showToastError(String message) {

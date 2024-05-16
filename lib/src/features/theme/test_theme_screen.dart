@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:get_it/get_it.dart';
-
-import 'theme_controller.dart';
 
 class TestThemeScreen extends StatefulWidget {
   const TestThemeScreen({super.key});

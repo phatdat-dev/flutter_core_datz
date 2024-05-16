@@ -19,6 +19,11 @@ class MyAppConfigs extends BaseConfigs {
         lightTheme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
       );
+
+  @override
+  AssetsPath get appAssetsPath => AssetsPath().copyWith(
+        loadding: 'assets/images/loading/loading-loop.gif',
+      );
 }
 
 void main() {
@@ -44,6 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             ElevatedButton(onPressed: () => const SettingRoute().push(context), child: const Text("Setting")),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text("Test"),
+            ),
           ],
         ),
       ),

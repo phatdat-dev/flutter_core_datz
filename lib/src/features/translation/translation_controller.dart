@@ -2,12 +2,9 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
-import '../../app/app_globals.dart';
-import '../../app/app_storage_constants.dart';
-import '../../datasource/local/storage_service.dart';
 
 /// flutter pub run easy_localization:generate -S assets/translations -f keys -o locale_keys.g.dart
 final class TranslationController {

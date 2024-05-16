@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_core_datz/flutter_core_datz.dart';
 
-import '../app/app_globals.dart';
 import '../app/base_configs.dart';
 
 // Loadding.show(); Loadding.dismiss();
@@ -12,11 +12,12 @@ class Loadding {
   static void show() async {
     _stacKLoadding.add(true);
     if (_key.currentContext == null && _stacKLoadding.length == 1) {
-      showDialog(
+      await showDialog(
         context: AppGlobals.context, // rootNavigatorKey MaterialApp
         barrierDismissible: true,
         builder: (context) => LoaddingWidget(key: _key),
       );
+      _stacKLoadding.clear();
     }
   }
 

@@ -13,13 +13,11 @@ class AppTheme {
     ).copyWith(
       surfaceTint: Colors.white, // ArlertDialog background
     );
-    const hintColor = Colors.grey;
 
     return ThemeData.light().copyWith(
       colorScheme: colorScheme,
       primaryColor: colorScheme.primary,
       scaffoldBackgroundColor: colorScheme.surface,
-      hintColor: hintColor,
     );
   }
 
