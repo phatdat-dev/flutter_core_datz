@@ -68,6 +68,12 @@ extension ListExtension<E> on List<E> {
     }
     return list;
   }
+
+  /// swap with index
+  void onReorder(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) newIndex--;
+    insert(newIndex, removeAt(oldIndex));
+  }
 }
 
 extension IterableNullExtension<E> on Iterable<E>? {
