@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:flutter_core_datz/src/app/base_configs.dart';
 import 'package:get_it/get_it.dart';
@@ -23,10 +22,10 @@ Future<void> runMain({
   ]);
 
   // Setting Device Orientation
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
   await onInit?.call();
 
   runApp(builder(const MyApp()));
