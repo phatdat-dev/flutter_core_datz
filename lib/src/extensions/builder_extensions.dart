@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 
 extension ValueListenableExtension<T> on ValueListenable<T> {
   Widget builder(
-    Widget Function(BuildContext context, T value) builder,
-  ) {
+    Widget Function(BuildContext context, T value) builder, {
+    /// Loading widget when value is null
+    Widget? ifNull,
+  }) {
     return ValueListenableBuilder<T>(
       valueListenable: this,
-      builder: (context, value, child) => builder(context, value),
+      builder: (context, value, child) {
+        if (value == null) return ifNull ?? const Center(child: CircularProgressIndicator());
+        return builder(context, value);
+      },
     );
   }
 }
