@@ -92,7 +92,7 @@ final class HelperWidget {
     return const SizedBox.shrink();
   }
 
-  static void showCustomAlertDialog({
+  static Future<T?> showCustomAlertDialog<T>({
     required Widget child,
     List<Widget>? actions,
     BuildContext? context,
@@ -102,10 +102,15 @@ final class HelperWidget {
     bool barrierDismissible = true,
     EdgeInsets? insetPadding,
     Color? backgroundColor,
-  }) {
+    EdgeInsets? iconPadding,
+    EdgeInsets? titlePadding,
+    EdgeInsets? buttonPadding,
+    EdgeInsets? actionsPadding,
+    EdgeInsets? contentPadding,
+  }) async {
     if (width != null && height != null) defaultSize = false;
     const EdgeInsets defaultInsetPadding = EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0);
-    showDialog(
+    return await showDialog<T>(
       context: context ?? AppGlobals.context,
       barrierDismissible: barrierDismissible,
       builder: (context) => AlertDialog(
@@ -113,6 +118,11 @@ final class HelperWidget {
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         insetPadding: insetPadding ?? defaultInsetPadding,
+        iconPadding: iconPadding,
+        titlePadding: titlePadding,
+        buttonPadding: buttonPadding,
+        actionsPadding: actionsPadding,
+        contentPadding: contentPadding,
         content: SizedBox(
           width: defaultSize ? context.width * 0.5 : width,
           height: defaultSize ? context.height * 0.3 : height,
