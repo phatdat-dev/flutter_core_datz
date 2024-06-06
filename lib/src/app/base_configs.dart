@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,7 +12,6 @@ abstract class BaseConfigs {
   GoRouter router(BuildContext context);
   AssetsPath get appAssetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
-  ValueChanged<AppException>? get onCreateAppException => null;
   TranslationController get appTranslationController => TranslationController();
 }
 

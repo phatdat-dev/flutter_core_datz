@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use_from_same_package
 
 import 'dart:async';
 import 'dart:convert';
@@ -9,8 +9,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-
-import '../app/base_configs.dart';
 
 class AppException implements Exception, BaseModel<AppException> {
   DateTime? time;
@@ -41,26 +39,29 @@ class AppException implements Exception, BaseModel<AppException> {
     this.urlApi,
     this.route,
   }) {
+    onInit();
+  }
+
+  void onInit() {
     Helper.getInfoDevice().then((value) => infoDevice = value);
     route = GoRouter.of(AppGlobals.context).location;
     time = DateTime.now();
-    baseConfigs.onCreateAppException?.call(this);
   }
 
+  factory AppException.fromJson(Map<String, dynamic> json) => AppException(
+        time: DateTime.tryParse(json['time']),
+        timeProcess: json['timeProcess'],
+        userName: json['userName'],
+        message: json['message'],
+        statusCode: json['statusCode'],
+        identifier: json['identifier'],
+        infoDevice: json['infoDevice'],
+        urlApi: json['urlApi'],
+        route: json['route'],
+      );
+
   @override
-  AppException fromJson(Map<String, dynamic> json) {
-    return AppException(
-      time: DateTime.tryParse(json['time']),
-      timeProcess: json['timeProcess'],
-      userName: json['userName'],
-      message: json['message'],
-      statusCode: json['statusCode'],
-      identifier: json['identifier'],
-      infoDevice: json['infoDevice'],
-      urlApi: json['urlApi'],
-      route: json['route'],
-    );
-  }
+  AppException fromJson(Map<String, dynamic> json) => AppException.fromJson(json);
 
   @override
   Map<String, dynamic> toJson() {
@@ -98,37 +99,40 @@ class AppException implements Exception, BaseModel<AppException> {
     } catch (ex) {
       // khi có lỗi tạo ra thì lưu lại
       GetIt.instance<AppExceptionController>().state.insert(0, this);
-      //
-      if (ex is TimeoutException) {
-        message = ex.message.toString();
-        statusCode = 1;
-      } else if (ex is SocketException) {
-        message = ex.message;
-        statusCode = 2;
-      } else if (ex is DioException) {
-        message = Helper.toMessageError(ex.response?.data);
-        if (message == "null") message = "Server/Parse error";
-        statusCode = ex.response?.statusCode ?? 3;
-        urlApi = ex.response?.requestOptions.uri.toString();
-        //
-        if (statusCode == 404) showToast = false; //LINK - lib/shared/network/network_exception_handle_mixin.dart:20
-      } else {
-        message = ex.toString();
-        statusCode = -1;
-        urlApi = AppGlobals.lastCallUrlApi;
-        Future.delayed(const Duration(seconds: 1), () {
-          HelperWidget.showToastError("Có lỗi xảy ra, nhấn để xem >>");
-        });
-      }
-      identifier = (identifier ?? "") + ex.runtimeType.toString();
-      stopWatch.stop();
-      timeProcess = stopWatch.elapsed.inMilliseconds;
-      //
-      if (showToast) HelperWidget.showToastError('[$statusCode]:\n$message');
-      //
-      Printt.red(Helper.formatJsonString(toString()));
+      onExceptionAsync(ex, stopWatch, showToast);
+
       return Left(this);
     }
+  }
+
+  void onExceptionAsync(final Object ex, final Stopwatch stopWatch, bool showToast) {
+    if (ex is TimeoutException) {
+      message = ex.message.toString();
+      statusCode = 1;
+    } else if (ex is SocketException) {
+      message = ex.message;
+      statusCode = 2;
+    } else if (ex is DioException) {
+      message = Helper.toMessageError(ex.response?.data);
+      if (message == "null") message = "Server/Parse error";
+      statusCode = ex.response?.statusCode ?? 3;
+      urlApi = ex.response?.requestOptions.uri.toString();
+      //LINK - lib/shared/network/network_exception_handle_mixin.dart:20
+    } else {
+      message = ex.toString();
+      statusCode = -1;
+      urlApi = AppGlobals.lastCallUrlApi;
+      Future.delayed(const Duration(seconds: 1), () {
+        HelperWidget.showToastError("Có lỗi xảy ra, nhấn để xem >>");
+      });
+    }
+    identifier = (identifier ?? "") + ex.runtimeType.toString();
+    stopWatch.stop();
+    timeProcess = stopWatch.elapsed.inMilliseconds;
+    //
+    if (showToast) HelperWidget.showToastError('[$statusCode]:\n$message');
+    //
+    Printt.red(Helper.formatJsonString(toString()));
   }
 
   Either<AppException, T> handleException<T>(T Function() handler) {
@@ -143,14 +147,18 @@ class AppException implements Exception, BaseModel<AppException> {
     } catch (ex) {
       // khi có lỗi tạo ra thì lưu lại
       GetIt.instance<AppExceptionController>().state.insert(0, this);
-      message = ex.toString();
-      statusCode = -1;
-      urlApi = AppGlobals.lastCallUrlApi;
-      identifier = (identifier ?? "") + ex.runtimeType.toString();
-      stopWatch.stop();
-      timeProcess = stopWatch.elapsed.inMilliseconds;
-      Printt.red(Helper.formatJsonString(toString()));
+      onException(ex, stopWatch);
       return Left(this);
     }
+  }
+
+  void onException(final Object ex, final Stopwatch stopWatch) {
+    message = ex.toString();
+    statusCode = -1;
+    urlApi = AppGlobals.lastCallUrlApi;
+    identifier = (identifier ?? "") + ex.runtimeType.toString();
+    stopWatch.stop();
+    timeProcess = stopWatch.elapsed.inMilliseconds;
+    Printt.red(Helper.formatJsonString(toString()));
   }
 }
