@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core_datz/src/features/theme/theme_controller.dart';
@@ -41,6 +43,14 @@ class MyApp extends StatelessWidget {
             ...context.localizationDelegates,
             FormBuilderLocalizations.delegate,
           ],
+          scrollBehavior: const MaterialScrollBehavior().copyWith(
+            dragDevices: {
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.touch,
+              PointerDeviceKind.stylus,
+              PointerDeviceKind.unknown,
+            },
+          ),
           //builder fix first context
           builder: (context, child) {
             return Overlay(
