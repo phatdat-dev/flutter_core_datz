@@ -58,15 +58,18 @@ extension ListExtension<E> on List<E> {
   //List.separated count,generator,separator
   //input: cout=> 7, generator=> 1 , separator=> 0
   //output: [1,0,1,0,1,0,1]
-  static List<T> separated<T>({required int itemCount, required T Function(int index) separatorBuilder, required T Function(int index) itemBuilder}) {
-    final List<T> list = [];
+
+  static Iterable<T> separated<T>({
+    required int itemCount,
+    required T Function(int index) separatorBuilder,
+    required T Function(int index) itemBuilder,
+  }) sync* {
     for (int i = 0; i < itemCount; i++) {
-      list.add(itemBuilder(i));
+      yield itemBuilder(i);
       if (i < itemCount - 1) {
-        list.add(separatorBuilder(i));
+        yield separatorBuilder(i);
       }
     }
-    return list;
   }
 
   /// swap with index
