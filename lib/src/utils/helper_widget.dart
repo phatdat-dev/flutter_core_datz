@@ -139,6 +139,7 @@ final class HelperWidget {
     String? hintText = 'Search...',
     T? currentSelected,
     BorderRadiusGeometry? borderRadius,
+    String Function(int index, String queryName)? queryNameItemBuilder,
   }) async {
     final ValueNotifier<List<T>> search = ValueNotifier(data.toList());
     final txtController = TextEditingController();
@@ -176,15 +177,17 @@ final class HelperWidget {
                   itemCount: searchValue.length,
                   itemBuilder: (context, index) {
                     final isSelected = currentSelected == searchValue[index];
+                    String queryName = searchValue[index].queryName;
+                    queryName = queryNameItemBuilder?.call(index, queryName) ?? queryName;
                     return ListTile(
                       title: txtController.text.isEmpty
                           ? Text(
-                              searchValue[index].queryName,
+                              queryName,
                               style: isSelected ? const TextStyle(fontWeight: FontWeight.bold) : null,
                             )
                           : RichText(
                               text: TextSpan(
-                                children: highlightOccurrences(searchValue[index].queryName, txtController.text),
+                                children: highlightOccurrences(queryName, txtController.text),
                                 style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                               ),
                             ),
