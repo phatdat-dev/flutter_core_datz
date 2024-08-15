@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../extensions/app_extensions.dart';
@@ -28,27 +26,38 @@ mixin class ColorConstants {
   //
 
   static MaterialColor getMaterialColor(Color color) {
-    return MaterialColor(color.value, {
-      50: tintColor(color, 0.9),
-      100: tintColor(color, 0.8),
-      200: tintColor(color, 0.6),
-      300: tintColor(color, 0.4),
-      400: tintColor(color, 0.2),
-      500: color,
-      600: shadeColor(color, 0.1),
-      700: shadeColor(color, 0.2),
-      800: shadeColor(color, 0.3),
-      900: shadeColor(color, 0.4),
-    });
+    return MaterialColor(
+      color.value,
+      <int, Color>{
+        50: tintColor(color, 0.9),
+        100: tintColor(color, 0.8),
+        200: tintColor(color, 0.6),
+        300: tintColor(color, 0.4),
+        400: tintColor(color, 0.2),
+        500: color,
+        600: shadeColor(color, 0.1),
+        700: shadeColor(color, 0.2),
+        800: shadeColor(color, 0.3),
+        900: shadeColor(color, 0.4),
+      },
+    );
   }
 
-  static int tintValue(int value, double factor) => max(0, min((value + ((255 - value) * factor)).round(), 255));
+  static Color tintColor(Color color, double factor) {
+    return Color.fromRGBO(
+      color.red + ((255 - color.red) * factor).round(),
+      color.green + ((255 - color.green) * factor).round(),
+      color.blue + ((255 - color.blue) * factor).round(),
+      1,
+    );
+  }
 
-  static Color tintColor(Color color, double factor) =>
-      Color.fromRGBO(tintValue(color.red, factor), tintValue(color.green, factor), tintValue(color.blue, factor), 1);
-
-  static int shadeValue(int value, double factor) => max(0, min(value - (value * factor).round(), 255));
-
-  static Color shadeColor(Color color, double factor) =>
-      Color.fromRGBO(shadeValue(color.red, factor), shadeValue(color.green, factor), shadeValue(color.blue, factor), 1);
+  static Color shadeColor(Color color, double factor) {
+    return Color.fromRGBO(
+      (color.red * (1 - factor)).round(),
+      (color.green * (1 - factor)).round(),
+      (color.blue * (1 - factor)).round(),
+      1,
+    );
+  }
 }
