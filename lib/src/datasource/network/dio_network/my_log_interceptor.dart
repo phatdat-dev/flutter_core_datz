@@ -129,7 +129,7 @@ class MyLogInterceptor extends Interceptor {
     }
     if (responseBody) {
       Printt.defaultt('Data Response:');
-      _printAll(response.toString(), Printt.magenta);
+      _printAll(jsonEncode(response.data), Printt.magenta);
     }
     Printt.defaultt('');
   }
@@ -138,7 +138,7 @@ class MyLogInterceptor extends Interceptor {
     (printt ?? Printt.defaultt)('$key: $v');
   }
 
-  void _printAll(msg, [PrinttLog? printt]) {
-    msg.toString().split('\n').forEach(printt ?? Printt.defaultt);
+  void _printAll(String msg, [PrinttLog? printt]) {
+    msg.split('\n').forEach(printt ?? Printt.defaultt);
   }
 }
