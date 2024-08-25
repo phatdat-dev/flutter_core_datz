@@ -52,7 +52,7 @@ abstract class BaseDioNetworkService implements NetworkService, NetworkException
 
           // Gắn access_token vào header, gửi kèm access_token trong header mỗi khi call API
           if (apiKey.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer $apiKey';
+            options.headers['Authorization'] = apiKey;
           }
           // Update static lần cuối gọi API là gì...
           AppGlobals.lastCallUrlApi = options.path;
