@@ -129,7 +129,11 @@ class MyLogInterceptor extends Interceptor {
     }
     if (responseBody) {
       Printt.defaultt('Data Response:');
-      _printAll(jsonEncode(response.data), Printt.magenta);
+      try {
+        _printAll(jsonEncode(response.data), Printt.magenta);
+      } catch (e) {
+        _printAll(response.data.toString(), Printt.magenta);
+      }
     }
     Printt.defaultt('');
   }
