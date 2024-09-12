@@ -124,4 +124,69 @@ final class Helper {
     }
     return message;
   }
+
+  // weekNumber
+  static int getWeekNumber(DateTime date) {
+    final startOfYear = DateTime(date.year, 1, 1);
+    final firstMonday = startOfYear.weekday;
+    final daysInFirstWeek = 8 - firstMonday;
+    final diff = date.difference(startOfYear).inDays;
+    int weekNumber = ((diff - daysInFirstWeek) / 7).ceil();
+    if (daysInFirstWeek > 3) weekNumber++;
+
+    return weekNumber;
+  }
+
+  // weekNumber to date
+  static DateTime getFirstDateOfWeek(int weekNumber, int year) {
+    final firstDayOfYear = DateTime(year, 1, 1);
+    final firstMonday = firstDayOfYear.weekday;
+    final daysInFirstWeek = 8 - firstMonday;
+    final firstDate = firstDayOfYear.add(Duration(days: (weekNumber - 1) * 7 - daysInFirstWeek + 1));
+    return firstDate;
+  }
+
+  /// Toggles the player's full screen mode.
+  // start rotate screen
+  // https://stackoverflow.com/questions/50322054/flutter-how-to-set-and-lock-screen-orientation-on-demand
+  static void toggleFullScreenMode(bool isFullScreen) {
+    if (isFullScreen) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+    } else {
+      SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    }
+  }
+
+  static void hideStatusBarAndNavigationBar(bool toggle) {
+    //hide status bar and navigator bar
+    if (toggle) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values); // to re-show bars
+    }
+  }
+
+  static dynamic splitJsonStringFromRawResponse(String? originalString) {
+    if (originalString == null || originalString.isEmpty) return null;
+    try {
+      final result = jsonDecode(originalString);
+      if (result != null) return result;
+    } catch (e) {
+      // Tìm vị trí bắt đầu và kết thúc của đoạn JSON
+      int startIndex = originalString.indexOf('```json');
+      int endIndex = originalString.lastIndexOf('```');
+
+      // Kiểm tra xem các chỉ số có hợp lệ không
+      if (startIndex == -1 || endIndex == -1 || startIndex >= endIndex) return null;
+
+      // Trích xuất đoạn JSON
+      String jsonString = originalString.substring(startIndex + 7, endIndex).trim(); // +7 để bỏ qua chuỗi '```json'
+
+      // Chuyển đổi đoạn JSON thành dynamic (có thể là List hoặc Map)
+      return jsonDecode(jsonString);
+    }
+  }
 }
