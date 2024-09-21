@@ -13,6 +13,7 @@ abstract class BaseConfigs {
   AssetsPath get appAssetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
   TranslationController get appTranslationController => TranslationController();
+  ResponsiveScreenSettings get responsiveScreenSettings => const ResponsiveScreenSettings();
 }
 
 class AssetsPath {
