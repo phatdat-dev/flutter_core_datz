@@ -1,9 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_core_datz/flutter_core_datz.dart';
-import 'package:flutter_core_datz/src/app/base_configs.dart';
 import 'package:get_it/get_it.dart';
+
+import '../../../flutter_core_datz.dart';
+import '../../app/base_configs.dart';
 
 class ThemeController extends ChangeNotifier {
   late ThemeState _state;

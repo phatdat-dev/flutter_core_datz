@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:get_it/get_it.dart';
+
+import '../../../flutter_core_datz.dart';
 
 class TestThemeScreen extends StatefulWidget {
   const TestThemeScreen({super.key});
@@ -103,23 +104,39 @@ class _TestThemeScreenState extends State<TestThemeScreen> with SingleTickerProv
             buildColorTheme(Theme.of(context).colorScheme.onPrimary, 'onPrimary'),
             buildColorTheme(Theme.of(context).colorScheme.primaryContainer, 'primaryContainer'),
             buildColorTheme(Theme.of(context).colorScheme.onPrimaryContainer, 'onPrimaryContainer'),
+            buildColorTheme(Theme.of(context).colorScheme.primaryFixed, 'primaryFixed'),
+            buildColorTheme(Theme.of(context).colorScheme.primaryFixedDim, 'primaryFixedDim'),
+            buildColorTheme(Theme.of(context).colorScheme.onPrimaryFixed, 'onPrimaryFixed'),
+            buildColorTheme(Theme.of(context).colorScheme.onPrimaryFixedVariant, 'onPrimaryFixedVariant'),
             buildColorTheme(Theme.of(context).colorScheme.secondary, 'secondary'),
             buildColorTheme(Theme.of(context).colorScheme.onSecondary, 'onSecondary'),
             buildColorTheme(Theme.of(context).colorScheme.secondaryContainer, 'secondaryContainer'),
             buildColorTheme(Theme.of(context).colorScheme.onSecondaryContainer, 'onSecondaryContainer'),
+            buildColorTheme(Theme.of(context).colorScheme.secondaryFixed, 'secondaryFixed'),
+            buildColorTheme(Theme.of(context).colorScheme.secondaryFixedDim, 'secondaryFixedDim'),
+            buildColorTheme(Theme.of(context).colorScheme.onSecondaryFixed, 'onSecondaryFixed'),
+            buildColorTheme(Theme.of(context).colorScheme.onSecondaryFixedVariant, 'onSecondaryFixedVariant'),
             buildColorTheme(Theme.of(context).colorScheme.tertiary, 'tertiary'),
             buildColorTheme(Theme.of(context).colorScheme.onTertiary, 'onTertiary'),
             buildColorTheme(Theme.of(context).colorScheme.tertiaryContainer, 'tertiaryContainer'),
             buildColorTheme(Theme.of(context).colorScheme.onTertiaryContainer, 'onTertiaryContainer'),
+            buildColorTheme(Theme.of(context).colorScheme.tertiaryFixed, 'tertiaryFixed'),
+            buildColorTheme(Theme.of(context).colorScheme.tertiaryFixedDim, 'tertiaryFixedDim'),
+            buildColorTheme(Theme.of(context).colorScheme.onTertiaryFixed, 'onTertiaryFixed'),
+            buildColorTheme(Theme.of(context).colorScheme.onTertiaryFixedVariant, 'onTertiaryFixedVariant'),
             buildColorTheme(Theme.of(context).colorScheme.error, 'error'),
             buildColorTheme(Theme.of(context).colorScheme.onError, 'onError'),
             buildColorTheme(Theme.of(context).colorScheme.errorContainer, 'errorContainer'),
             buildColorTheme(Theme.of(context).colorScheme.onErrorContainer, 'onErrorContainer'),
-            buildColorTheme(Theme.of(context).colorScheme.background, 'background'),
-            buildColorTheme(Theme.of(context).colorScheme.onBackground, 'onBackground'),
             buildColorTheme(Theme.of(context).colorScheme.surface, 'surface'),
             buildColorTheme(Theme.of(context).colorScheme.onSurface, 'onSurface'),
-            buildColorTheme(Theme.of(context).colorScheme.surfaceVariant, 'surfaceVariant'),
+            buildColorTheme(Theme.of(context).colorScheme.surfaceDim, 'surfaceDim'),
+            buildColorTheme(Theme.of(context).colorScheme.surfaceBright, 'surfaceBright'),
+            buildColorTheme(Theme.of(context).colorScheme.surfaceContainerLowest, 'surfaceContainerLowest'),
+            buildColorTheme(Theme.of(context).colorScheme.surfaceContainerLow, 'surfaceContainerLow'),
+            buildColorTheme(Theme.of(context).colorScheme.surfaceContainer, 'surfaceContainer'),
+            buildColorTheme(Theme.of(context).colorScheme.surfaceContainerHigh, 'surfaceContainerHigh'),
+            buildColorTheme(Theme.of(context).colorScheme.surfaceContainerHighest, 'surfaceContainerHighest'),
             buildColorTheme(Theme.of(context).colorScheme.onSurfaceVariant, 'onSurfaceVariant'),
             buildColorTheme(Theme.of(context).colorScheme.outline, 'outline'),
             buildColorTheme(Theme.of(context).colorScheme.outlineVariant, 'outlineVariant'),
