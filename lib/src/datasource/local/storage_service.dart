@@ -8,15 +8,15 @@ class StorageService {
   bool get hasInitialized => sharedPreferences != null;
 
   Future<void> init() async {
-    await _initSharedPrefs();
-    await _initCacheDb();
+    await initSharedPrefs();
+    await initCacheDb();
   }
 
-  Future<void> _initSharedPrefs() async {
+  Future<void> initSharedPrefs() async {
     sharedPreferences ??= await SharedPreferences.getInstance();
   }
 
-  Future<void> _initCacheDb() async {
+  Future<void> initCacheDb() async {
     // final dbPath = await getDatabasesPath();
     // cacheDb = await openDatabase('$dbPath/cache.db');
   }

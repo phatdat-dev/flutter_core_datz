@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       EasyLocalization.logger.enableBuildModes = [];
     }
     return EasyLocalization(
-      path: baseConfigs.appAssetsPath.localization, //
+      path: baseConfigs.assetsPath.localization, //
       supportedLocales: translationController.locales,
       fallbackLocale: translationController.fallbackLocale,
       startLocale: translationController.startLocale,

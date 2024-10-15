@@ -23,7 +23,7 @@ class MyCachedNetworkImage extends StatelessWidget {
       height: height,
       fit: fit,
       errorWidget: (context, error, stackTrace) => const Icon(Icons.image, color: Colors.grey),
-      placeholder: (context, url) => Image.asset(baseConfigs.appAssetsPath.imageError),
+      placeholder: (context, url) => Image.asset(baseConfigs.assetsPath.imageError),
       fadeInDuration: const Duration(milliseconds: 200),
       fadeOutDuration: const Duration(milliseconds: 180),
     );

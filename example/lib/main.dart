@@ -21,7 +21,7 @@ class MyAppConfigs extends BaseConfigs {
       );
 
   @override
-  AssetsPath get appAssetsPath => AssetsPath().copyWith(
+  AssetsPath get assetsPath => AssetsPath().copyWith(
         loadding: 'assets/images/loading/loading-loop.gif',
       );
 }

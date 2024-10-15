@@ -10,10 +10,11 @@ late BaseConfigs baseConfigs;
 abstract class BaseConfigs {
   String get appTitle;
   GoRouter router(BuildContext context);
-  AssetsPath get appAssetsPath => AssetsPath();
+  AssetsPath get assetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
-  TranslationController get appTranslationController => TranslationController();
+  TranslationController get translationController => TranslationController();
   ResponsiveScreenSettings get responsiveScreenSettings => const ResponsiveScreenSettings();
+  StorageService get storageService => StorageService();
 }
 
 class AssetsPath {

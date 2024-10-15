@@ -51,7 +51,7 @@ final class HelperWidget {
   }
 
   static ImageProvider imageProviderFrom(String imagePath) {
-    if (imagePath.isEmpty) return AssetImage(baseConfigs.appAssetsPath.imageError);
+    if (imagePath.isEmpty) return AssetImage(baseConfigs.assetsPath.imageError);
     return (imagePath.isURL) ? CachedNetworkImageProvider(imagePath) : AssetImage(imagePath) as ImageProvider;
   }
 

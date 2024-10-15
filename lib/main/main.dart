@@ -42,7 +42,7 @@ void errorWidget() {
         alignment: Alignment.center,
         color: Colors.transparent,
         child: Image.asset(
-          baseConfigs.appAssetsPath.errorWidget,
+          baseConfigs.assetsPath.errorWidget,
           width: 100,
           height: 100,
         ),
@@ -53,10 +53,10 @@ void errorWidget() {
 
 Future<void> _initSingletons() async {
   // Services
-  GetIt.instance.registerLazySingleton<StorageService>(() => StorageService());
+  GetIt.instance.registerLazySingleton<StorageService>(() => baseConfigs.storageService);
   GetIt.instance.registerLazySingleton<NetworkConnectivityService>(() => NetworkConnectivityService());
   // Controllers
-  GetIt.instance.registerLazySingleton<TranslationController>(() => baseConfigs.appTranslationController);
+  GetIt.instance.registerLazySingleton<TranslationController>(() => baseConfigs.translationController);
   GetIt.instance.registerLazySingleton<ThemeController>(() => ThemeController());
   GetIt.instance.registerLazySingleton<AppExceptionController>(() => AppExceptionController());
 

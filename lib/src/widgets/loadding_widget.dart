@@ -42,7 +42,7 @@ class LoaddingWidgetState extends State<LoaddingWidget> {
 
   @override
   void initState() {
-    imageLoadding = AssetImage(baseConfigs.appAssetsPath.loadding);
+    imageLoadding = AssetImage(baseConfigs.assetsPath.loadding);
     super.initState();
   }
 
