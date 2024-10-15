@@ -7,8 +7,13 @@ import 'base_configs.dart';
 
 mixin BaseResponsiveMixin on Diagnosticable {
 // mixin BaseResponsiveMixin {
+  /// [400-700] => Phone
   static late bool isMobile;
+
+  /// [700-1000] => Tablet
   static late bool isTablet;
+
+  /// [1000-...] => Desktop
   static late bool isDesktop;
 
   @protected
@@ -37,7 +42,7 @@ mixin BaseResponsiveMixin on Diagnosticable {
         }
         widget ??= Center(
             child: Text(
-          '${defaultTargetPlatform.name} Element is Empty !',
+          'Screen size not suitable !',
           style: const TextStyle(color: Colors.red, fontSize: 16),
           textAlign: TextAlign.center,
         ));
@@ -86,9 +91,9 @@ class ResponsiveScreenSettings {
   final double watchChangePoint;
 
   const ResponsiveScreenSettings({
-    this.desktopChangePoint = 900,
-    this.tabletChangePoint = 600,
-    this.watchChangePoint = 300,
+    this.desktopChangePoint = 1000,
+    this.tabletChangePoint = 700,
+    this.watchChangePoint = 400,
   });
 }
 
