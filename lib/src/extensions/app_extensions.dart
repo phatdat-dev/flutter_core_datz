@@ -1,5 +1,3 @@
-library flutter_core_datz_app_extensions;
-
 export 'builder_extensions.dart';
 export 'color_extensions.dart';
 export 'color_scheme_extensions.dart';

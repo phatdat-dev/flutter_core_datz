@@ -1,4 +1,4 @@
-library flutter_core_datz;
+library;
 
 export 'main/main.dart';
 export 'src/app/app_globals.dart';

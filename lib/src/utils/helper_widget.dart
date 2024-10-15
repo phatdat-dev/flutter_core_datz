@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../flutter_core_datz.dart';
 import '../app/base_configs.dart';
 import '../widgets/my_cached_network_image.dart';
 

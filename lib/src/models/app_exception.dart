@@ -6,9 +6,10 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../flutter_core_datz.dart';
 
 class AppException implements Exception, BaseModel<AppException> {
   DateTime? time;

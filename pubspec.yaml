@@ -26,8 +26,7 @@ dependencies:
   path_provider: any
   connectivity_plus: any
   # LocalDB
-  isar: ^4.0.0-dev.14
-  isar_flutter_libs: any
+  # sqflite: any
   shared_preferences: any
   get_it: any
   # Widget

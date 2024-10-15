@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../flutter_core_datz.dart';
 import 'widgets/task_animate_design_widget.dart';
 
 class AppExceptionScreen extends StatelessWidget {

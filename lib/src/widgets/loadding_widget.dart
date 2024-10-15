@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_core_datz/flutter_core_datz.dart';
 
+import '../../flutter_core_datz.dart';
 import '../app/base_configs.dart';
 
 // Loadding.show(); Loadding.dismiss();

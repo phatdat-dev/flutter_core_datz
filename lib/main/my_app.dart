@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_core_datz/src/features/theme/theme_controller.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get_it/get_it.dart';
 
 import '../src/app/app_globals.dart';
 import '../src/app/base_configs.dart';
+import '../src/features/theme/theme_controller.dart';
 import '../src/features/translation/translation_controller.dart';
 
 class MyApp extends StatelessWidget {

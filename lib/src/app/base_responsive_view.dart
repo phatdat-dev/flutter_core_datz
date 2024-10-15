@@ -40,10 +40,10 @@ mixin BaseResponsiveMixin on Diagnosticable {
         } else if (isMobile) {
           widget = buildMobile(context);
         }
-        widget ??= Center(
+        widget ??= const Center(
             child: Text(
           'Screen size not suitable !',
-          style: const TextStyle(color: Colors.red, fontSize: 16),
+          style: TextStyle(color: Colors.red, fontSize: 16),
           textAlign: TextAlign.center,
         ));
 

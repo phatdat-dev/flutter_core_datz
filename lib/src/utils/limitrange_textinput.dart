@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:flutter_core_datz/flutter_core_datz.dart';
+
+import '../../flutter_core_datz.dart';
 
 /// ```dart
 /// inputFormatters: (isInputNumber)
