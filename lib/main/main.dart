@@ -11,7 +11,8 @@ import 'my_app.dart';
 
 Future<void> runMain({
   required BaseConfigs configs,
-  Widget Function(Widget child)? builder,
+  Widget Function(Widget child)? beforeAppBuilder,
+  TransitionBuilder? builder,
   FutureOr<void> Function()? onInit,
 }) async {
   baseConfigs = configs;
@@ -28,7 +29,7 @@ Future<void> runMain({
   // ]);
   await onInit?.call();
 
-  runApp(builder?.call(const MyApp()) ?? const MyApp());
+  runApp(beforeAppBuilder?.call(MyApp(builder: builder)) ?? MyApp(builder: builder));
   errorWidget();
 }
 

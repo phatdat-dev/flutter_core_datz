@@ -11,7 +11,8 @@ import '../src/features/theme/theme_controller.dart';
 import '../src/features/translation/translation_controller.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, this.builder});
+  final TransitionBuilder? builder;
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +52,13 @@ class MyApp extends StatelessWidget {
               PointerDeviceKind.unknown,
             },
           ),
-          //builder fix first context
           builder: (context, child) {
+            //builder fix first context
             return Overlay(
               initialEntries: [
                 if (child != null)
                   OverlayEntry(
-                    builder: (context) => child,
+                    builder: (context) => builder?.call(context, child) ?? child,
                   ),
               ],
             );
