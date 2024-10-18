@@ -12,6 +12,16 @@ import 'my_app.dart';
 Future<void> runMain({
   required BaseConfigs configs,
   Widget Function(Widget child)? beforeAppBuilder,
+
+  /// example
+  /// ```dart
+  /// builder: (context, child) => MediaQuery(
+  ///    data: MediaQuery.of(context).copyWith(
+  ///      textScaler: const TextScaler.linear(0.7),
+  ///    ),
+  ///    child: child!,
+  ///  )
+  /// ```
   TransitionBuilder? builder,
   FutureOr<void> Function()? onInit,
 }) async {

@@ -8,7 +8,7 @@ extension MapExtension<K, V> on Map<K, V> {
   }
 
   //get list value with key
-  List<V> getValues(List<K> keys) => keys.map((key) => this[key]!).toList();
+  List<V?> getValues(List<K> keys) => keys.map((key) => this[key]).toList();
   //get map value with key
   Map<K, V> getMap(List<K> keys) => Map.fromEntries(_filterr((entry) => keys.contains(entry.key)));
 

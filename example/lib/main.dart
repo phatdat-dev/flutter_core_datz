@@ -29,7 +29,6 @@ class MyAppConfigs extends BaseConfigs {
 void main() {
   runMain(
     configs: MyAppConfigs(),
-    builder: (child) => child,
   );
 }
 
