@@ -28,7 +28,7 @@ mixin BaseResponsiveMixin on Diagnosticable {
 
         /// Nếu đang ở trạng thái bình thường (nằm dọc-mobile)
         isMobile = isPortrait && (width < settings.watchChangePoint);
-        isTablet = isPortrait && (width >= settings.tabletChangePoint) && (width < settings.desktopChangePoint);
+        isTablet = (width >= settings.tabletChangePoint) && (width < settings.desktopChangePoint);
         isDesktop = (width >= settings.desktopChangePoint);
 
         Widget? widget;
