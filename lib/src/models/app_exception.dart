@@ -115,7 +115,7 @@ class AppException implements Exception, BaseModel<AppException> {
       statusCode = 2;
     } else if (ex is DioException) {
       message = Helper.toMessageError(ex.response?.data);
-      if (message == "null") message = "Server/Parse error";
+      if (message == "null") message = ex.toString();
       statusCode = ex.response?.statusCode ?? 3;
       urlApi = ex.response?.requestOptions.uri.toString();
       //LINK - lib/shared/network/network_exception_handle_mixin.dart:20
@@ -123,9 +123,11 @@ class AppException implements Exception, BaseModel<AppException> {
       message = ex.toString();
       statusCode = -1;
       urlApi = AppGlobals.lastCallUrlApi;
-      Future.delayed(const Duration(seconds: 1), () {
-        HelperWidget.showToastError("Có lỗi xảy ra, nhấn để xem >>");
-      });
+      if (showToast) {
+        Future.delayed(const Duration(seconds: 1), () {
+          HelperWidget.showToastError("Có lỗi xảy ra, nhấn để xem >>");
+        });
+      }
     }
     identifier = (identifier ?? "") + ex.runtimeType.toString();
     stopWatch.stop();
