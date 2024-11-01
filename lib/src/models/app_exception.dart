@@ -82,7 +82,7 @@ class AppException implements Exception, BaseModel<AppException> {
   @override
   String toString() => jsonEncode(toJson());
 
-  Future<Either<AppException, T>> handleExceptionAsync<T>(Future<T> Function() handler, {bool showToast = true}) async {
+  Future<Either<AppException, T>> handleExceptionAsync<T>(Future<T> Function() handler, {bool showToastError = true}) async {
     final stopWatch = Stopwatch();
     stopWatch.start();
     try {
@@ -100,13 +100,13 @@ class AppException implements Exception, BaseModel<AppException> {
     } catch (ex) {
       // khi có lỗi tạo ra thì lưu lại
       GetIt.instance<AppExceptionController>().state.insert(0, this);
-      onExceptionAsync(ex, stopWatch, showToast);
+      onExceptionAsync(ex, stopWatch, showToastError);
 
       return Left(this);
     }
   }
 
-  void onExceptionAsync(final Object ex, final Stopwatch stopWatch, bool showToast) {
+  void onExceptionAsync(final Object ex, final Stopwatch stopWatch, bool showToastError) {
     if (ex is TimeoutException) {
       message = ex.message.toString();
       statusCode = 1;
@@ -123,7 +123,7 @@ class AppException implements Exception, BaseModel<AppException> {
       message = ex.toString();
       statusCode = -1;
       urlApi = AppGlobals.lastCallUrlApi;
-      if (showToast) {
+      if (showToastError) {
         Future.delayed(const Duration(seconds: 1), () {
           HelperWidget.showToastError("Có lỗi xảy ra, nhấn để xem >>");
         });
@@ -133,7 +133,7 @@ class AppException implements Exception, BaseModel<AppException> {
     stopWatch.stop();
     timeProcess = stopWatch.elapsed.inMilliseconds;
     //
-    if (showToast) HelperWidget.showToastError('[$statusCode]:\n$message');
+    if (showToastError) HelperWidget.showToastError('[$statusCode]:\n$message');
     //
     Printt.red(Helper.formatJsonString(toString()));
   }

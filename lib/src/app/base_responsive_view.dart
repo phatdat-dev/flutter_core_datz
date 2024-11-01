@@ -6,14 +6,16 @@ import 'package:flutter/material.dart';
 import 'base_configs.dart';
 
 mixin BaseResponsiveMixin on Diagnosticable {
-// mixin BaseResponsiveMixin {
-  /// [400-700] => Phone
+  /// [0-300] => Watch
+  static late bool isWatch;
+
+  /// [300-600] => Phone
   static late bool isMobile;
 
-  /// [700-1000] => Tablet
+  /// [600-900] => Tablet
   static late bool isTablet;
 
-  /// [1000-...] => Desktop
+  /// [900-...] => Desktop
   static late bool isDesktop;
 
   @protected
@@ -24,10 +26,12 @@ mixin BaseResponsiveMixin on Diagnosticable {
       builder: (context, orientation) {
         final settings = baseConfigs.responsiveScreenSettings;
         final width = MediaQuery.sizeOf(context).width;
-        final isPortrait = (orientation == Orientation.portrait);
+        // final isPortrait = (orientation == Orientation.portrait);
 
         /// Nếu đang ở trạng thái bình thường (nằm dọc-mobile)
-        isMobile = isPortrait && (width < settings.watchChangePoint);
+        // isMobile = isPortrait && (width < settings.mobileChangePoint);
+        isWatch = (width < settings.mobileChangePoint);
+        isMobile = (width >= settings.mobileChangePoint) && (width < settings.tabletChangePoint);
         isTablet = (width >= settings.tabletChangePoint) && (width < settings.desktopChangePoint);
         isDesktop = (width >= settings.desktopChangePoint);
 
@@ -39,7 +43,10 @@ mixin BaseResponsiveMixin on Diagnosticable {
           widget = buildTablet(context);
         } else if (isMobile) {
           widget = buildMobile(context);
+        } else if (isWatch) {
+          widget = buildWatch(context);
         }
+
         widget ??= const Center(
             child: Text(
           'Screen size not suitable !',
@@ -71,29 +78,19 @@ mixin BaseResponsiveMixin on Diagnosticable {
   Widget? buildTablet(BuildContext context) => null;
 
   Widget? buildMobile(BuildContext context) => null;
+
+  Widget? buildWatch(BuildContext context) => null;
 }
 
 class ResponsiveScreenSettings {
-  /// When the width is greater als this value
-  /// the display will be set as [ScreenType.Desktop]
   final double desktopChangePoint;
-
-  /// When the width is greater als this value
-  /// the display will be set as [ScreenType.Tablet]
-  /// or when width greater als [watchChangePoint] and smaller als this value
-  /// the display will be [ScreenType.Phone]
   final double tabletChangePoint;
-
-  /// When the width is smaller als this value
-  /// the display will be set as [ScreenType.Watch]
-  /// or when width greater als this value and smaller als [tabletChangePoint]
-  /// the display will be [ScreenType.Phone]
-  final double watchChangePoint;
+  final double mobileChangePoint;
 
   const ResponsiveScreenSettings({
-    this.desktopChangePoint = 1000,
-    this.tabletChangePoint = 700,
-    this.watchChangePoint = 400,
+    this.desktopChangePoint = 900,
+    this.tabletChangePoint = 600,
+    this.mobileChangePoint = 300,
   });
 }
 
