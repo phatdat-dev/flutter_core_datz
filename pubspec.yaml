@@ -4,8 +4,8 @@ version: 0.0.7
 homepage:
 
 environment:
-  sdk: 3.5.3
-  flutter: 3.24.3
+  sdk: 3.5.4
+  flutter: 3.24.4
 
 dependencies:
   flutter:
@@ -14,7 +14,7 @@ dependencies:
   dio: any
   logger: any
   # routing
-  go_router: any
+  go_router: ^13.2.5 # 14.4.1 nó đang lỗi popUntil
   # Language
   easy_localization: any
   # support dart core
