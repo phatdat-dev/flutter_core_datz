@@ -101,31 +101,6 @@ final class Helper {
     return prettyString;
   }
 
-  static String toMessageError(dynamic errorMessage) {
-    String message = '';
-    if (errorMessage is Map) {
-      if (errorMessage.containsKey('error') || errorMessage.containsKey('message')) {
-        if (errorMessage['error'] is Map) {
-          //cho nay` bat' loi~ OpenAI
-          message = errorMessage['error']['message'];
-        } else {
-          message = (errorMessage['message'] ?? errorMessage['error']).toString();
-        }
-      } else {
-        errorMessage.forEach((key, value) {
-          if (value is List) {
-            message += '${value.join('\n')}\n';
-          } else {
-            message += value.toString();
-          }
-        });
-      }
-    } else {
-      message = errorMessage.toString();
-    }
-    return message;
-  }
-
   // weekNumber
   static int getWeekNumber(DateTime date) {
     final startOfYear = DateTime(date.year, 1, 1);

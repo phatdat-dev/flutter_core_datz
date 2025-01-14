@@ -26,11 +26,9 @@ class MyAppConfigs extends BaseConfigs {
       );
 }
 
-void main() {
-  runMain(
-    configs: MyAppConfigs(),
-  );
-}
+void main() => runMain(
+      configs: MyAppConfigs(),
+    );
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

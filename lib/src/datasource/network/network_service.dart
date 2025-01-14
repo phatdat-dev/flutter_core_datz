@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
-import '../../utils/helper.dart';
-import '../../utils/helper_widget.dart';
-import '../../utils/utils.dart';
+import '../../../flutter_core_datz.dart';
 
 abstract interface class NetworkService {
   String get baseUrl;
@@ -15,20 +14,23 @@ abstract interface class NetworkService {
 }
 
 mixin NetworkExceptionHandleMixin on NetworkService {
+  @protected
+  void defaultLog(Response? response) {
+    if (response == null) return;
+    String message = '[${response.statusCode}]:\n${response.statusMessage}';
+    HelperWidget.showToastError(message);
+    Printt.red(message);
+  }
+
   Future<void> handleErrorStatus(Response? response) async {
     if (response == null) return;
-    void defaultLog() {
-      String message = 'CODE (${response.statusCode}):\n${response.statusMessage}';
-      HelperWidget.showToastError(message);
-      Printt.red(message);
-    }
 
     switch (response.statusCode) {
       // case 400 || 500:
       case 500:
-        final message = Helper.toMessageError(response.data!);
+        final message = AppException.toMessageError(response.data!);
 
-        HelperWidget.showToastError('CODE (${response.statusCode}):\n$message');
+        HelperWidget.showToastError('[${response.statusCode}]:\n$message');
         break;
 
       case 400 || 404:
@@ -36,18 +38,16 @@ mixin NetworkExceptionHandleMixin on NetworkService {
         break;
 
       case 401:
-        //401: Print token expired
-        defaultLog();
-        await onUnauthorized();
+        await onUnauthorized(response);
         break;
 
       default:
-        defaultLog();
+        defaultLog(response);
         break;
     }
   }
 
-  Future<void> onUnauthorized() async {
+  Future<void> onUnauthorized(Response? response) async {
     //Remove token
     // Global.StorageServiceerences.remove(StorageConstants.userAccount);
     // AuthenticationController.userAccount = null;

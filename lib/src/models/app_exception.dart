@@ -82,6 +82,31 @@ class AppException implements Exception, BaseModel<AppException> {
   @override
   String toString() => jsonEncode(toJson());
 
+  static String toMessageError(dynamic errorMessage) {
+    String message = '';
+    if (errorMessage is Map) {
+      if (errorMessage.containsKey('error') || errorMessage.containsKey('message')) {
+        if (errorMessage['error'] is Map) {
+          //cho nay` bat' loi~ OpenAI
+          message = errorMessage['error']['message'];
+        } else {
+          message = (errorMessage['message'] ?? errorMessage['error']).toString();
+        }
+      } else {
+        errorMessage.forEach((key, value) {
+          if (value is List) {
+            message += '${value.join('\n')}\n';
+          } else {
+            message += value.toString();
+          }
+        });
+      }
+    } else {
+      message = errorMessage.toString();
+    }
+    return message;
+  }
+
   Future<Either<AppException, T>> handleExceptionAsync<T>(Future<T> Function() handler, {bool showToastError = true}) async {
     final stopWatch = Stopwatch();
     stopWatch.start();
@@ -114,7 +139,7 @@ class AppException implements Exception, BaseModel<AppException> {
       message = ex.message;
       statusCode = 2;
     } else if (ex is DioException) {
-      message = Helper.toMessageError(ex.response?.data);
+      message = toMessageError(ex.response?.data);
       if (message == "null") message = ex.toString();
       statusCode = ex.response?.statusCode ?? 3;
       urlApi = ex.response?.requestOptions.uri.toString();
@@ -123,11 +148,6 @@ class AppException implements Exception, BaseModel<AppException> {
       message = ex.toString();
       statusCode = -1;
       urlApi = AppGlobals.lastCallUrlApi;
-      if (showToastError) {
-        Future.delayed(const Duration(seconds: 1), () {
-          HelperWidget.showToastError("Có lỗi xảy ra, nhấn để xem >>");
-        });
-      }
     }
     identifier = (identifier ?? "") + ex.runtimeType.toString();
     stopWatch.stop();
@@ -138,7 +158,7 @@ class AppException implements Exception, BaseModel<AppException> {
     Printt.red(Helper.formatJsonString(toString()));
   }
 
-  Either<AppException, T> handleException<T>(T Function() handler) {
+  Either<AppException, T> handleException<T>(T Function() handler, {bool showToastError = true}) {
     final stopWatch = Stopwatch();
     stopWatch.start();
     try {
@@ -150,18 +170,22 @@ class AppException implements Exception, BaseModel<AppException> {
     } catch (ex) {
       // khi có lỗi tạo ra thì lưu lại
       GetIt.instance<AppExceptionController>().state.insert(0, this);
-      onException(ex, stopWatch);
+      onException(ex, stopWatch, showToastError);
       return Left(this);
     }
   }
 
-  void onException(final Object ex, final Stopwatch stopWatch) {
+  void onException(final Object ex, final Stopwatch stopWatch, bool showToastError) {
     message = ex.toString();
     statusCode = -1;
     urlApi = AppGlobals.lastCallUrlApi;
+    //
     identifier = (identifier ?? "") + ex.runtimeType.toString();
     stopWatch.stop();
     timeProcess = stopWatch.elapsed.inMilliseconds;
+    //
+    if (showToastError) HelperWidget.showToastError('[$statusCode]:\n$message');
+    //
     Printt.red(Helper.formatJsonString(toString()));
   }
 }

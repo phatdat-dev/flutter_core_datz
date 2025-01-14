@@ -5,28 +5,26 @@ import '../app/base_configs.dart';
 
 // Loadding.show(); Loadding.dismiss();
 class Loadding {
-  static GlobalKey<LoaddingWidgetState> _key = GlobalKey<LoaddingWidgetState>();
-
-  static final List<bool> _stacKLoadding = [];
+  static OverlayEntry? _overlayEntry;
 
   static void show() async {
-    _stacKLoadding.add(true);
-    if (_key.currentContext == null && _stacKLoadding.length == 1) {
-      await showDialog(
-        context: AppGlobals.context, // rootNavigatorKey MaterialApp
-        barrierDismissible: true,
-        builder: (context) => LoaddingWidget(key: _key),
-      );
-      _stacKLoadding.clear();
-    }
+    if (_overlayEntry != null) return;
+    _overlayEntry = OverlayEntry(
+      builder: (context) => GestureDetector(
+        onTap: () => dismiss(),
+        child: Container(
+          color: DialogTheme.of(context).barrierColor ?? Theme.of(context).dialogTheme.barrierColor ?? Colors.black54,
+          child: const LoaddingWidget(),
+        ),
+      ),
+    );
+    Overlay.of(AppGlobals.context).insert(_overlayEntry!);
   }
 
   static void dismiss() {
-    if (_stacKLoadding.isNotEmpty) _stacKLoadding.removeLast();
-    if (_stacKLoadding.isEmpty && _key.currentContext != null) {
-      Navigator.of(_key.currentContext!, rootNavigator: true).pop();
-      _key = GlobalKey<LoaddingWidgetState>();
-    }
+    if (_overlayEntry == null) return;
+    _overlayEntry!.remove();
+    _overlayEntry = null;
   }
 }
 
