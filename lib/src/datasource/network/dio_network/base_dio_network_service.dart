@@ -18,12 +18,11 @@ abstract class BaseDioNetworkService implements NetworkService, NetworkException
 
   @override
   Map<String, Object> get headers => {
-        'Accept': 'application/json, text/plain, */*',
-        'Charset': 'utf-8',
-        'Access-Control-Allow-Origin': '*',
-        // 'Access-Control-Allow-Methods': 'GET,PUT,PATCH,POST,DELETE',
-        // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-        'Content-Type': 'application/json;charset=UTF-8',
+        "Accept": "application/json, text/plain, */*",
+        "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Methods": "GET,PUT,PATCH,POST,DELETE",
+        // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+        "Content-Type": "application/json;charset=UTF-8", // HttpHeaders.contentTypeHeader
       };
   @override
   int get timeOutSecond => 60;
@@ -52,7 +51,7 @@ abstract class BaseDioNetworkService implements NetworkService, NetworkException
 
           // Gắn access_token vào header, gửi kèm access_token trong header mỗi khi call API
           if (apiKey.isNotEmpty) {
-            options.headers['Authorization'] = apiKey;
+            options.headers["Authorization"] = apiKey;
           }
           // Update static lần cuối gọi API là gì...
           AppGlobals.lastCallUrlApi = options.path;

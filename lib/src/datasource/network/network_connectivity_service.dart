@@ -10,6 +10,16 @@ import '../../app/app_globals.dart';
 import '../../utils/utils.dart';
 
 class NetworkConnectivityService {
+  final bool showSnackBarConnect;
+  final bool showDialogDisconnect;
+
+  NetworkConnectivityService({
+    this.showSnackBarConnect = true,
+    this.showDialogDisconnect = true,
+  });
+
+  //
+
   final _networkConnectivity = Connectivity();
   final _debouncer = Debouncer(delay: const Duration(seconds: 3));
   GlobalKey _keyPopup = GlobalKey();
@@ -59,6 +69,7 @@ class NetworkConnectivityService {
   }
 
   void _showDialogDisconnect() {
+    if (!showDialogDisconnect) return;
     showCupertinoDialog(
       context: AppGlobals.context,
       builder: (context) => CupertinoAlertDialog(
@@ -80,6 +91,7 @@ class NetworkConnectivityService {
   }
 
   void _showSnackBarMessage(String message) {
+    if (!showSnackBarConnect) return;
     ScaffoldMessenger.of(AppGlobals.context).showSnackBar(
       SnackBar(
         content: Text(message),

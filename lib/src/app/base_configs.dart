@@ -15,6 +15,7 @@ abstract class BaseConfigs {
   TranslationController get translationController => TranslationController();
   ResponsiveScreenSettings get responsiveScreenSettings => const ResponsiveScreenSettings();
   StorageService get storageService => StorageService();
+  NetworkConnectivityService get networkConnectivityService => NetworkConnectivityService();
 }
 
 class AssetsPath {

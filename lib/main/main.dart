@@ -65,7 +65,7 @@ void errorWidget() {
 Future<void> _initSingletons() async {
   // Services
   GetIt.instance.registerLazySingleton<StorageService>(() => baseConfigs.storageService);
-  GetIt.instance.registerLazySingleton<NetworkConnectivityService>(() => NetworkConnectivityService());
+  GetIt.instance.registerLazySingleton<NetworkConnectivityService>(() => baseConfigs.networkConnectivityService);
   // Controllers
   GetIt.instance.registerLazySingleton<TranslationController>(() => baseConfigs.translationController);
   GetIt.instance.registerLazySingleton<ThemeController>(() => ThemeController());

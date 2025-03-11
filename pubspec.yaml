@@ -1,11 +1,11 @@
 name: flutter_core_datz
 description: "A new Flutter package project."
-version: 1.0.0+1
+version: 1.0.0+2
 homepage:
 
 environment:
-  sdk: 3.6.1
-  flutter: 3.27.3
+  sdk: 3.7.0
+  flutter: 3.29.1
 
 dependencies:
   flutter:
