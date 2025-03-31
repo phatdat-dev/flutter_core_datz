@@ -1,3 +1,5 @@
+// ignore_for_file: unintended_html_in_doc_comment
+
 typedef Condition = bool Function();
 
 extension ListExtension<E> on List<E> {

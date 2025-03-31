@@ -19,7 +19,7 @@ final class HelperWidget {
       description: Text(message),
       showProgressBar: true,
       autoCloseDuration: const Duration(seconds: 5),
-      closeButtonShowType: CloseButtonShowType.onHover,
+      closeButton: const ToastCloseButton(showType: CloseButtonShowType.onHover),
       callbacks: ToastificationCallbacks(
         onTap: (toast) {
           const AppExceptionRoute().push(context);
@@ -55,39 +55,17 @@ final class HelperWidget {
     return (imagePath.isURL) ? CachedNetworkImageProvider(imagePath) : AssetImage(imagePath) as ImageProvider;
   }
 
-  static Widget imageWidget(
-    String imagePath, {
-    double? width,
-    double? height,
-    BoxFit? fit,
-    Color? color,
-  }) {
+  static Widget imageWidget(String imagePath, {double? width, double? height, BoxFit? fit, Color? color}) {
     if (imagePath.isImageFileName) {
       if (imagePath.isURL || imagePath.contains('http')) {
-        return MyCachedNetworkImage(
-          imageUrl: imagePath,
-          width: width,
-          height: height,
-          fit: fit,
-        );
+        return MyCachedNetworkImage(imageUrl: imagePath, width: width, height: height, fit: fit);
       } else if (imagePath.contains('assets')) {
-        return Image.asset(
-          imagePath,
-          width: width,
-          height: height,
-          fit: fit,
-        );
+        return Image.asset(imagePath, width: width, height: height, fit: fit);
       }
     }
 
     if (imagePath.isVectorFileName) {
-      return SvgPicture.asset(
-        imagePath,
-        width: width,
-        height: height,
-        fit: fit ?? BoxFit.contain,
-        colorFilter: color?.toColorFilter(),
-      );
+      return SvgPicture.asset(imagePath, width: width, height: height, fit: fit ?? BoxFit.contain, colorFilter: color?.toColorFilter());
     }
     return const SizedBox.shrink();
   }
@@ -113,23 +91,20 @@ final class HelperWidget {
     return await showDialog<T>(
       context: context ?? AppGlobals.context,
       barrierDismissible: barrierDismissible,
-      builder: (context) => AlertDialog(
-        scrollable: true,
-        backgroundColor: backgroundColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        insetPadding: insetPadding ?? defaultInsetPadding,
-        iconPadding: iconPadding,
-        titlePadding: titlePadding,
-        buttonPadding: buttonPadding,
-        actionsPadding: actionsPadding,
-        contentPadding: contentPadding,
-        content: SizedBox(
-          width: defaultSize ? context.width * 0.5 : width,
-          height: defaultSize ? context.height * 0.3 : height,
-          child: child,
-        ),
-        actions: actions,
-      ),
+      builder:
+          (context) => AlertDialog(
+            scrollable: true,
+            backgroundColor: backgroundColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            insetPadding: insetPadding ?? defaultInsetPadding,
+            iconPadding: iconPadding,
+            titlePadding: titlePadding,
+            buttonPadding: buttonPadding,
+            actionsPadding: actionsPadding,
+            contentPadding: contentPadding,
+            content: SizedBox(width: defaultSize ? context.width * 0.5 : width, height: defaultSize ? context.height * 0.3 : height, child: child),
+            actions: actions,
+          ),
     );
   }
 
@@ -144,60 +119,60 @@ final class HelperWidget {
     final ValueNotifier<List<T>> search = ValueNotifier(data.toList());
     final txtController = TextEditingController();
     return await showDialog<T>(
-        // showGeneralDialog
-        context: context ?? AppGlobals.context,
-        builder: (context) {
-          final size = context.mediaQuerySize;
-          return AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: borderRadius ?? const BorderRadius.all(Radius.circular(10))),
-            titlePadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            scrollable: true,
-            title: Container(
-              height: 40,
-              margin: const EdgeInsets.all(10),
-              child: TextField(
-                controller: txtController,
-                onChanged: (value) => HelperReflect.search(listOrigin: data, listSearch: search, nameModel: 'queryName', keywordSearch: value),
-                decoration: InputDecoration(
-                  hintText: hintText,
-                  prefixIcon: const Icon(Icons.search_rounded),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                  border: const OutlineInputBorder(),
-                ),
+      // showGeneralDialog
+      context: context ?? AppGlobals.context,
+      builder: (context) {
+        final size = context.mediaQuerySize;
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: borderRadius ?? const BorderRadius.all(Radius.circular(10))),
+          titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          scrollable: true,
+          title: Container(
+            height: 40,
+            margin: const EdgeInsets.all(10),
+            child: TextField(
+              controller: txtController,
+              onChanged: (value) => HelperReflect.search(listOrigin: data, listSearch: search, nameModel: 'queryName', keywordSearch: value),
+              decoration: InputDecoration(
+                hintText: hintText,
+                prefixIcon: const Icon(Icons.search_rounded),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                border: const OutlineInputBorder(),
               ),
             ),
-            content: SizedBox(
-              width: size.width,
-              height: size.height / 2,
-              child: ValueListenableBuilder(
-                valueListenable: search,
-                builder: (context, searchValue, child) => ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: searchValue.length,
-                  itemBuilder: (context, index) {
-                    final isSelected = currentSelected == searchValue[index];
-                    String queryName = searchValue[index].queryName;
-                    queryName = queryNameItemBuilder?.call(index, queryName) ?? queryName;
-                    return ListTile(
-                      title: txtController.text.isEmpty
-                          ? Text(
-                              queryName,
-                              style: isSelected ? const TextStyle(fontWeight: FontWeight.bold) : null,
-                            )
-                          : RichText(
-                              text: TextSpan(
-                                children: highlightOccurrences(queryName, txtController.text),
-                                style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-                              ),
-                            ),
-                      onTap: () => Navigator.of(context).pop(searchValue[index]),
-                    );
-                  },
-                ),
-              ),
+          ),
+          content: SizedBox(
+            width: size.width,
+            height: size.height / 2,
+            child: ValueListenableBuilder(
+              valueListenable: search,
+              builder:
+                  (context, searchValue, child) => ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: searchValue.length,
+                    itemBuilder: (context, index) {
+                      final isSelected = currentSelected == searchValue[index];
+                      String queryName = searchValue[index].queryName;
+                      queryName = queryNameItemBuilder?.call(index, queryName) ?? queryName;
+                      return ListTile(
+                        title:
+                            txtController.text.isEmpty
+                                ? Text(queryName, style: isSelected ? const TextStyle(fontWeight: FontWeight.bold) : null)
+                                : RichText(
+                                  text: TextSpan(
+                                    children: highlightOccurrences(queryName, txtController.text),
+                                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                                  ),
+                                ),
+                        onTap: () => Navigator.of(context).pop(searchValue[index]),
+                      );
+                    },
+                  ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

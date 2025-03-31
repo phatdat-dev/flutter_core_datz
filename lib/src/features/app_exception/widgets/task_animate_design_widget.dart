@@ -60,31 +60,19 @@ class _TaskAnimateDesignWidgetState extends State<TaskAnimateDesignWidget> with 
               child: Card(
                 color: widget.backgroundColor,
                 elevation: 5.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                  side: BorderSide(color: widget.statusColor),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0), side: BorderSide(color: widget.statusColor)),
                 child: InkWell(
                   // onTap: () {}, //! tạm bỏ cái này
                   borderRadius: BorderRadius.circular(25),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 25.0, top: 10.0, right: 10.0, bottom: 10.0),
-                    child: IntrinsicHeight(
-                      child: Column(
-                        children: buildDataInfo(),
-                      ),
-                    ),
+                    child: IntrinsicHeight(child: Column(children: buildDataInfo())),
                   ),
                 ),
               ),
             ),
           ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: _CircleAnimateAvatarWidget(imageAvatar: widget.imageAvatar),
-            ),
-          ),
+          Positioned.fill(child: Align(alignment: Alignment.centerLeft, child: _CircleAnimateAvatarWidget(imageAvatar: widget.imageAvatar))),
         ],
       ),
     );
@@ -99,14 +87,8 @@ class _TaskAnimateDesignWidgetState extends State<TaskAnimateDesignWidget> with 
     return [
       if (widget.title != null || widget.statusTitle != null)
         rowText(
-          title: Text(
-            widget.title ?? '',
-            style: TextStyle(color: context.theme.colorScheme.primary, fontWeight: FontWeight.bold),
-          ),
-          trailing: BorderContainerWidget(
-            color: widget.statusColor,
-            title: widget.statusTitle ?? "",
-          ),
+          title: Text(widget.title ?? '', style: TextStyle(color: context.theme.colorScheme.primary, fontWeight: FontWeight.bold)),
+          trailing: BorderContainerWidget(color: widget.statusColor, title: widget.statusTitle ?? ""),
         ),
       //! sau này sẽ xóa đoạn này
       ...buildFieldFromField(newField),
@@ -154,10 +136,7 @@ class _TaskAnimateDesignWidgetState extends State<TaskAnimateDesignWidget> with 
       }
 
       return rowText(
-        title: Text(
-          e3.value.toString(),
-          style: TextStyle(color: context.theme.colorScheme.inverseSurface),
-        ),
+        title: Text(e3.value.toString(), style: TextStyle(color: context.theme.colorScheme.inverseSurface)),
         //right Value
         trailing: Text(
           e.value.toString(),
@@ -202,12 +181,8 @@ class _TaskAnimateDesignWidgetState extends State<TaskAnimateDesignWidget> with 
     }).toList();
   }
 
-  Widget rowText({required Widget title, required Widget trailing}) => Row(
-        children: [
-          Expanded(flex: 5, child: title),
-          Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: trailing)),
-        ],
-      );
+  Widget rowText({required Widget title, required Widget trailing}) =>
+      Row(children: [Expanded(flex: 5, child: title), Expanded(flex: 3, child: Align(alignment: Alignment.centerRight, child: trailing))]);
 }
 
 class Clipper extends CustomClipper<Path> {
@@ -220,11 +195,7 @@ class Clipper extends CustomClipper<Path> {
     var radius = 28.0;
 
     path.lineTo(0.0, size.height / 2 + radius);
-    path.arcToPoint(
-      Offset(0.0, size.height / 2 - radius),
-      radius: Radius.circular(radius),
-      clockwise: false,
-    );
+    path.arcToPoint(Offset(0.0, size.height / 2 - radius), radius: Radius.circular(radius), clockwise: false);
 
     path.close();
     return path;
@@ -236,10 +207,7 @@ class Clipper extends CustomClipper<Path> {
 
 class _CircleAnimateAvatarWidget extends StatefulWidget {
   final String? imageAvatar;
-  const _CircleAnimateAvatarWidget({
-    super.key,
-    this.imageAvatar,
-  });
+  const _CircleAnimateAvatarWidget({this.imageAvatar});
 
   @override
   _CircleAnimateAvatarWidgetState createState() {
@@ -273,16 +241,10 @@ class _CircleAnimateAvatarWidgetState extends State<_CircleAnimateAvatarWidget> 
           color: Colors.white,
           elevation: 10.0,
           child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(width: 1.0, color: Colors.green),
-            ),
+            decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 1.0, color: Colors.green)),
             height: 50.0,
             width: 50.0,
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: HelperWidget.imageProviderFrom(widget.imageAvatar ?? ""),
-            ),
+            child: CircleAvatar(backgroundColor: Colors.white, backgroundImage: HelperWidget.imageProviderFrom(widget.imageAvatar ?? "")),
           ),
         ),
       ),

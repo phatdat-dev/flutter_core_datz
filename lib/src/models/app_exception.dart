@@ -23,7 +23,6 @@ class AppException implements Exception, BaseModel<AppException> {
 
   /// identifier is used to identify the exception
   String? identifier;
-
   String? infoDevice;
 
   /// route of app
@@ -50,142 +49,101 @@ class AppException implements Exception, BaseModel<AppException> {
   }
 
   factory AppException.fromJson(Map<String, dynamic> json) => AppException(
-        time: DateTime.tryParse(json['time']),
-        timeProcess: json['timeProcess'],
-        userName: json['userName'],
-        message: json['message'],
-        statusCode: json['statusCode'],
-        identifier: json['identifier'],
-        infoDevice: json['infoDevice'],
-        urlApi: json['urlApi'],
-        route: json['route'],
-      );
+    time: DateTime.tryParse(json['time'] ?? ''),
+    timeProcess: json['timeProcess'],
+    userName: json['userName'],
+    message: json['message'] ?? '',
+    statusCode: json['statusCode'],
+    identifier: json['identifier'],
+    infoDevice: json['infoDevice'],
+    urlApi: json['urlApi'],
+    route: json['route'],
+  );
 
   @override
   AppException fromJson(Map<String, dynamic> json) => AppException.fromJson(json);
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'time': time?.toIso8601String(),
-      'timeProcess': timeProcess,
-      'userName': userName,
-      'message': message,
-      'statusCode': statusCode,
-      'identifier': identifier,
-      'infoDevice': infoDevice,
-      'urlApi': urlApi,
-      'route': route,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    'time': time?.toIso8601String(),
+    'timeProcess': timeProcess,
+    'userName': userName,
+    'message': message,
+    'statusCode': statusCode,
+    'identifier': identifier,
+    'infoDevice': infoDevice,
+    'urlApi': urlApi,
+    'route': route,
+  };
 
   @override
   String toString() => jsonEncode(toJson());
 
   static String toMessageError(dynamic errorMessage) {
-    String message = '';
     if (errorMessage is Map) {
       if (errorMessage.containsKey('error') || errorMessage.containsKey('message')) {
-        if (errorMessage['error'] is Map) {
-          //cho nay` bat' loi~ OpenAI
-          message = errorMessage['error']['message'];
-        } else {
-          message = (errorMessage['message'] ?? errorMessage['error']).toString();
-        }
-      } else {
-        errorMessage.forEach((key, value) {
-          if (value is List) {
-            message += '${value.join('\n')}\n';
-          } else {
-            message += value.toString();
-          }
-        });
+        final error = errorMessage['error'];
+        return error is Map ? error['message'] ?? '' : (errorMessage['message'] ?? error).toString();
       }
-    } else {
-      message = errorMessage.toString();
+      return errorMessage.entries.map((e) => e.value is List ? e.value.join('\n') : e.value.toString()).join('\n');
     }
-    return message;
+    return errorMessage.toString();
   }
 
   Future<Either<AppException, T>> handleExceptionAsync<T>(Future<T> Function() handler, {bool showToastError = true}) async {
-    final stopWatch = Stopwatch();
-    stopWatch.start();
+    final stopWatch = Stopwatch()..start();
     try {
       final val = await handler();
-
-      // if (val == null) {
-      //   message = 'Data is null';
-      //   statusCode = 0;
-      //   return Left(this);
-      // }
-      //
-      stopWatch.stop();
-      timeProcess = stopWatch.elapsed.inMilliseconds;
+      timeProcess = stopWatch.elapsedMilliseconds;
       return Right(val);
     } catch (ex) {
-      // khi có lỗi tạo ra thì lưu lại
-      GetIt.instance<AppExceptionController>().state.insert(0, this);
-      onExceptionAsync(ex, stopWatch, showToastError);
-
-      return Left(this);
+      return onException(ex, stopWatch, showToastError);
     }
-  }
-
-  void onExceptionAsync(final Object ex, final Stopwatch stopWatch, bool showToastError) {
-    if (ex is TimeoutException) {
-      message = ex.message.toString();
-      statusCode = 1;
-    } else if (ex is SocketException) {
-      message = ex.message;
-      statusCode = 2;
-    } else if (ex is DioException) {
-      message = toMessageError(ex.response?.data);
-      if (message == "null") message = ex.toString();
-      statusCode = ex.response?.statusCode ?? 3;
-      urlApi = ex.response?.requestOptions.uri.toString();
-      //LINK - lib/shared/network/network_exception_handle_mixin.dart:20
-    } else {
-      message = ex.toString();
-      statusCode = -1;
-      urlApi = AppGlobals.lastCallUrlApi;
-    }
-    identifier = (identifier ?? "") + ex.runtimeType.toString();
-    stopWatch.stop();
-    timeProcess = stopWatch.elapsed.inMilliseconds;
-    //
-    if (showToastError) HelperWidget.showToastError('[$statusCode]:\n$message');
-    //
-    Printt.red(Helper.formatJsonString(toString()));
   }
 
   Either<AppException, T> handleException<T>(T Function() handler, {bool showToastError = true}) {
-    final stopWatch = Stopwatch();
-    stopWatch.start();
+    final stopWatch = Stopwatch()..start();
     try {
       final val = handler();
-
-      stopWatch.stop();
-      timeProcess = stopWatch.elapsed.inMilliseconds;
+      timeProcess = stopWatch.elapsedMilliseconds;
       return Right(val);
     } catch (ex) {
-      // khi có lỗi tạo ra thì lưu lại
-      GetIt.instance<AppExceptionController>().state.insert(0, this);
-      onException(ex, stopWatch, showToastError);
-      return Left(this);
+      return onException(ex, stopWatch, showToastError);
     }
   }
 
-  void onException(final Object ex, final Stopwatch stopWatch, bool showToastError) {
-    message = ex.toString();
+  Either<AppException, T> onException<T>(Object ex, Stopwatch stopWatch, bool showToastError) {
+    stopWatch.stop();
+    timeProcess = stopWatch.elapsedMilliseconds;
+    message = onExtractMessageFromException(ex);
+    identifier = (identifier ?? "") + ex.runtimeType.toString();
+
+    if (showToastError && GetIt.instance<NetworkConnectivityService>().isOnline) {
+      HelperWidget.showToastError('[$statusCode]:\n$message');
+    }
+
+    Printt.red(Helper.formatJsonString(toString()));
+    GetIt.instance<AppExceptionController>().state.insert(0, this);
+
+    return Left(this);
+  }
+
+  String onExtractMessageFromException(Object ex) {
+    if (ex is TimeoutException) {
+      statusCode = 1;
+      return ex.message ?? 'Timeout error';
+    } else if (ex is SocketException) {
+      statusCode = 2;
+      return ex.message;
+    } else if (ex is DioException) {
+      statusCode = ex.response?.statusCode ?? 3;
+      urlApi = ex.response?.requestOptions.uri.toString();
+      var message = toMessageError(ex.response?.data);
+      if (message == "null") message = ex.toString();
+      return message;
+    }
     statusCode = -1;
     urlApi = AppGlobals.lastCallUrlApi;
-    //
-    identifier = (identifier ?? "") + ex.runtimeType.toString();
-    stopWatch.stop();
-    timeProcess = stopWatch.elapsed.inMilliseconds;
-    //
-    if (showToastError) HelperWidget.showToastError('[$statusCode]:\n$message');
-    //
-    Printt.red(Helper.formatJsonString(toString()));
+    return ex.toString();
   }
 }

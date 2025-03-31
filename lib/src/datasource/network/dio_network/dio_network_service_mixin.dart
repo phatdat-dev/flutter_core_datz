@@ -1,3 +1,5 @@
+// ignore_for_file: unintended_html_in_doc_comment
+
 part of 'base_dio_network_service.dart';
 
 enum RequestMethod { GET, POST, PUT, DELETE }
@@ -7,6 +9,7 @@ mixin DioNetworkServiceMixin on BaseDioNetworkService {
   Future<dynamic> onRequest<T extends BaseModel>(
     String url,
     RequestMethod method, {
+
     /// body: dữ liệu gửi lên server, thường dùng cho != GET
     /// [Map<String, dynamic>] || List<Map<String, dynamic>] || [BaseModel] || [List<BaseModel>] || ...
     dynamic body,
@@ -34,21 +37,21 @@ mixin DioNetworkServiceMixin on BaseDioNetworkService {
 
       final res = await dio
           .request(
-        url,
-        data: body,
-        options: Options(
-          method: method.name,
-          // contentType: Headers.jsonContentType,
-          // responseType: ResponseType.json,
-        ),
-        queryParameters: queryParam?.map((key, value) => MapEntry(key, value.toString())),
-      )
+            url,
+            data: body,
+            options: Options(
+              method: method.name,
+              // contentType: Headers.jsonContentType,
+              // responseType: ResponseType.json,
+            ),
+            queryParameters: queryParam?.map((key, value) => MapEntry(key, value.toString())),
+          )
           .then((value) {
-        //decoder
-        if (baseModel == null) return value.data; //return Response<dynamic>
-        if (value.data is List) return (value.data as List).map((e) => baseModel.fromJson(e)).toList();
-        return baseModel.fromJson(value.data);
-      });
+            //decoder
+            if (baseModel == null) return value.data; //return Response<dynamic>
+            if (value.data is List) return (value.data as List).map((e) => baseModel.fromJson(e)).toList();
+            return baseModel.fromJson(value.data);
+          });
       return res;
     }
   }

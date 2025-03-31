@@ -10,7 +10,7 @@ mixin class ColorConstants {
   static Color? disableFillColor(BuildContext context) {
     final fillColor = Theme.of(context).inputDecorationTheme.fillColor;
     if (fillColor == null) return null;
-    return ColorConstants.getMaterialColor(fillColor).shade600.withOpacity(0.4);
+    return ColorConstants.getMaterialColor(fillColor).shade600.withValues(alpha: 0.4);
   }
 
   //
@@ -18,29 +18,24 @@ mixin class ColorConstants {
   static Color hexToColor(String hex) {
     assert(hex.isHexColor, 'hex color must be #rrggbb or #rrggbbaa');
 
-    return Color(
-      int.parse(hex.substring(1), radix: 16) + (hex.length == 7 ? 0xff000000 : 0x00000000),
-    );
+    return Color(int.parse(hex.substring(1), radix: 16) + (hex.length == 7 ? 0xff000000 : 0x00000000));
   }
 
   //
 
   static MaterialColor getMaterialColor(Color color) {
-    return MaterialColor(
-      color.value,
-      <int, Color>{
-        50: tintColor(color, 0.9),
-        100: tintColor(color, 0.8),
-        200: tintColor(color, 0.6),
-        300: tintColor(color, 0.4),
-        400: tintColor(color, 0.2),
-        500: color,
-        600: shadeColor(color, 0.1),
-        700: shadeColor(color, 0.2),
-        800: shadeColor(color, 0.3),
-        900: shadeColor(color, 0.4),
-      },
-    );
+    return MaterialColor(color.toARGB32(), <int, Color>{
+      50: tintColor(color, 0.9),
+      100: tintColor(color, 0.8),
+      200: tintColor(color, 0.6),
+      300: tintColor(color, 0.4),
+      400: tintColor(color, 0.2),
+      500: color,
+      600: shadeColor(color, 0.1),
+      700: shadeColor(color, 0.2),
+      800: shadeColor(color, 0.3),
+      900: shadeColor(color, 0.4),
+    });
   }
 
   static Color tintColor(Color color, double factor) {
@@ -53,11 +48,6 @@ mixin class ColorConstants {
   }
 
   static Color shadeColor(Color color, double factor) {
-    return Color.fromRGBO(
-      (color.red * (1 - factor)).round(),
-      (color.green * (1 - factor)).round(),
-      (color.blue * (1 - factor)).round(),
-      1,
-    );
+    return Color.fromRGBO((color.red * (1 - factor)).round(), (color.green * (1 - factor)).round(), (color.blue * (1 - factor)).round(), 1);
   }
 }

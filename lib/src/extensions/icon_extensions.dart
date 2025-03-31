@@ -53,7 +53,7 @@ extension IconExtension on Icon {
       if (weight != null) 'weight': weight,
       if (grade != null) 'grade': grade,
       if (opticalSize != null) 'opticalSize': opticalSize,
-      if (color != null) 'color': color?.value,
+      if (color != null) 'color': color?.toARGB32(),
       // "shadows": shadows?.map((e) => e.toJson()).toList(),
       if (semanticLabel != null) 'semanticLabel': semanticLabel,
     };
@@ -72,11 +72,6 @@ extension IconDataExtension on IconData {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'codePoint': codePoint,
-      'fontFamily': fontFamily,
-      'fontPackage': fontPackage,
-      'matchTextDirection': matchTextDirection,
-    };
+    return {'codePoint': codePoint, 'fontFamily': fontFamily, 'fontPackage': fontPackage, 'matchTextDirection': matchTextDirection};
   }
 }

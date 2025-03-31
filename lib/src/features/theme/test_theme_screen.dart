@@ -38,40 +38,24 @@ class _TestThemeScreenState extends State<TestThemeScreen> with SingleTickerProv
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Theme'),
-          bottom: TabBar(
-            controller: tabbarController,
-            tabs: const [
-              Tab(text: 'Light'),
-              Tab(text: 'Dark'),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          controller: tabbarController,
-          children: [
-            Theme(data: ThemeData.light(), child: _buildThemeColor(context)),
-            Theme(data: ThemeData.dark(), child: _buildThemeColor(context)),
-          ],
-        ));
+      appBar: AppBar(title: const Text('Theme'), bottom: TabBar(controller: tabbarController, tabs: const [Tab(text: 'Light'), Tab(text: 'Dark')])),
+      body: TabBarView(
+        controller: tabbarController,
+        children: [Theme(data: ThemeData.light(), child: _buildThemeColor(context)), Theme(data: ThemeData.dark(), child: _buildThemeColor(context))],
+      ),
+    );
   }
 
   ListView _buildThemeColor(BuildContext context) {
     return ListView(
       children: [
         GridView(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: [
             buildColorTheme(Theme.of(context).canvasColor, 'canvasColor'),
             buildColorTheme(Theme.of(context).cardColor, 'cardColor'),
-            buildColorTheme(Theme.of(context).dialogBackgroundColor, 'dialogBackgroundColor'),
             buildColorTheme(Theme.of(context).disabledColor, 'disabledColor'),
             buildColorTheme(Theme.of(context).dividerColor, 'dividerColor'),
             buildColorTheme(Theme.of(context).focusColor, 'focusColor'),
@@ -92,11 +76,7 @@ class _TestThemeScreenState extends State<TestThemeScreen> with SingleTickerProv
         const Divider(thickness: 2, color: Colors.cyan),
         //build colorSheme
         GridView(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: [
@@ -157,13 +137,8 @@ class _TestThemeScreenState extends State<TestThemeScreen> with SingleTickerProv
       mainAxisSize: MainAxisSize.min,
       children: [
         GestureDetector(
-          onLongPress: () => Clipboard.setData(ClipboardData(text: '${color.value}')),
-          child: Container(
-            width: 100,
-            height: 100,
-            color: color,
-            child: Text('${color.value}'),
-          ),
+          onLongPress: () => Clipboard.setData(ClipboardData(text: '${color.toARGB32()}')),
+          child: Container(width: 100, height: 100, color: color, child: Text('${color.toARGB32()}')),
         ),
         Text(name, style: const TextStyle(fontSize: 10)),
       ],
