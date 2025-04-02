@@ -38,16 +38,28 @@ mixin class ColorConstants {
     });
   }
 
+  //! https://stackoverflow.com/questions/79278159/warnings-after-upgrading-to-flutter-3-27-0-value-and-green-are-deprecated
   static Color tintColor(Color color, double factor) {
     return Color.fromRGBO(
-      color.red + ((255 - color.red) * factor).round(),
-      color.green + ((255 - color.green) * factor).round(),
-      color.blue + ((255 - color.blue) * factor).round(),
+      color.redd + ((255 - color.redd) * factor).round(),
+      color.greenn + ((255 - color.greenn) * factor).round(),
+      color.bluee + ((255 - color.bluee) * factor).round(),
       1,
     );
   }
 
   static Color shadeColor(Color color, double factor) {
-    return Color.fromRGBO((color.red * (1 - factor)).round(), (color.green * (1 - factor)).round(), (color.blue * (1 - factor)).round(), 1);
+    return Color.fromRGBO((color.redd * (1 - factor)).round(), (color.greenn * (1 - factor)).round(), (color.bluee * (1 - factor)).round(), 1);
   }
+}
+
+extension _ColorUtils on Color {
+  int get redd => (r * 255).toInt();
+  int get greenn => (g * 255).toInt();
+  int get bluee => (b * 255).toInt();
+  int get alphaa => (a * 255).toInt();
+
+  // Combine the components into a single int using bit shifting
+  // ignore: unused_element
+  int toInt() => (alphaa << 24) | (redd << 16) | (greenn << 8) | bluee;
 }

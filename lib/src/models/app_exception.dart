@@ -44,7 +44,11 @@ class AppException implements Exception, BaseModel<AppException> {
 
   void onInit() {
     Helper.getInfoDevice().then((value) => infoDevice = value);
-    route = GoRouter.of(AppGlobals.context).location;
+    try {
+      route = GoRouter.of(AppGlobals.context).location;
+    } catch (e) {
+      route = AppGlobals.lastCallUrlApi;
+    }
     time = DateTime.now();
   }
 
