@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../flutter_core_datz.dart';
@@ -51,7 +52,8 @@ final class HelperWidget {
   }
 
   static ImageProvider imageProviderFrom(String imagePath) {
-    if (imagePath.isEmpty) return AssetImage(baseConfigs.assetsPath.imageError);
+    final configs = GetIt.instance<BaseConfigs>();
+    if (imagePath.isEmpty) return AssetImage(configs.assetsPath.imageError);
     return (imagePath.isURL) ? CachedNetworkImageProvider(imagePath) : AssetImage(imagePath) as ImageProvider;
   }
 

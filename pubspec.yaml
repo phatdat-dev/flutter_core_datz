@@ -1,11 +1,11 @@
 name: flutter_core_datz
 description: "A new Flutter package project."
-version: 1.0.1+4
+version: 1.0.2+5
 homepage:
 
 environment:
-  sdk: 3.7.2
-  flutter: 3.29.2
+  sdk: "3.7.2"
+  flutter: "3.29.3"
 
 dependencies:
   flutter:
@@ -14,7 +14,8 @@ dependencies:
   dio: any
   logger: any
   # routing
-  go_router: ^13.2.5 # 14.4.1 nó đang lỗi popUntil
+  auto_route: any
+
   # Language
   easy_localization: any
   # support dart core
@@ -42,7 +43,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: any
   build_runner: any
-  go_router_builder: any
+  auto_route_generator: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

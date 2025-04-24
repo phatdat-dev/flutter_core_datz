@@ -25,11 +25,10 @@ Future<void> runMain({
   TransitionBuilder? builder,
   FutureOr<void> Function()? onInit,
 }) async {
-  baseConfigs = configs;
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
     EasyLocalization.ensureInitialized(),
-    _initSingletons(),
+    _initSingletons(configs),
   ]);
 
   // Setting Device Orientation
@@ -53,7 +52,7 @@ void errorWidget() {
         alignment: Alignment.center,
         color: Colors.transparent,
         child: Image.asset(
-          baseConfigs.assetsPath.errorWidget,
+          GetIt.instance<BaseConfigs>().assetsPath.errorWidget,
           width: 100,
           height: 100,
         ),
@@ -62,12 +61,13 @@ void errorWidget() {
   }
 }
 
-Future<void> _initSingletons() async {
+Future<void> _initSingletons(BaseConfigs configs) async {
+  GetIt.instance.registerSingleton<BaseConfigs>(configs);
   // Services
-  GetIt.instance.registerLazySingleton<StorageService>(() => baseConfigs.storageService);
-  GetIt.instance.registerLazySingleton<NetworkConnectivityService>(() => baseConfigs.networkConnectivityService);
+  GetIt.instance.registerLazySingleton<StorageService>(() => configs.storageService);
+  GetIt.instance.registerLazySingleton<NetworkConnectivityService>(() => configs.networkConnectivityService);
   // Controllers
-  GetIt.instance.registerLazySingleton<TranslationController>(() => baseConfigs.translationController);
+  GetIt.instance.registerLazySingleton<TranslationController>(() => configs.translationController);
   GetIt.instance.registerLazySingleton<ThemeController>(() => ThemeController());
   GetIt.instance.registerLazySingleton<AppExceptionController>(() => AppExceptionController());
 

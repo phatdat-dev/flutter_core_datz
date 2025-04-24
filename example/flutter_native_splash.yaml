@@ -1,0 +1,16 @@
+# flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/images/logo/logo-removebg-crop-1152x1152-circle-768.png"
+  color_dark: "#ffffff"
+  image_dark: "assets/images/logo/logo-removebg-crop-1152x1152-circle-768.png"
+
+  android_12:
+    icon_background_color: "#ffffff"
+    image: "assets/images/logo/logo-removebg-crop-1152x1152-circle-768.png"
+    icon_background_color_dark: "#ffffff"
+    image_dark: "assets/images/logo/logo-removebg-crop-1152x1152-circle-768.png"
+
+  # fullscreen: true
+  # android_gravity: fill

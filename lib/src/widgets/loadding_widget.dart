@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../flutter_core_datz.dart';
-import '../app/base_configs.dart';
 
 // Loadding.show(); Loadding.dismiss();
 class Loadding {
@@ -40,7 +40,8 @@ class LoaddingWidgetState extends State<LoaddingWidget> {
 
   @override
   void initState() {
-    imageLoadding = AssetImage(baseConfigs.assetsPath.loadding);
+    final configs = GetIt.instance<BaseConfigs>();
+    imageLoadding = AssetImage(configs.assetsPath.loadding);
     super.initState();
   }
 

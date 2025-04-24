@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../flutter_core_datz.dart';
 
+@RoutePage()
 class TestThemeScreen extends StatefulWidget {
   const TestThemeScreen({super.key});
 

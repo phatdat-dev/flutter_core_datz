@@ -1,0 +1,186 @@
+# Docs hướng dẫn mình tự viết ở đây: https://viblo.asia/p/flutter-cicd-to-testflight-with-github-actions-0gdJzDlkVz5
+name: Build & Release
+
+on:
+  push:
+    # branches:
+    #   - datz
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    name: Build
+    runs-on: macos-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
+          architecture: x64
+
+      - name: Check Flutter Version
+        run: flutter --version
+      - name: Check XCodeBuild Version
+        run: xcodebuild -version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # file keystore upload-keystore.jks được tạo từ keytool
+      - name: Download Android Keystore
+        run: |
+          echo ${{ secrets.UPLOAD_KEYSTORE_BASE64 }} | base64 --decode > android/app/upload-keystore.jks
+
+      # file key.properties lúc release Google Play
+      - name: Create key.properties
+        run: |
+          # Download keystore first (ensure success before creating key.properties)
+          if [[ $? -eq 0 ]]; then
+            echo "storePassword=${{ secrets.STOREPASSWORD }}" >> android/key.properties
+            echo "keyPassword=${{ secrets.KEYPASSWORD }}" >> android/key.properties
+            echo "keyAlias=upload" >> android/key.properties
+            echo "storeFile=upload-keystore.jks" >> android/key.properties
+          else
+            echo "Error: Downloading keystore failed. Skipping key.properties creation."
+            exit 1
+          fi
+
+      # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development
+      # https://stackoverflow.com/questions/74869907/trying-to-set-certificate-and-provisioning-profile-in-github-actions-for-xcodebu
+      - name: Install the Apple certificate and provisioning profile
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }} # lấy từ keychain access -> export -> export as p12
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }} # mật khẩu khi export p12
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }} # lấy từ xcode -> export -> export as provisioning profile
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }} # mật khẩu keychain
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # apply provisioning profile
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+      - name: Build Android
+        run: |
+          flutter build apk --release
+          flutter build appbundle
+
+      - name: Pod install
+        run: cd ios && pod install --repo-update && cd ..
+
+      # flutter build ipa --no-codesign
+      - name: Build iOS
+        run: |
+          flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+
+      - name: Rename APK, AAB, IPA  with tag
+        run: |
+          TAG="[${{ github.ref_name }}]"
+          # Rename APK
+          for file in build/app/outputs/flutter-apk/*.apk; do
+            filename=$(basename "$file")
+            mv "$file" "$(dirname "$file")/[${TAG}]${filename}"
+          done
+          # Rename AAB
+          for file in build/app/outputs/bundle/release/*.aab; do
+            filename=$(basename "$file")
+            mv "$file" "$(dirname "$file")/[${TAG}]${filename}"
+          done
+          # Rename IPA
+          for file in build/ios/ipa/*.ipa; do
+            filename=$(basename "$file")
+            mv "$file" "$(dirname "$file")/[${TAG}]${filename}"
+          done
+
+      - name: Collect the file and upload as artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: app-release
+          path: |
+            build/app/outputs/flutter-apk/*.apk
+            build/app/outputs/bundle/release/*.aab
+            build/ios/ipa/*.ipa
+          # compression-level: 0
+
+      # Important! Cleanup: remove the certificate and provisioning profile from the runner!
+      - name: Clean up keychain and provisioning profile
+        if: ${{ always() }}
+        run: |
+          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
+
+  # Release job, upload the ipa to App Distribution
+  release:
+    name: Release IPA
+    needs: [build]
+    runs-on: macos-latest
+    steps:
+      # Retrieve ipa file from GitHub artifacts
+      # - name: Clone repository
+      #   uses: actions/checkout@v4
+
+      - name: Get app-release from artifacts
+        uses: actions/download-artifact@v4.1.7
+        with:
+          name: app-release
+          path: build
+          merge-multiple: true
+
+      # https://github.com/Apple-Actions/upload-testflight-build/issues/27
+
+      - name: Install private API key P8
+        env:
+          APPSTORE_KEY_P8_BASE64: ${{ secrets.APPSTORE_KEY_P8_BASE64 }}
+          APPSTORE_APIKEY: ${{ secrets.APPSTORE_APIKEY }}
+        run: |
+          mkdir -p ~/private_keys
+          echo -n "$APPSTORE_KEY_P8_BASE64" | base64 --decode > ~/private_keys/AuthKey_$APPSTORE_APIKEY.p8
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - name: Upload to AppStore
+        env:
+          APPSTORE_APIKEY: ${{ secrets.APPSTORE_APIKEY }} # lấy từ appstore connect -> users and access -> keys -> create key
+          APPSTORE_APIISSUER: ${{ secrets.APPSTORE_APIISSUER }} # lấy từ appstore connect -> users and access -> keys -> create key
+          # còn có file AuthKey_$APPSTORE_APIKEY.p8 nữa
+        run: |
+          xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey $APPSTORE_APIKEY --apiIssuer $APPSTORE_APIISSUER
+
+      - name: Push to Releases file
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          name: ${{ github.ref_name }} # tên release
+          artifacts: |
+            build/app/outputs/flutter-apk/*.apk
+            build/app/outputs/bundle/release/*.aab
+            build/ios/ipa/*.ipa
+          tag: ${{ github.ref_name }} # tag release
+          token: "${{ secrets.REPOSITORY_TOKEN }}" # token repo, tạo từ setting -> developer settings -> personal access token

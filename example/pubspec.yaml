@@ -1,101 +1,158 @@
 name: example
-description: "A new Flutter project."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
+description: A new Flutter project.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
 
 environment:
-  sdk: 3.7.2
-  flutter: 3.29.2
+  sdk: "3.7.2"
+  flutter: "3.29.3"
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
+
+  cupertino_icons: any
+  #Dio for Api Calling
+  dio: any
+  logger: any
+  #
+  auto_route: any
+  # Language
+  easy_localization: any
+  # support dart core
+  intl: any
+  collection: any #array, List method
+  dartz: any
+  package_info_plus: any #get package info
+  equatable: any
+  path: any
+  flutter_dotenv: any
+  upgrader: any
+  web_socket_channel: any
+  tiengviet: any
+
+  #FireBase
+  firebase_core: any
+  firebase_remote_config: any
+  firebase_messaging: any
+  flutter_local_notifications: any
+  # LocalDB
+  shared_preferences: any
+  sqflite: any
+  #
+  get_it: any
+  provider: any
+  # native
+  # device_info_plus: any #get device infocollection: any #array, List method
+  path_provider: any
+  image_picker: any
+  file_picker: any
+  connectivity_plus: any
+  # open_file_plus:
+  #   git:
+  #     url: https://github.com/postflow/open_file_plus.git
+  #     ref: main
+  # permission_handler: any
+  # external_app_launcher: any
+  # Widget util
+  flutter_svg: any
+  cached_network_image: any
+  shimmer: any # animate loading
+  # lottie: any
+  animate_do: any
+  flip_card: any # animation
+  # like_button: any
+  # animated_tree_view: any
+  # avatar_glow: any # cho hiệu ứng glow cái mic
+  pin_code_fields: any #pin code, giảm thiểu xử lý việc nhập sai
+  toastification: any #show toast error
+  timeline_tile: any
+  path_drawing: any
+  flutter_slidable: any
+  # paged_vertical_calendar: any
+  # full_calender: any # Lunar, Solar convert
+  # docx_template: any
+  numberpicker: any
+  # syncfusion_flutter_charts: any
+  syncfusion_flutter_pdf: any # tạo file pdf
+  # syncfusion_flutter_pdfviewer: any # xem file pdf
+  # wolt_modal_sheet: any # better dialog
+  chatview: ^2.4.0
+  showcaseview: any
+  icons_plus: any
+  #
+  flutter_form_builder: any #bingding form
+  form_builder_validators: any
+  # BarCode
+  # mobile_scanner: any
+  # syncfusion_flutter_barcodes: any
+  # printing: any
+  # pdf_image_renderer: any # pdf_to_image_converter
+  # Link web
+  url_launcher: any
+  flutter_inappwebview: any # webview
+  # google_generative_ai: any
+  # syncfusion_flutter_datagrid: any
+  # scrollable_positioned_list: any #scroll to index
+  # palette_generator: any
+  #
+  #
   flutter_core_datz:
     path: ../
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: any
-  get_it: any
-  easy_localization: any
+  # flutter_dynamic_filter:
+  #   git:
+  #     url: https://github.com/phatdat-dev/flutter_dynamic_filter
+  #     ref: main
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: any
-  go_router_builder: any
+  integration_test:
+    sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: any
+  # mockito: any #test
+  # http_mock_adapter: any #test
+  build_runner: any
+  flutter_native_splash: any
+  flutter_launcher_icons: any # flutter pub run flutter_launcher_icons
+  auto_route_generator: any
+  flutter_gen_runner: any # dart pub global activate flutter_gen
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+dependency_overrides:
+  intl: ^0.20.0
+
+flutter_gen:
+  output: lib/generated/ # Optional (default: lib/gen/)
+
 # The following section is specific to Flutter packages.
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - .env
     - assets/gif/
     - assets/icons/
     - assets/images/
-    - assets/images/loading/
     - assets/images/logo/
-    - assets/lottie/
+    - assets/images/loading/
+    - assets/images/authenication/
+    # - assets/lottie/
     - assets/svg/
     - assets/translations/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
   # fonts:
-  #   - family: Schyler
+  #   - family: MerriWeather
   #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
+  #       - asset: fonts/merri_weather/Merriweather-Black.ttf
+  #       - asset: fonts/merri_weather/Merriweather-Bold.ttf
+  #   - family: Mulish
   #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  #       - asset: fonts/mulish/Mulish-Bold.ttf
+  #       - asset: fonts/mulish/Mulish-Regular.ttf

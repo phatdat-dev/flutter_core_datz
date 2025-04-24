@@ -16,54 +16,42 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController theme = GetIt.instance<ThemeController>();
+    final configs = GetIt.instance<BaseConfigs>();
+    final theme = GetIt.instance<ThemeController>();
     final translationController = GetIt.instance<TranslationController>();
 
     if (AppGlobals.kTestMode) {
       EasyLocalization.logger.enableBuildModes = [];
     }
     return EasyLocalization(
-      path: baseConfigs.assetsPath.localization, //
+      path: configs.assetsPath.localization, //
       supportedLocales: translationController.locales,
       fallbackLocale: translationController.fallbackLocale,
       startLocale: translationController.startLocale,
       child: ListenableBuilder(
         listenable: theme,
-        builder: (context, child) => MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          title: baseConfigs.appTitle,
-          routerConfig: baseConfigs.router(context),
-          //theme
-          theme: theme.state.lightTheme,
-          darkTheme: theme.state.darkTheme,
-          themeMode: theme.state.themeMode,
-          //language
-          locale: context.locale,
-          supportedLocales: context.supportedLocales,
-          localizationsDelegates: [
-            ...context.localizationDelegates,
-            FormBuilderLocalizations.delegate,
-          ],
-          scrollBehavior: const MaterialScrollBehavior().copyWith(
-            dragDevices: {
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.touch,
-              PointerDeviceKind.stylus,
-              PointerDeviceKind.unknown,
-            },
-          ),
-          builder: (context, child) {
-            //builder fix first context
-            return Overlay(
-              initialEntries: [
-                if (child != null)
-                  OverlayEntry(
-                    builder: (context) => builder?.call(context, child) ?? child,
-                  ),
-              ],
-            );
-          },
-        ),
+        builder:
+            (context, child) => MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              title: configs.appTitle,
+              routerConfig: configs.routerConfig(context),
+              //theme
+              theme: theme.state.lightTheme,
+              darkTheme: theme.state.darkTheme,
+              themeMode: theme.state.themeMode,
+              //language
+              locale: context.locale,
+              supportedLocales: context.supportedLocales,
+              localizationsDelegates: [...context.localizationDelegates, FormBuilderLocalizations.delegate],
+              scrollBehavior: const MaterialScrollBehavior().copyWith(
+                dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch, PointerDeviceKind.stylus, PointerDeviceKind.unknown},
+              ),
+              builder: (context, child) {
+                //builder fix first context
+                AppGlobals.context = context;
+                return Overlay(initialEntries: [if (child != null) OverlayEntry(builder: (context) => builder?.call(context, child) ?? child)]);
+              },
+            ),
       ),
     );
   }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'base_configs.dart';
 
@@ -24,7 +25,8 @@ mixin BaseResponsiveMixin on Diagnosticable {
   Widget build(BuildContext context) {
     return OrientationBuilder(
       builder: (context, orientation) {
-        final settings = baseConfigs.responsiveScreenSettings;
+        final configs = GetIt.instance<BaseConfigs>();
+        final settings = configs.responsiveScreenSettings;
         final width = MediaQuery.sizeOf(context).width;
         // final isPortrait = (orientation == Orientation.portrait);
 

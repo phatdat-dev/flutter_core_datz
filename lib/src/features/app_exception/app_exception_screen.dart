@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../flutter_core_datz.dart';
 import 'widgets/task_animate_design_widget.dart';
 
+@RoutePage()
 class AppExceptionScreen extends StatelessWidget {
   const AppExceptionScreen({super.key});
 

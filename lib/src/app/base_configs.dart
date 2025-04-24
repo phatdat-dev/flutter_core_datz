@@ -1,15 +1,12 @@
 // ignore_for_file: deprecated_member_use_from_same_package
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../flutter_core_datz.dart';
 
-late BaseConfigs baseConfigs;
-
 abstract class BaseConfigs {
   String get appTitle;
-  GoRouter router(BuildContext context);
+  RouterConfig<Object>? routerConfig(BuildContext context);
   AssetsPath get assetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
   TranslationController get translationController => TranslationController();
@@ -32,12 +29,7 @@ class AssetsPath {
   });
 
   // copyWith
-  AssetsPath copyWith({
-    String? localization,
-    String? loadding,
-    String? errorWidget,
-    String? imageError,
-  }) {
+  AssetsPath copyWith({String? localization, String? loadding, String? errorWidget, String? imageError}) {
     return AssetsPath(
       localization: localization ?? this.localization,
       loadding: loadding ?? this.loadding,

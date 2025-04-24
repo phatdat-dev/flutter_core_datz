@@ -2,5 +2,25 @@
   "en_US": "Tiếng Anh",
   "vi_VN": "Tiếng Việt",
   "ja_JP": "Tiếng Nhật",
-  "Language": "Ngôn ngữ"
+  "Language": "Ngôn ngữ",
+  "Home": "Trang chủ",
+  "Message": "Tin nhắn",
+  "Notification": "Thông báo",
+  "Account": "Tài khoản",
+  "Exchange": "Trao đổi",
+  "UnderDevelopment": "Chức năng đang được phát triển",
+  "Search": "Tìm kiếm",
+  "Login": "Đăng nhập",
+  "LoginView": {
+    "Username": "Tên đăng nhập",
+    "Password": "Mật khẩu",
+    "ForgotPassword": "Quên mật khẩu"
+  },
+  "Register": "Đăng ký",
+  "Logout": "Đăng xuất",
+  "UserManual": "Hướng dẫn sử dụng",
+  "Setting": "Cài đặt",
+  "SettingView": {
+    "ViewCurrentColorCode": "Xem mã màu hiện tại"
+  }
 }

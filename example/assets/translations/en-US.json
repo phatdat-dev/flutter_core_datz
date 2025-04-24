@@ -2,5 +2,25 @@
   "en_US": "English",
   "vi_VN": "Vietnamese",
   "ja_JP": "Japanese",
-  "Language": "Language"
+  "Language": "Language",
+  "Home": "Home",
+  "Message": "Message",
+  "Notification": "Notification",
+  "Account": "Account",
+  "Exchange": "Exchange",
+  "UnderDevelopment": "Under Development",
+  "Search": "Search",
+  "Login": "Login",
+  "LoginView": {
+    "Username": "Username",
+    "Password": "Password",
+    "ForgotPassword": "Forgot Password"
+  },
+  "Register": "Register",
+  "Logout": "Logout",
+  "UserManual": "User Manual",
+  "Setting": "Setting",
+  "SettingView": {
+    "ViewCurrentColorCode": "View current color code"
+  }
 }

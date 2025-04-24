@@ -5,7 +5,6 @@ export 'context_extensions.dart';
 export 'dartz/dartz_either_extensions.dart';
 export 'datetime_extensions.dart';
 export 'datetimerange_extensions.dart';
-export 'go_router/go_router_extensions.dart';
 export 'icon_extensions.dart';
 export 'iterable_extensions.dart';
 export 'list_extensions.dart';

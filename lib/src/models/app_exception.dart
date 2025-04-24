@@ -4,10 +4,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../flutter_core_datz.dart';
 
@@ -45,7 +45,7 @@ class AppException implements Exception, BaseModel<AppException> {
   void onInit() {
     Helper.getInfoDevice().then((value) => infoDevice = value);
     try {
-      route = GoRouter.of(AppGlobals.context).location;
+      route = AutoRouter.of(AppGlobals.context).currentPath;
     } catch (e) {
       route = AppGlobals.lastCallUrlApi;
     }

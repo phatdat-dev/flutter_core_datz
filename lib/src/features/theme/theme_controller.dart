@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../flutter_core_datz.dart';
-import '../../app/base_configs.dart';
 
 class ThemeController extends ChangeNotifier {
   late ThemeState _state;
@@ -15,6 +14,9 @@ class ThemeController extends ChangeNotifier {
     _sharedPrefs.setString(AppStorageConstants.theme, _state.themeMode.name);
     notifyListeners();
   }
+
+  BaseConfigs get _configs => GetIt.instance<BaseConfigs>();
+
 
   ThemeController() {
     _state = loadThemeStorage(); // getDefaultTheme();
@@ -32,7 +34,7 @@ class ThemeController extends ChangeNotifier {
       theme = ThemeMode.values.byName(defaultThemeMode.name);
     }
 
-    return baseConfigs.themeState.copyWith(themeMode: theme);
+    return _configs.themeState.copyWith(themeMode: theme);
   }
 
   void setDefaultTheme() {
@@ -41,7 +43,7 @@ class ThemeController extends ChangeNotifier {
 
   ThemeState loadThemeStorage() {
     final name = _sharedPrefs.get(AppStorageConstants.theme) as String?;
-    final result = baseConfigs.themeState;
+    final result = _configs.themeState;
     if (name != null) {
       final themeMode = ThemeMode.values.byName(name);
       if (result.themeMode != themeMode) result.themeMode = themeMode;
