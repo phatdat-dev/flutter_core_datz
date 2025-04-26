@@ -34,7 +34,7 @@ class RegisterController extends BaseController {
         },
         (data) async {
           MyHelperWidget.showToastSuccess(data.message ?? "");
-          AppGlobals.context.navigateTo(const LoginRoute());
+          Globals.context.navigateTo(const LoginRoute());
         },
       );
       isLoadding.value = false;

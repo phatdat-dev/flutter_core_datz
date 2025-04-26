@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
 
-final class Globals {
+final class AppGlobals {
   static bool get isIos => defaultTargetPlatform == TargetPlatform.iOS;
 }

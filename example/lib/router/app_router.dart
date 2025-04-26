@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_core_datz/flutter_core_datz.dart' as datz;
+import 'package:flutter_core_datz/flutter_core_datz.dart';
 
 import '../features/authentication/forgot_password/view/forgot_password_1_select_view.dart';
 import '../features/authentication/forgot_password/view/forgot_password_2_pin_view.dart';
@@ -24,6 +24,8 @@ final appRouter = AppRouter();
 
 @AutoRouterConfig(replaceInRouteName: 'Page|Screen|View,Route')
 class AppRouter extends RootStackRouter {
+  AppRouter() : super(navigatorKey: Globals.rootNavigatorKey);
+
   @override
   List<AutoRoute> get routes => [
     ...datz.DAppRouter().routes,

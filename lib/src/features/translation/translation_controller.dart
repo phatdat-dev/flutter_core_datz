@@ -17,24 +17,20 @@ final class TranslationController {
   TranslationController({
     this.fallbackLocale = const Locale('en', 'US'),
     this.startLocale = const Locale('vi', 'VN'),
-    this.locales = const [
-      Locale('en', 'US'),
-      Locale('vi', 'VN'),
-      Locale('ja', 'JP'),
-    ],
+    this.locales = const [Locale('en', 'US'), Locale('vi', 'VN'), Locale('ja', 'JP')],
   });
 
   final _sharedPrefs = GetIt.instance.get<StorageService>().sharedPreferences!;
 
   // function change language
   void changeLocale(Locale localeee) {
-    AppGlobals.context.setLocale(localeee);
+    Globals.context.setLocale(localeee);
     _sharedPrefs.setString(AppStorageConstants.langCode, localeee.languageCode);
   }
 
   Future<Locale> getLocaleFromLanguage() async {
     final langCode = _sharedPrefs.get(AppStorageConstants.langCode);
-    final context = AppGlobals.context;
+    final context = Globals.context;
 
     if (langCode == null) return context.deviceLocale;
 

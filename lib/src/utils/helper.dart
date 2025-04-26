@@ -23,7 +23,7 @@ final class Helper {
     }
 
     if (inputDate == null) return date;
-    String output = DateFormat.yMd(AppGlobals.context.locale.languageCode).add_Hms().format(inputDate);
+    String output = DateFormat.yMd(Globals.context.locale.languageCode).add_Hms().format(inputDate);
     return output;
   }
 
@@ -127,10 +127,7 @@ final class Helper {
   // https://stackoverflow.com/questions/50322054/flutter-how-to-set-and-lock-screen-orientation-on-demand
   static void toggleFullScreenMode(bool isFullScreen) {
     if (isFullScreen) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
+      SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     } else {
       SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     }

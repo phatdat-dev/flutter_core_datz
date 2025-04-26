@@ -1,7 +1,7 @@
 library;
 
 export 'main/main.dart';
-export 'src/app/app_globals.dart';
+export 'src/app/globals.dart';
 export 'src/app/app_storage_constants.dart';
 export 'src/app/base_configs.dart';
 export 'src/app/base_responsive_view.dart';

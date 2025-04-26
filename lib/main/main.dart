@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../flutter_core_datz.dart';
-import '../src/app/base_configs.dart';
 import 'my_app.dart';
 
 Future<void> runMain({
@@ -26,10 +25,7 @@ Future<void> runMain({
   FutureOr<void> Function()? onInit,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Future.wait([
-    EasyLocalization.ensureInitialized(),
-    _initSingletons(configs),
-  ]);
+  await Future.wait([EasyLocalization.ensureInitialized(), _initSingletons(configs)]);
 
   // Setting Device Orientation
   // SystemChrome.setPreferredOrientations([
@@ -44,18 +40,14 @@ Future<void> runMain({
 
 @pragma('vm:entry-point')
 void errorWidget() {
-  if (!AppGlobals.kTestMode) {
+  if (!Globals.kTestMode) {
     // tránh lỗi integration test
     ErrorWidget.builder = (FlutterErrorDetails details) {
       if (kDebugMode) return ErrorWidget(details.exception);
       return Container(
         alignment: Alignment.center,
         color: Colors.transparent,
-        child: Image.asset(
-          GetIt.instance<BaseConfigs>().assetsPath.errorWidget,
-          width: 100,
-          height: 100,
-        ),
+        child: Image.asset(GetIt.instance<BaseConfigs>().assetsPath.errorWidget, width: 100, height: 100),
       );
     };
   }

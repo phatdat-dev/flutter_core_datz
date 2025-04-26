@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get_it/get_it.dart';
 
-import '../src/app/app_globals.dart';
 import '../src/app/base_configs.dart';
+import '../src/app/globals.dart';
 import '../src/features/theme/theme_controller.dart';
 import '../src/features/translation/translation_controller.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     final theme = GetIt.instance<ThemeController>();
     final translationController = GetIt.instance<TranslationController>();
 
-    if (AppGlobals.kTestMode) {
+    if (Globals.kTestMode) {
       EasyLocalization.logger.enableBuildModes = [];
     }
     return EasyLocalization(
@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
               ),
               builder: (context, child) {
                 //builder fix first context
-                AppGlobals.context = context;
                 return Overlay(initialEntries: [if (child != null) OverlayEntry(builder: (context) => builder?.call(context, child) ?? child)]);
               },
             ),

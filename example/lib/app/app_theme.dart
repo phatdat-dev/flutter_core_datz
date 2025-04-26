@@ -64,7 +64,6 @@ class AppTheme {
     return ExpansionTileThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(width: 0.1)),
       collapsedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      childrenPadding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
     );
   }
 }

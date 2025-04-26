@@ -6,7 +6,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../app/app_globals.dart';
+import '../../app/globals.dart';
 import '../../utils/utils.dart';
 
 class NetworkConnectivityService {
@@ -70,7 +70,7 @@ class NetworkConnectivityService {
   void _showDialogDisconnect() {
     if (!showDialogDisconnect) return;
     showCupertinoDialog(
-      context: AppGlobals.context,
+      context: Globals.context,
       builder:
           (context) => CupertinoAlertDialog(
             key: _keyPopup,
@@ -92,6 +92,6 @@ class NetworkConnectivityService {
 
   void _showSnackBarMessage(String message) {
     if (!showSnackBarConnect) return;
-    ScaffoldMessenger.of(AppGlobals.context).showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 5)));
+    ScaffoldMessenger.of(Globals.context).showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 5)));
   }
 }

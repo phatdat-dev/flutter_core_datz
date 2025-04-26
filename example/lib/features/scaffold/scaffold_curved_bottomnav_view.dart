@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-import '../../app/globals.dart';
+import '../../app/app_globals.dart';
 import '../../core/check_app_view.dart';
 import '../../packages/curved_navigation_bar/curved_navigation_bar.dart';
 import '../../router/app_router.dart';
@@ -121,7 +121,7 @@ class BottomNavigationWidget extends StatelessWidget {
       // buttonBackgroundColor: Theme.of(context).primaryColor,
       // buttonLabelColor: Colors.white,
       animationDuration: const Duration(milliseconds: 300),
-      height: Globals.isIos ? 80 : 65,
+      height: AppGlobals.isIos ? 80 : 65,
       onTap: (index) => tabsRouter.setActiveIndex(index),
       items:
           {"Home": MingCute.home_5_line, "Wallet": MingCute.wallet_4_line, "Track": MingCute.car_line, "Account": MingCute.user_3_line}.entries

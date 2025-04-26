@@ -69,7 +69,7 @@ class LoginController extends BaseController {
   }
 
   void redirectToHomeScreen() {
-    final context = formKey.currentState?.context ?? AppGlobals.context;
+    final context = formKey.currentState?.context ?? Globals.context;
     if (context.mounted) context.pushRoute(const HomeRoute());
   }
 
@@ -80,7 +80,7 @@ class LoginController extends BaseController {
     userController.state.value = null;
     await _localDataSource.removeUserFromStorage();
     // trả về màn hình login
-    final context = AppGlobals.context;
+    final context = Globals.context;
     if (context.mounted) context.navigateTo(const LoginRoute());
     // nếu có lưu mật khẩu thì set lại thông tin đăng nhập tại form
     if (isSavePassword.value && cacheUser != null) {

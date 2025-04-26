@@ -16,7 +16,7 @@ class ForgotPassword3NewPassView extends StatelessWidget {
 
   void onPressed() {
     if (formKey.currentState!.saveAndValidate()) {
-      final context = AppGlobals.context;
+      final context = Globals.context;
       HelperWidget.showCustomAlertDialog(
         context: context,
         defaultSize: false,

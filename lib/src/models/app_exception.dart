@@ -45,9 +45,9 @@ class AppException implements Exception, BaseModel<AppException> {
   void onInit() {
     Helper.getInfoDevice().then((value) => infoDevice = value);
     try {
-      route = AutoRouter.of(AppGlobals.context).currentPath;
+      route = AutoRouter.of(Globals.context).currentPath;
     } catch (e) {
-      route = AppGlobals.lastCallUrlApi;
+      route = Globals.lastCallUrlApi;
     }
     time = DateTime.now();
   }
@@ -147,7 +147,7 @@ class AppException implements Exception, BaseModel<AppException> {
       return message;
     }
     statusCode = -1;
-    urlApi = AppGlobals.lastCallUrlApi;
+    urlApi = Globals.lastCallUrlApi;
     return ex.toString();
   }
 }

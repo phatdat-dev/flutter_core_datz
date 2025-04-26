@@ -8,7 +8,7 @@ import '../../app/app_constants.dart';
 
 final class MyHelperWidget {
   static void showToastSuccess(String message, {ToastificationCallbacks callbacks = const ToastificationCallbacks()}) {
-    final context = AppGlobals.context;
+    final context = Globals.context;
     toastification.show(
       context: context,
       type: ToastificationType.success,
@@ -24,7 +24,7 @@ final class MyHelperWidget {
   }
 
   static void showToastWarning(String message) {
-    final context = AppGlobals.context;
+    final context = Globals.context;
     toastification.show(
       context: context,
       type: ToastificationType.warning,
@@ -92,7 +92,7 @@ final class MyHelperWidget {
     final txtController = TextEditingController();
     return await showDialog<T>(
       // showGeneralDialog
-      context: context ?? AppGlobals.context,
+      context: context ?? Globals.context,
       builder: (context) {
         final size = context.mediaQuerySize;
         return ValueListenableBuilder(

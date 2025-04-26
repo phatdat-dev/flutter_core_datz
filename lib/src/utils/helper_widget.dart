@@ -5,12 +5,11 @@ import 'package:get_it/get_it.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../flutter_core_datz.dart';
-import '../app/base_configs.dart';
 import '../widgets/my_cached_network_image.dart';
 
 final class HelperWidget {
   static void showToastError(String message) {
-    final context = AppGlobals.context;
+    final context = Globals.context;
     toastification.show(
       context: context,
       type: ToastificationType.error,
@@ -91,7 +90,7 @@ final class HelperWidget {
     if (width != null && height != null) defaultSize = false;
     const EdgeInsets defaultInsetPadding = EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0);
     return await showDialog<T>(
-      context: context ?? AppGlobals.context,
+      context: context ?? Globals.context,
       barrierDismissible: barrierDismissible,
       builder:
           (context) => AlertDialog(
@@ -122,7 +121,7 @@ final class HelperWidget {
     final txtController = TextEditingController();
     return await showDialog<T>(
       // showGeneralDialog
-      context: context ?? AppGlobals.context,
+      context: context ?? Globals.context,
       builder: (context) {
         final size = context.mediaQuerySize;
         return AlertDialog(
