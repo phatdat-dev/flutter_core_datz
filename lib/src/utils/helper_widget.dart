@@ -57,16 +57,14 @@ final class HelperWidget {
   }
 
   static Widget imageWidget(String imagePath, {double? width, double? height, BoxFit? fit, Color? color}) {
-    if (imagePath.isImageFileName) {
-      if (imagePath.isURL || imagePath.contains('http')) {
-        return MyCachedNetworkImage(imageUrl: imagePath, width: width, height: height, fit: fit);
-      } else if (imagePath.contains('assets')) {
-        return Image.asset(imagePath, width: width, height: height, fit: fit);
-      }
-    }
-
     if (imagePath.isVectorFileName) {
       return SvgPicture.asset(imagePath, width: width, height: height, fit: fit ?? BoxFit.contain, colorFilter: color?.toColorFilter());
+    }
+
+    if (imagePath.isURL || imagePath.contains('http')) {
+      return MyCachedNetworkImage(imageUrl: imagePath, width: width, height: height, fit: fit);
+    } else if (imagePath.contains('assets')) {
+      return Image.asset(imagePath, width: width, height: height, fit: fit);
     }
     return const SizedBox.shrink();
   }
