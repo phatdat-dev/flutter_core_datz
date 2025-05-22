@@ -13,7 +13,10 @@ class NetworkConnectivityService {
   final bool showSnackBarConnect;
   final bool showDialogDisconnect;
 
-  NetworkConnectivityService({this.showSnackBarConnect = true, this.showDialogDisconnect = true});
+  NetworkConnectivityService({
+    this.showSnackBarConnect = true,
+    this.showDialogDisconnect = true,
+  });
 
   bool get isOnline => _isOnline;
 
@@ -40,7 +43,10 @@ class NetworkConnectivityService {
   }
 
   // 2.
-  Future<void> _checkStatus(List<ConnectivityResult> result, {bool showSnackBar = true}) async {
+  Future<void> _checkStatus(
+    List<ConnectivityResult> result, {
+    bool showSnackBar = true,
+  }) async {
     const String address = 'google.com';
 
     if (!result.contains(ConnectivityResult.none)) {
@@ -71,27 +77,28 @@ class NetworkConnectivityService {
     if (!showDialogDisconnect) return;
     showCupertinoDialog(
       context: Globals.context,
-      builder:
-          (context) => CupertinoAlertDialog(
-            key: _keyPopup,
-            title: const Text('No Internet'),
-            content: const Text('Please check your internet connection'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _keyPopup = GlobalKey();
-                  if (_isOnline == false) _showDialogDisconnect();
-                },
-                child: const Text('OK'),
-              ),
-            ],
+      builder: (context) => CupertinoAlertDialog(
+        key: _keyPopup,
+        title: const Text('No Internet'),
+        content: const Text('Please check your internet connection'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _keyPopup = GlobalKey();
+              if (_isOnline == false) _showDialogDisconnect();
+            },
+            child: const Text('OK'),
           ),
+        ],
+      ),
     );
   }
 
   void _showSnackBarMessage(String message) {
     if (!showSnackBarConnect) return;
-    ScaffoldMessenger.of(Globals.context).showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 5)));
+    ScaffoldMessenger.of(Globals.context).showSnackBar(
+      SnackBar(content: Text(message), duration: const Duration(seconds: 5)),
+    );
   }
 }

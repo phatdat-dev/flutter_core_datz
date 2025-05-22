@@ -23,7 +23,9 @@ final class Helper {
     }
 
     if (inputDate == null) return date;
-    String output = DateFormat.yMd(Globals.context.locale.languageCode).add_Hms().format(inputDate);
+    String output = DateFormat.yMd(
+      Globals.context.locale.languageCode,
+    ).add_Hms().format(inputDate);
     return output;
   }
 
@@ -63,8 +65,9 @@ final class Helper {
 
   static String generateIdFromDateTimeNow() => DateFormat('yyyyMMddHHmmssSSS').format(DateTime.now());
 
-  static List<Map<String, dynamic>> convertToListMap(List<dynamic> list) =>
-      List<Map<String, dynamic>>.from(list.map((e) => Map<String, dynamic>.from(e)));
+  static List<Map<String, dynamic>> convertToListMap(List<dynamic> list) => List<Map<String, dynamic>>.from(
+    list.map((e) => Map<String, dynamic>.from(e)),
+  );
 
   static Future<String> getInfoDevice() async {
     if (_infoDevice?.isEmpty ?? true) {
@@ -118,7 +121,9 @@ final class Helper {
     final firstDayOfYear = DateTime(year, 1, 1);
     final firstMonday = firstDayOfYear.weekday;
     final daysInFirstWeek = 8 - firstMonday;
-    final firstDate = firstDayOfYear.add(Duration(days: (weekNumber - 1) * 7 - daysInFirstWeek + 1));
+    final firstDate = firstDayOfYear.add(
+      Duration(days: (weekNumber - 1) * 7 - daysInFirstWeek + 1),
+    );
     return firstDate;
   }
 
@@ -127,7 +132,10 @@ final class Helper {
   // https://stackoverflow.com/questions/50322054/flutter-how-to-set-and-lock-screen-orientation-on-demand
   static void toggleFullScreenMode(bool isFullScreen) {
     if (isFullScreen) {
-      SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
     } else {
       SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     }
@@ -138,7 +146,10 @@ final class Helper {
     if (toggle) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     } else {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values); // to re-show bars
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual,
+        overlays: SystemUiOverlay.values,
+      ); // to re-show bars
     }
   }
 

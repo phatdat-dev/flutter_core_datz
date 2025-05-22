@@ -19,12 +19,17 @@ class _WalletViewState extends State<WalletView> {
       slivers: [
         const SliverAppBar(title: Text("Wallet")),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingContent),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppConstants.paddingContent,
+          ),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               const SizedBox(height: 10),
 
-              SizedBox(height: kBottomNavigationBarHeight * (AppGlobals.isIos ? 2.3 : 1.5)),
+              SizedBox(
+                height:
+                    kBottomNavigationBarHeight * (AppGlobals.isIos ? 2.3 : 1.5),
+              ),
             ]),
           ),
         ),

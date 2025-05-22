@@ -9,18 +9,31 @@ class BaseSearchRequestModel extends BaseModel<BaseSearchRequestModel> {
   DateTime? fromDate;
   DateTime? toDate;
 
-  BaseSearchRequestModel({this.query, this.page = 1, this.pageSize = 50, this.sortBy, this.isSortDescending, this.fromDate, this.toDate});
+  BaseSearchRequestModel({
+    this.query,
+    this.page = 1,
+    this.pageSize = 50,
+    this.sortBy,
+    this.isSortDescending,
+    this.fromDate,
+    this.toDate,
+  });
 
   @override
-  BaseSearchRequestModel fromJson(Map<String, dynamic> json) => BaseSearchRequestModel(
-    query: json['query'],
-    page: (json['page'] as num).toInt(),
-    pageSize: (json['pageSize'] as num).toInt(),
-    sortBy: json['sortBy'],
-    isSortDescending: json['isSortDescending'],
-    fromDate: json['fromDate'] != null ? DateTime.tryParse(json['fromDate']) : null,
-    toDate: json['toDate'] != null ? DateTime.tryParse(json['toDate']) : null,
-  );
+  BaseSearchRequestModel fromJson(Map<String, dynamic> json) =>
+      BaseSearchRequestModel(
+        query: json['query'],
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['pageSize'] as num).toInt(),
+        sortBy: json['sortBy'],
+        isSortDescending: json['isSortDescending'],
+        fromDate: json['fromDate'] != null
+            ? DateTime.tryParse(json['fromDate'])
+            : null,
+        toDate: json['toDate'] != null
+            ? DateTime.tryParse(json['toDate'])
+            : null,
+      );
 
   @override
   Map<String, dynamic> toJson() {

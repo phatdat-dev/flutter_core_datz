@@ -41,7 +41,13 @@ class CheckRadioCircleWidget<T> extends StatelessWidget {
   final Widget child;
   final ValueChanged<T?> onChanged;
 
-  const CheckRadioCircleWidget({super.key, required this.value, required this.groupValue, required this.onChanged, required this.child});
+  const CheckRadioCircleWidget({
+    super.key,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +59,9 @@ class CheckRadioCircleWidget<T> extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: isSelected ? Colors.blue : Colors.transparent),
+          border: Border.all(
+            color: isSelected ? Colors.blue : Colors.transparent,
+          ),
           // color: isSelected ? Colors.blue : Colors.transparent,
         ),
         child: child,
@@ -93,7 +101,13 @@ class CircleRadioListTitleWidget<T> extends CheckRadioListTileWidget<T> {
       leading: Container(
         padding: EdgeInsets.all(circlePadding),
         margin: EdgeInsets.all(circleMargin),
-        decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: isSelected ? circleColor : Colors.transparent, width: 2)),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: isSelected ? circleColor : Colors.transparent,
+            width: 2,
+          ),
+        ),
         child: leading,
       ),
       title: title,

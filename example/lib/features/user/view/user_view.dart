@@ -29,7 +29,9 @@ class _UserViewState extends State<UserView> {
   }
 
   InputDecoration _hideInputDecoration({String? hintText}) {
-    final border = UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).highlightColor));
+    final border = UnderlineInputBorder(
+      borderSide: BorderSide(color: Theme.of(context).highlightColor),
+    );
     return InputDecoration(
       filled: false,
       border: border,
@@ -63,7 +65,12 @@ class _UserViewState extends State<UserView> {
                               Container(
                                 height: 200.0 + kToolbarHeight,
                                 decoration: const BoxDecoration(
-                                  image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/1500/800")),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      "https://picsum.photos/1500/800",
+                                    ),
+                                  ),
                                 ),
                               ),
                               Positioned(
@@ -75,10 +82,17 @@ class _UserViewState extends State<UserView> {
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: HelperWidget.imageProviderFrom(Assets.images.logo.logo512x512.path),
+                                      image: HelperWidget.imageProviderFrom(
+                                        Assets.images.logo.logo512x512.path,
+                                      ),
                                     ),
                                     color: Colors.white,
-                                    border: Border.all(color: Theme.of(context).colorScheme.surface, width: 6.0),
+                                    border: Border.all(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.surface,
+                                      width: 6.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -90,48 +104,79 @@ class _UserViewState extends State<UserView> {
                             children: <Widget>[
                               Text(
                                 user?.resPartner?.name ?? "",
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 28,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(width: 5.0),
-                              Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary),
+                              Icon(
+                                Icons.check_circle,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ],
                           ),
                           const SizedBox(height: 10.0),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingContent),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppConstants.paddingContent,
+                            ),
                             child: Column(
                               children: [
                                 buildInfomation(),
-                                if (GetIt.instance<UserController>().state.value != null)
+                                if (GetIt.instance<UserController>()
+                                        .state
+                                        .value !=
+                                    null)
                                   SizedBox(
                                     width: double.infinity,
                                     child: ElevatedButton(
                                       onPressed: () async {
                                         final result = await showDialog<bool>(
                                           context: context,
-                                          builder:
-                                              (context) => AlertDialog(
-                                                title: const Text("Xác nhận xóa tài khoản"),
-                                                content: const Text(
-                                                  "Tài khoản của bạn sẽ bị xóa vĩnh viễn trong vòng 30 ngày nếu không sử dụng. Bạn có chắc chắn muốn xóa tài khoản?",
-                                                ),
-                                                actions: [
-                                                  TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text("Hủy")),
-                                                  FilledButton(
-                                                    onPressed: () {
-                                                      LoginController.onLogout();
-                                                      // Navigator.of(context).pop(true);
-                                                    },
-                                                    style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5)),
-                                                    child: const Text("Xóa tài khoản"),
-                                                  ),
-                                                ],
+                                          builder: (context) => AlertDialog(
+                                            title: const Text(
+                                              "Xác nhận xóa tài khoản",
+                                            ),
+                                            content: const Text(
+                                              "Tài khoản của bạn sẽ bị xóa vĩnh viễn trong vòng 30 ngày nếu không sử dụng. Bạn có chắc chắn muốn xóa tài khoản?",
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.of(
+                                                  context,
+                                                ).pop(false),
+                                                child: const Text("Hủy"),
                                               ),
+                                              FilledButton(
+                                                onPressed: () {
+                                                  LoginController.onLogout();
+                                                  // Navigator.of(context).pop(true);
+                                                },
+                                                style: FilledButton.styleFrom(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5,
+                                                      ),
+                                                ),
+                                                child: const Text(
+                                                  "Xóa tài khoản",
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         );
                                         if (result == true) {}
                                       },
-                                      child: const Text("Xóa tài khoản", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                                      child: const Text(
+                                        "Xóa tài khoản",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                   ),
                               ],
@@ -148,7 +193,9 @@ class _UserViewState extends State<UserView> {
               top: kToolbarHeight,
               left: 10,
               child: Material(
-                color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.5),
+                color: Theme.of(
+                  context,
+                ).colorScheme.surface.withValues(alpha: 0.5),
                 shape: const CircleBorder(),
                 child: const BackButton(),
               ),
@@ -269,7 +316,13 @@ class _UserViewState extends State<UserView> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 13.0), //LINK - :37
-                  child: Row(children: [item["icon"] as Widget, const SizedBox(width: 5.0), Text("${item["label"]}: ")]),
+                  child: Row(
+                    children: [
+                      item["icon"] as Widget,
+                      const SizedBox(width: 5.0),
+                      Text("${item["label"]}: "),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: Builder(
@@ -281,10 +334,12 @@ class _UserViewState extends State<UserView> {
                             initialValue: DateTime.tryParse(text),
                             enabled: item["enable"] as bool? ?? true,
                             inputType: InputType.date,
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
                             decoration: _hideInputDecoration(),
                             onChanged: (newValue) {
-                              request?[item["fieldName"] as String] = newValue?.toIso8601String();
+                              request?[item["fieldName"] as String] = newValue
+                                  ?.toIso8601String();
                               // controller.state.value = controller.state.value?.fromJson(value!);
                             },
                           );
@@ -293,26 +348,39 @@ class _UserViewState extends State<UserView> {
                             name: item["fieldName"] as String,
                             initialValue: text.toUpperCase(), //!
                             enabled: item["enable"] as bool? ?? true,
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
                             decoration: _hideInputDecoration(),
-                            items: (item["options"] as List<String>).map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                            items: (item["options"] as List<String>)
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e),
+                                  ),
+                                )
+                                .toList(),
                             onChanged: (newValue) {
-                              request?[item["fieldName"] as String] = newValue?.toLowerCase();
+                              request?[item["fieldName"] as String] = newValue
+                                  ?.toLowerCase();
                               // controller.state.value = controller.state.value?.fromJson(value!);
                             },
                           );
                         default:
                           return Opacity(
-                            opacity: item["enable"] as bool? ?? true ? 1.0 : 0.5,
+                            opacity: item["enable"] as bool? ?? true
+                                ? 1.0
+                                : 0.5,
                             child: FormBuilderTextField(
                               name: item["fieldName"] as String,
                               initialValue: text,
                               keyboardType: keyboardType,
                               enabled: item["enable"] as bool? ?? true,
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .copyWith(fontWeight: FontWeight.bold),
                               decoration: _hideInputDecoration(),
                               onChanged: (newValue) {
-                                request?[item["fieldName"] as String] = newValue;
+                                request?[item["fieldName"] as String] =
+                                    newValue;
                                 // controller.state.value = controller.state.value?.fromJson(value!);
                               },
                             ),

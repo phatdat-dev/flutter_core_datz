@@ -25,7 +25,10 @@ Future<void> runMain({
   FutureOr<void> Function()? onInit,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Future.wait([EasyLocalization.ensureInitialized(), _initSingletons(configs)]);
+  await Future.wait([
+    EasyLocalization.ensureInitialized(),
+    _initSingletons(configs),
+  ]);
 
   // Setting Device Orientation
   // SystemChrome.setPreferredOrientations([
@@ -34,7 +37,9 @@ Future<void> runMain({
   // ]);
   await onInit?.call();
 
-  runApp(beforeAppBuilder?.call(MyApp(builder: builder)) ?? MyApp(builder: builder));
+  runApp(
+    beforeAppBuilder?.call(MyApp(builder: builder)) ?? MyApp(builder: builder),
+  );
   errorWidget();
 }
 
@@ -47,7 +52,11 @@ void errorWidget() {
       return Container(
         alignment: Alignment.center,
         color: Colors.transparent,
-        child: Image.asset(GetIt.instance<BaseConfigs>().assetsPath.errorWidget, width: 100, height: 100),
+        child: Image.asset(
+          GetIt.instance<BaseConfigs>().assetsPath.errorWidget,
+          width: 100,
+          height: 100,
+        ),
       );
     };
   }
@@ -56,12 +65,22 @@ void errorWidget() {
 Future<void> _initSingletons(BaseConfigs configs) async {
   GetIt.instance.registerSingleton<BaseConfigs>(configs);
   // Services
-  GetIt.instance.registerLazySingleton<StorageService>(() => configs.storageService);
-  GetIt.instance.registerLazySingleton<NetworkConnectivityService>(() => configs.networkConnectivityService);
+  GetIt.instance.registerLazySingleton<StorageService>(
+    () => configs.storageService,
+  );
+  GetIt.instance.registerLazySingleton<NetworkConnectivityService>(
+    () => configs.networkConnectivityService,
+  );
   // Controllers
-  GetIt.instance.registerLazySingleton<TranslationController>(() => configs.translationController);
-  GetIt.instance.registerLazySingleton<ThemeController>(() => ThemeController());
-  GetIt.instance.registerLazySingleton<AppExceptionController>(() => AppExceptionController());
+  GetIt.instance.registerLazySingleton<TranslationController>(
+    () => configs.translationController,
+  );
+  GetIt.instance.registerLazySingleton<ThemeController>(
+    () => ThemeController(),
+  );
+  GetIt.instance.registerLazySingleton<AppExceptionController>(
+    () => AppExceptionController(),
+  );
 
   // initiating db
   await GetIt.instance<StorageService>().init();

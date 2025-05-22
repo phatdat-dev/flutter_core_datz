@@ -7,5 +7,6 @@ extension NumExtension on num {
 
   // String formatNumberMoney([String? symbol]) => NumberFormat.currency(customPattern: '#,### \u00a4', symbol: symbol, decimalDigits: 5).format(this);
   String formatNumber() => NumberFormat('#,###', 'en_US').format(this);
-  String formatNumberCompact() => NumberFormat.compact(locale: 'en_US').format(this);
+  String formatNumberCompact() =>
+      NumberFormat.compact(locale: 'en_US').format(this);
 }

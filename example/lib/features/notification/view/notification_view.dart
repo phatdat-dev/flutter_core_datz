@@ -29,7 +29,9 @@ class _NotificationViewState extends State<NotificationView> {
             ),
           ],
           body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingContent),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppConstants.paddingContent,
+            ),
             children: [
               ...List.generate(2, (index) {
                 (indexx % 10 == 0) ? indexx = 0 : indexx++;

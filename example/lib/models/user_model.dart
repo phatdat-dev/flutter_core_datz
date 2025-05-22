@@ -21,11 +21,13 @@ class UserModel extends BaseModel<UserModel> {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        userName: json['user_name'],
-        password: json['password'] ?? json['pwd'],
-        userId: (json['user_id'] as num?)?.toInt(),
-        resPartner: json['res_partner'] != null ? ResPartner().fromJson(json['res_partner']) : null,
-      );
+    userName: json['user_name'],
+    password: json['password'] ?? json['pwd'],
+    userId: (json['user_id'] as num?)?.toInt(),
+    resPartner: json['res_partner'] != null
+        ? ResPartner().fromJson(json['res_partner'])
+        : null,
+  );
 
   @override
   UserModel fromJson(Map<String, dynamic> json) => UserModel.fromJson(json);
@@ -88,15 +90,17 @@ class ResPartner extends BaseModel<ResPartner> {
   });
 
   factory ResPartner.fromJson(Map<String, dynamic> json) => ResPartner(
-        id: (json['id'] as num?)?.toInt(),
-        name: json['name'],
-        phone: json['phone'] ?? json['mobile'],
-        idNo: json['id_no'] is String? ? json['id_no'] : null,
-        yob: json['yob']?.toString(),
-        gender: json['gender'],
-        email: json['email'],
-        countryId: json['country_id'] != null ? StateResponse(id: json['country_id'][0], name: json['country_id'][1]) : null,
-      );
+    id: (json['id'] as num?)?.toInt(),
+    name: json['name'],
+    phone: json['phone'] ?? json['mobile'],
+    idNo: json['id_no'] is String? ? json['id_no'] : null,
+    yob: json['yob']?.toString(),
+    gender: json['gender'],
+    email: json['email'],
+    countryId: json['country_id'] != null
+        ? StateResponse(id: json['country_id'][0], name: json['country_id'][1])
+        : null,
+  );
 
   @override
   ResPartner fromJson(Map<String, dynamic> json) => ResPartner.fromJson(json);

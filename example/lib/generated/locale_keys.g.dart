@@ -2,7 +2,7 @@
 
 // ignore_for_file: constant_identifier_names
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const en_US = 'en_US';
   static const vi_VN = 'vi_VN';
   static const ja_JP = 'ja_JP';
@@ -23,7 +23,7 @@ abstract class  LocaleKeys {
   static const Logout = 'Logout';
   static const UserManual = 'UserManual';
   static const Setting = 'Setting';
-  static const SettingView_ViewCurrentColorCode = 'SettingView.ViewCurrentColorCode';
+  static const SettingView_ViewCurrentColorCode =
+      'SettingView.ViewCurrentColorCode';
   static const SettingView = 'SettingView';
-
 }

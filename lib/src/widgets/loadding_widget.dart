@@ -10,14 +10,16 @@ class Loadding {
   static void show() async {
     if (_overlayEntry != null) return;
     _overlayEntry = OverlayEntry(
-      builder:
-          (context) => GestureDetector(
-            onTap: () => dismiss(),
-            child: Container(
-              color: DialogTheme.of(context).barrierColor ?? Theme.of(context).dialogTheme.barrierColor ?? Colors.black54,
-              child: const LoaddingWidget(),
-            ),
-          ),
+      builder: (context) => GestureDetector(
+        onTap: () => dismiss(),
+        child: Container(
+          color:
+              DialogTheme.of(context).barrierColor ??
+              Theme.of(context).dialogTheme.barrierColor ??
+              Colors.black54,
+          child: const LoaddingWidget(),
+        ),
+      ),
     );
     Overlay.of(Globals.context).insert(_overlayEntry!);
   }
@@ -65,9 +67,17 @@ class LoaddingWidgetState extends State<LoaddingWidget> {
               color: Colors.white,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(20),
-              boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 10.0, offset: Offset(0.0, 10.0))],
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10.0,
+                  offset: Offset(0.0, 10.0),
+                ),
+              ],
             ),
-            child: ClipOval(child: Image(image: imageLoadding, width: 200, height: 200)),
+            child: ClipOval(
+              child: Image(image: imageLoadding, width: 200, height: 200),
+            ),
           ),
         ),
       ),

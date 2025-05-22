@@ -15,4 +15,5 @@ part 'firestore_service.dart';
 part 'notification_service.dart';
 part 'remote_config_service.dart';
 
-class FireBaseService with FireStoreService, NotificationService, RemoteConfigService {}
+class FireBaseService
+    with FireStoreService, NotificationService, RemoteConfigService {}

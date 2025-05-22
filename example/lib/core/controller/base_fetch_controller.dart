@@ -75,7 +75,9 @@ abstract class BaseFetchController<T> extends BaseController {
   // bởi vì có thể sẽ dùng NestedScrollView, nên ko thể chính xác được sử dụng cái nào để lấy scrollColtroller
   /// return true if isScrollBottom
   bool onListenScrollToBottom(ScrollController scrollController) {
-    bool isScrollBottom = scrollController.position.pixels == scrollController.position.maxScrollExtent;
+    bool isScrollBottom =
+        scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent;
     //nếu scroll đến cuối danh sách
     if ((!dataResponseIsMaximum) && isScrollBottom) {
       loadMoreData();
@@ -96,7 +98,9 @@ abstract class BaseFetchController<T> extends BaseController {
       );
       //
       if (parseObjectData is String) {
-        json = Helper.convertToListMap((parseObjectData as String).isEmpty ? json : json[parseObjectData]);
+        json = Helper.convertToListMap(
+          (parseObjectData as String).isEmpty ? json : json[parseObjectData],
+        );
       } else if (json is WrapperResponse) {
         json = json.listData;
       }

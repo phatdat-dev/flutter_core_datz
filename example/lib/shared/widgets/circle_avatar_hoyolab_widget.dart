@@ -11,7 +11,11 @@ import 'circle_avatar_outline.dart';
 String get _getAssetsLogo => Assets.images.logo.logo.keyName;
 
 class CircleAvatarHoyolabWidget extends StatefulWidget {
-  const CircleAvatarHoyolabWidget({super.key, this.radius = 25, this.backgroundColor});
+  const CircleAvatarHoyolabWidget({
+    super.key,
+    this.radius = 25,
+    this.backgroundColor,
+  });
   final double radius;
   final Color? backgroundColor;
 
@@ -47,11 +51,10 @@ class _CircleAvatarHoyolabWidgetState extends State<CircleAvatarHoyolabWidget> w
             valueListenable: avatarSet,
             builder: (context, value, child) {
               if (value != null) {
-                listImage ??=
-                    (value['data']['list'] as List)
-                        // .where((e) => e['name'] == '原神')
-                        .expand((e) => e['list'])
-                        .toList();
+                listImage ??= (value['data']['list'] as List)
+                    // .where((e) => e['name'] == '原神')
+                    .expand((e) => e['list'])
+                    .toList();
                 randomIndex ??= Random().nextInt(listImage!.length);
                 //
                 final settingController = GetIt.instance<SettingController>();
@@ -59,14 +62,13 @@ class _CircleAvatarHoyolabWidgetState extends State<CircleAvatarHoyolabWidget> w
 
                 return ValueListenableBuilder(
                   valueListenable: settingController.avatarUrl,
-                  builder:
-                      (context, value, child) => FadeInImage.assetNetwork(
-                        placeholder: _getAssetsLogo,
-                        image: value,
-                        fit: BoxFit.cover,
-                        fadeInDuration: const Duration(milliseconds: 200),
-                        fadeOutDuration: const Duration(milliseconds: 180),
-                      ),
+                  builder: (context, value, child) => FadeInImage.assetNetwork(
+                    placeholder: _getAssetsLogo,
+                    image: value,
+                    fit: BoxFit.cover,
+                    fadeInDuration: const Duration(milliseconds: 200),
+                    fadeOutDuration: const Duration(milliseconds: 180),
+                  ),
                 );
 
                 // return Image.network(
@@ -123,43 +125,55 @@ void showAvatarSetDialog(BuildContext context) {
                     final e = listMapImage[index];
                     return Column(
                       children: [
-                        Text("${e['game_name']} (${(e['list'] as List).length})"),
+                        Text(
+                          "${e['game_name']} (${(e['list'] as List).length})",
+                        ),
                         ValueListenableBuilder(
                           valueListenable: selectedAvatar,
-                          builder:
-                              (context, value, child) => Wrap(
-                                alignment: WrapAlignment.center,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                spacing: 5,
-                                runSpacing: 5,
-                                children:
-                                    (e['list'] as List).map<Widget>((e) {
-                                      Widget buildAvatar(double radius) => GestureDetector(
-                                        onTap: () => selectedAvatar.value = e['icon'],
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.transparent,
-                                          radius: radius,
-                                          child: ClipOval(
-                                            child: FadeInImage.assetNetwork(
-                                              placeholder: _getAssetsLogo,
-                                              image: e['icon'],
-                                              fit: BoxFit.cover,
-                                              fadeInDuration: const Duration(milliseconds: 200),
-                                              fadeOutDuration: const Duration(milliseconds: 180),
-                                            ),
-                                          ),
-                                        ),
-                                      );
+                          builder: (context, value, child) => Wrap(
+                            alignment: WrapAlignment.center,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: 5,
+                            runSpacing: 5,
+                            children: (e['list'] as List).map<Widget>((e) {
+                              Widget buildAvatar(double radius) => GestureDetector(
+                                onTap: () => selectedAvatar.value = e['icon'],
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: radius,
+                                  child: ClipOval(
+                                    child: FadeInImage.assetNetwork(
+                                      placeholder: _getAssetsLogo,
+                                      image: e['icon'],
+                                      fit: BoxFit.cover,
+                                      fadeInDuration: const Duration(
+                                        milliseconds: 200,
+                                      ),
+                                      fadeOutDuration: const Duration(
+                                        milliseconds: 180,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
 
-                                      final bool isSelected = value == e['icon'];
+                              final bool isSelected = value == e['icon'];
 
-                                      Widget child = buildAvatar(radius);
+                              Widget child = buildAvatar(radius);
 
-                                      if (isSelected) child = CircleAvatarOutline(child: buildAvatar(radius + 10));
+                              if (isSelected) {
+                                child = CircleAvatarOutline(
+                                  child: buildAvatar(radius + 10),
+                                );
+                              }
 
-                                      return AnimatedSize(alignment: Alignment.center, duration: const Duration(milliseconds: 200), child: child);
-                                    }).toList(),
-                              ),
+                              return AnimatedSize(
+                                alignment: Alignment.center,
+                                duration: const Duration(milliseconds: 200),
+                                child: child,
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ],
                     );
@@ -180,7 +194,9 @@ void showAvatarSetDialog(BuildContext context) {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              GetIt.instance<SettingController>().changeAvatarUrl(selectedAvatar.value);
+              GetIt.instance<SettingController>().changeAvatarUrl(
+                selectedAvatar.value,
+              );
             },
             child: const Text('OK'),
           ),

@@ -19,13 +19,19 @@ class TextRegisterWidget extends StatelessWidget {
               const Text("Bạn không có tài khoản?"),
               TextButton(
                 onPressed: () => context.pushRoute(const RegisterRoute()),
-                child: Text("Đăng ký ngay!", style: TextStyle(color: context.theme.colorScheme.error)),
+                child: Text(
+                  "Đăng ký ngay!",
+                  style: TextStyle(color: context.theme.colorScheme.error),
+                ),
               ),
             ],
           ),
           TextButton(
             onPressed: () => context.pushRoute(const HomeRoute()),
-            child: const Text("Tôi muốn đặt vé không cần tạo tài khoản >>", style: TextStyle(color: Colors.green)),
+            child: const Text(
+              "Tôi muốn đặt vé không cần tạo tài khoản >>",
+              style: TextStyle(color: Colors.green),
+            ),
           ),
         ],
       ),
@@ -46,7 +52,10 @@ class TextLoginWidget extends StatelessWidget {
           const Text("Bạn đã có tài khoản?"),
           TextButton(
             onPressed: () => context.pushRoute(const LoginRoute()),
-            child: Text("Đăng nhập ngay!", style: TextStyle(color: context.theme.colorScheme.error)),
+            child: Text(
+              "Đăng nhập ngay!",
+              style: TextStyle(color: context.theme.colorScheme.error),
+            ),
           ),
         ],
       ),

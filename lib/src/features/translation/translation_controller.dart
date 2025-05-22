@@ -17,7 +17,11 @@ final class TranslationController {
   TranslationController({
     this.fallbackLocale = const Locale('en', 'US'),
     this.startLocale = const Locale('vi', 'VN'),
-    this.locales = const [Locale('en', 'US'), Locale('vi', 'VN'), Locale('ja', 'JP')],
+    this.locales = const [
+      Locale('en', 'US'),
+      Locale('vi', 'VN'),
+      Locale('ja', 'JP'),
+    ],
   });
 
   final _sharedPrefs = GetIt.instance.get<StorageService>().sharedPreferences!;
@@ -42,7 +46,9 @@ final class TranslationController {
   }
 
   Future<void> init() async {
-    final String name = (startLocale.countryCode?.isEmpty ?? true) ? startLocale.languageCode : startLocale.toString();
+    final String name = (startLocale.countryCode?.isEmpty ?? true)
+        ? startLocale.languageCode
+        : startLocale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
     Intl.defaultLocale = localeName;

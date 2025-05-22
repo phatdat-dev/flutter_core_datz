@@ -65,7 +65,8 @@ class AppException implements Exception, BaseModel<AppException> {
   );
 
   @override
-  AppException fromJson(Map<String, dynamic> json) => AppException.fromJson(json);
+  AppException fromJson(Map<String, dynamic> json) =>
+      AppException.fromJson(json);
 
   @override
   Map<String, dynamic> toJson() => {
@@ -85,16 +86,24 @@ class AppException implements Exception, BaseModel<AppException> {
 
   static String toMessageError(dynamic errorMessage) {
     if (errorMessage is Map) {
-      if (errorMessage.containsKey('error') || errorMessage.containsKey('message')) {
+      if (errorMessage.containsKey('error') ||
+          errorMessage.containsKey('message')) {
         final error = errorMessage['error'];
-        return error is Map ? error['message'] ?? '' : (errorMessage['message'] ?? error).toString();
+        return error is Map
+            ? error['message'] ?? ''
+            : (errorMessage['message'] ?? error).toString();
       }
-      return errorMessage.entries.map((e) => e.value is List ? e.value.join('\n') : e.value.toString()).join('\n');
+      return errorMessage.entries
+          .map((e) => e.value is List ? e.value.join('\n') : e.value.toString())
+          .join('\n');
     }
     return errorMessage.toString();
   }
 
-  Future<Either<AppException, T>> handleExceptionAsync<T>(Future<T> Function() handler, {bool showToastError = true}) async {
+  Future<Either<AppException, T>> handleExceptionAsync<T>(
+    Future<T> Function() handler, {
+    bool showToastError = true,
+  }) async {
     final stopWatch = Stopwatch()..start();
     try {
       final val = await handler();
@@ -105,7 +114,10 @@ class AppException implements Exception, BaseModel<AppException> {
     }
   }
 
-  Either<AppException, T> handleException<T>(T Function() handler, {bool showToastError = true}) {
+  Either<AppException, T> handleException<T>(
+    T Function() handler, {
+    bool showToastError = true,
+  }) {
     final stopWatch = Stopwatch()..start();
     try {
       final val = handler();
@@ -116,13 +128,18 @@ class AppException implements Exception, BaseModel<AppException> {
     }
   }
 
-  Either<AppException, T> onException<T>(Object ex, Stopwatch stopWatch, bool showToastError) {
+  Either<AppException, T> onException<T>(
+    Object ex,
+    Stopwatch stopWatch,
+    bool showToastError,
+  ) {
     stopWatch.stop();
     timeProcess = stopWatch.elapsedMilliseconds;
     message = onExtractMessageFromException(ex);
     identifier = (identifier ?? "") + ex.runtimeType.toString();
 
-    if (showToastError && GetIt.instance<NetworkConnectivityService>().isOnline) {
+    if (showToastError &&
+        GetIt.instance<NetworkConnectivityService>().isOnline) {
       HelperWidget.showToastError('[$statusCode]:\n$message');
     }
 

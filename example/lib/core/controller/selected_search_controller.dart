@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 
 // https://api.flutter.dev/flutter/material/SearchAnchor-class.html
-class SelectedSearchController<T extends SearchDelegateQueryName> extends SearchController {
+class SelectedSearchController<T extends SearchDelegateQueryName>
+    extends SearchController {
   SelectedSearchController({this.maxHistory = 5});
   List<T> listData = []; //nên để final
   ValueChanged<T>? onSelectionChanged;
@@ -20,7 +21,9 @@ class SelectedSearchController<T extends SearchDelegateQueryName> extends Search
 
   void _handleSelection(T item) {
     closeView(item.queryName);
-    WidgetsBinding.instance.addPostFrameCallback((_) => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+    );
     //
     _selectedItem = item;
 
@@ -49,8 +52,17 @@ class SelectedSearchController<T extends SearchDelegateQueryName> extends Search
 
   Iterable<Widget> getSuggestions() {
     return listData
-        .where((element) => element.queryName.toLowerCase().contains(text.toLowerCase()))
-        .map((item) => ListTile(title: Text(item.queryName), trailing: _buildTrailingIconButton(item), onTap: () => _handleSelection(item)));
+        .where(
+          (element) =>
+              element.queryName.toLowerCase().contains(text.toLowerCase()),
+        )
+        .map(
+          (item) => ListTile(
+            title: Text(item.queryName),
+            trailing: _buildTrailingIconButton(item),
+            onTap: () => _handleSelection(item),
+          ),
+        );
   }
 
   Widget _buildTrailingIconButton(T item) => IconButton(

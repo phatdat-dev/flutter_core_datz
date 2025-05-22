@@ -38,17 +38,18 @@ class CurvedNavigationBar extends StatefulWidget {
     this.animationDuration = const Duration(milliseconds: 600),
     this.height = 80.0,
     this.maxWidth,
-  })  : letIndexChange = letIndexChange ?? ((_) => true),
-        assert(items.isNotEmpty),
-        assert(0 <= index && index < items.length),
-        assert(0 <= height && height <= 80.0),
-        assert(maxWidth == null || 0 <= maxWidth);
+  }) : letIndexChange = letIndexChange ?? ((_) => true),
+       assert(items.isNotEmpty),
+       assert(0 <= index && index < items.length),
+       assert(0 <= height && height <= 80.0),
+       assert(maxWidth == null || 0 <= maxWidth);
 
   @override
   CurvedNavigationBarState createState() => CurvedNavigationBarState();
 }
 
-class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTickerProviderStateMixin {
+class CurvedNavigationBarState extends State<CurvedNavigationBar>
+    with SingleTickerProviderStateMixin {
   late double _startingPos;
   late int _endingIndex;
   late double _pos;
@@ -77,7 +78,8 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
           _icon = widget.items[_endingIndex].icon;
           // _label = widget.items[_endingIndex].label;
         }
-        _buttonHide = (1 - ((middle - _pos) / (_startingPos - middle)).abs()).abs();
+        _buttonHide = (1 - ((middle - _pos) / (_startingPos - middle)).abs())
+            .abs();
       });
     });
   }
@@ -89,7 +91,11 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
       final newPosition = widget.index / _length;
       _startingPos = _pos;
       _endingIndex = widget.index;
-      _animationController.animateTo(newPosition, duration: widget.animationDuration, curve: widget.animationCurve);
+      _animationController.animateTo(
+        newPosition,
+        duration: widget.animationDuration,
+        curve: widget.animationCurve,
+      );
     }
     if (!_animationController.isAnimating) {
       _icon = widget.items[_endingIndex].icon;
@@ -110,9 +116,14 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
       height: widget.height,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final maxWidth = min(constraints.maxWidth, widget.maxWidth ?? constraints.maxWidth);
+          final maxWidth = min(
+            constraints.maxWidth,
+            widget.maxWidth ?? constraints.maxWidth,
+          );
           return Align(
-            alignment: textDirection == TextDirection.ltr ? Alignment.bottomLeft : Alignment.bottomRight,
+            alignment: textDirection == TextDirection.ltr
+                ? Alignment.bottomLeft
+                : Alignment.bottomRight,
             child: Container(
               color: widget.backgroundColor,
               width: maxWidth,
@@ -126,8 +137,12 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
                   children: <Widget>[
                     Positioned(
                       bottom: -40 - (80.0 - widget.height),
-                      left: textDirection == TextDirection.rtl ? null : _pos * maxWidth,
-                      right: textDirection == TextDirection.rtl ? _pos * maxWidth : null,
+                      left: textDirection == TextDirection.rtl
+                          ? null
+                          : _pos * maxWidth,
+                      right: textDirection == TextDirection.rtl
+                          ? _pos * maxWidth
+                          : null,
                       width: maxWidth / _length,
                       child: Center(
                         child: Transform.translate(
@@ -151,7 +166,12 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
                       right: 0,
                       bottom: 0 - (80.0 - widget.height),
                       child: CustomPaint(
-                        painter: NavCustomPainter(_pos, _length, widget.color, textDirection),
+                        painter: NavCustomPainter(
+                          _pos,
+                          _length,
+                          widget.color,
+                          textDirection,
+                        ),
                         child: Container(
                           height: 80.0,
                         ),
@@ -173,9 +193,9 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
                       right: 0,
                       bottom: 0 - (80.0 - widget.height),
                       child: SizedBox(
-                          height: 100.0,
-                          child: Row(
-                              children: widget.items.map((item) {
+                        height: 100.0,
+                        child: Row(
+                          children: widget.items.map((item) {
                             return NavButton(
                               onTap: _buttonTap,
                               position: _pos,
@@ -192,7 +212,9 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(bottom: 10),
+                                      padding: const EdgeInsets.only(
+                                        bottom: 10,
+                                      ),
                                       child: Align(
                                         alignment: Alignment.bottomCenter,
                                         child: item.label,
@@ -202,7 +224,9 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
                                 ),
                               ),
                             );
-                          }).toList())),
+                          }).toList(),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -229,7 +253,11 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
     setState(() {
       _startingPos = _pos;
       _endingIndex = index;
-      _animationController.animateTo(newPosition, duration: widget.animationDuration, curve: widget.animationCurve);
+      _animationController.animateTo(
+        newPosition,
+        duration: widget.animationDuration,
+        curve: widget.animationCurve,
+      );
     });
   }
 }

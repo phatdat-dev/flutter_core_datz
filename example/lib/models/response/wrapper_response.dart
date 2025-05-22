@@ -2,7 +2,8 @@
 
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 
-class WrapperResponse<T extends BaseModel> extends BaseModel<WrapperResponse<T>> {
+class WrapperResponse<T extends BaseModel>
+    extends BaseModel<WrapperResponse<T>> {
   final dynamic _data;
   final int? code;
   final String? message;
@@ -10,7 +11,13 @@ class WrapperResponse<T extends BaseModel> extends BaseModel<WrapperResponse<T>>
   final T baseModel;
   final List<String> wrapKey;
 
-  WrapperResponse({dynamic data, this.code, this.message, required this.baseModel, this.wrapKey = const ['Data', 'data']}) : _data = data;
+  WrapperResponse({
+    dynamic data,
+    this.code,
+    this.message,
+    required this.baseModel,
+    this.wrapKey = const ['Data', 'data'],
+  }) : _data = data;
 
   List<T>? get listData => _data is List ? _data as List<T> : null;
   T? get data => _data is T ? _data : null;
@@ -25,7 +32,9 @@ class WrapperResponse<T extends BaseModel> extends BaseModel<WrapperResponse<T>>
       if (json[key] == null) return null;
 
       if (json[key] is List) {
-        return List<T>.from((json[key] as List).map((x) => baseModel.fromJson(x)));
+        return List<T>.from(
+          (json[key] as List).map((x) => baseModel.fromJson(x)),
+        );
       } else if (json[key] is Map) {
         return baseModel.fromJson(json[key]);
       } else {
@@ -34,8 +43,12 @@ class WrapperResponse<T extends BaseModel> extends BaseModel<WrapperResponse<T>>
     }
 
     return WrapperResponse<T>(
-      data: wrapKey.map((e) => getData(e)).firstWhere((element) => element != null, orElse: () => null),
-      code: (json['ResultCode'] as num?)?.toInt() ?? (json['code'] as num?)?.toInt(),
+      data: wrapKey
+          .map((e) => getData(e))
+          .firstWhere((element) => element != null, orElse: () => null),
+      code:
+          (json['ResultCode'] as num?)?.toInt() ??
+          (json['code'] as num?)?.toInt(),
       message: json['ResultInfo'] ?? json['message'],
       baseModel: baseModel,
     );
@@ -46,7 +59,10 @@ class WrapperResponse<T extends BaseModel> extends BaseModel<WrapperResponse<T>>
     final data = <String, dynamic>{};
     if (this._data != null) {
       if (this._data is List) {
-        for (var element in wrapKey) data[element] = (this._data as List<T>).map((v) => v.toJson()).toList();
+        for (var element in wrapKey)
+          data[element] = (this._data as List<T>)
+              .map((v) => v.toJson())
+              .toList();
       } else {
         for (var element in wrapKey) data[element] = (this._data as T).toJson();
       }
@@ -60,8 +76,17 @@ class WrapperResponse<T extends BaseModel> extends BaseModel<WrapperResponse<T>>
     return data;
   }
 
-  WrapperResponse<T> copyWith({dynamic data, int? resultCode, String? resultInfo}) {
-    return WrapperResponse<T>(data: data ?? this._data, code: resultCode ?? this.code, message: resultInfo ?? this.message, baseModel: baseModel);
+  WrapperResponse<T> copyWith({
+    dynamic data,
+    int? resultCode,
+    String? resultInfo,
+  }) {
+    return WrapperResponse<T>(
+      data: data ?? this._data,
+      code: resultCode ?? this.code,
+      message: resultInfo ?? this.message,
+      baseModel: baseModel,
+    );
   }
 }
 

@@ -80,11 +80,16 @@ class MyLogInterceptor extends Interceptor {
       Printt.defaultt('Data Request:');
       if (options.data is FormData) {
         _printAll(
-            jsonEncode(Map.fromEntries([
+          jsonEncode(
+            Map.fromEntries([
               ...(options.data as FormData).fields,
-              ...(options.data as FormData).files.map((e) => MapEntry(e.key, e.value.filename)),
-            ])),
-            Printt.green);
+              ...(options.data as FormData).files.map(
+                (e) => MapEntry(e.key, e.value.filename),
+              ),
+            ]),
+          ),
+          Printt.green,
+        );
       } else {
         _printAll(jsonEncode(options.data), Printt.green);
       }
@@ -105,7 +110,11 @@ class MyLogInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (error) {
       Printt.red('*** DioException ***:');
-      _printKV(err.requestOptions.method, err.requestOptions.uri, Printt.yellow);
+      _printKV(
+        err.requestOptions.method,
+        err.requestOptions.uri,
+        Printt.yellow,
+      );
       Printt.red('$err');
       if (err.response != null) {
         _printResponse(err.response!);
@@ -117,7 +126,11 @@ class MyLogInterceptor extends Interceptor {
   }
 
   void _printResponse(Response response) {
-    _printKV(response.requestOptions.method, response.requestOptions.uri, Printt.yellow);
+    _printKV(
+      response.requestOptions.method,
+      response.requestOptions.uri,
+      Printt.yellow,
+    );
     if (responseHeader) {
       _printKV('statusCode', response.statusCode);
       if (response.isRedirect == true) {

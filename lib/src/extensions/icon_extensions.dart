@@ -72,6 +72,11 @@ extension IconDataExtension on IconData {
   }
 
   Map<String, dynamic> toJson() {
-    return {'codePoint': codePoint, 'fontFamily': fontFamily, 'fontPackage': fontPackage, 'matchTextDirection': matchTextDirection};
+    return {
+      'codePoint': codePoint,
+      'fontFamily': fontFamily,
+      'fontPackage': fontPackage,
+      'matchTextDirection': matchTextDirection,
+    };
   }
 }

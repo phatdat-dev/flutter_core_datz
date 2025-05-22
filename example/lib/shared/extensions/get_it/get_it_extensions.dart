@@ -3,7 +3,10 @@ import 'package:get_it/get_it.dart';
 
 extension GetItExtension on GetIt {
   // same resetLazySingleton
-  Future<T> refresh<T extends Object>(ValueGetter<T> factoryFunc, {String? instanceName}) async {
+  Future<T> refresh<T extends Object>(
+    ValueGetter<T> factoryFunc, {
+    String? instanceName,
+  }) async {
     if (isRegistered<T>(instanceName: instanceName)) await unregister<T>(instanceName: instanceName);
     return registerSingleton<T>(factoryFunc(), instanceName: instanceName);
   }

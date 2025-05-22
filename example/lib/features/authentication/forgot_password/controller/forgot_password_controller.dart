@@ -19,12 +19,15 @@ class ForgotPasswordController extends BaseController {
 
   void onChangeNewPassword(GlobalKey<FormBuilderState> formKey) async {
     if (formKey.currentState?.saveAndValidate() ?? false) {
-      final newPassword = formKey.currentState?.value["newPassword"]?.toString();
+      final newPassword = formKey.currentState?.value["newPassword"]
+          ?.toString();
       if (!newPassword.isNotNullAndEmpty) return;
       //
       (await _remoteDataSource.changePassword(newPassword!)).fold(
         (error) {
-          formKey.currentState?.fields["newPassword"]?.invalidate(error.message);
+          formKey.currentState?.fields["newPassword"]?.invalidate(
+            error.message,
+          );
         },
         (data) {
           formKey.currentState?.reset();

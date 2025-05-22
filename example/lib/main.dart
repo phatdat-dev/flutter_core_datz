@@ -24,7 +24,10 @@ void main() => runMain(
     await _initFirebase();
     await _initOpenAI();
     //
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   },
 );
 
@@ -33,19 +36,29 @@ class MyConfigs extends BaseConfigs {
   String get appTitle => AppConstants.appName;
 
   @override
-  RouterConfig<Object>? routerConfig(BuildContext context) => appRouter.config();
+  RouterConfig<Object>? routerConfig(BuildContext context) =>
+      appRouter.config();
 
   @override
-  ThemeState get themeState => ThemeState(lightTheme: AppTheme.lightTheme, darkTheme: AppTheme.darkTheme);
+  ThemeState get themeState => ThemeState(
+    lightTheme: AppTheme.lightTheme,
+    darkTheme: AppTheme.darkTheme,
+  );
 
   @override
   TranslationController get translationController => TranslationController(
     startLocale: const Locale('en', 'US'),
-    locales: const [Locale('en', 'US'), Locale('vi', 'VN'), Locale('ja', 'JP'), Locale('cs', 'CZ')],
+    locales: const [
+      Locale('en', 'US'),
+      Locale('vi', 'VN'),
+      Locale('ja', 'JP'),
+      Locale('cs', 'CZ'),
+    ],
   );
 
   @override
-  AssetsPath get assetsPath => AssetsPath(imageError: Assets.images.logo.logo512x512.path);
+  AssetsPath get assetsPath =>
+      AssetsPath(imageError: Assets.images.logo.logo512x512.path);
 
   @override
   StorageService get storageService => MyStorageService();
@@ -55,14 +68,22 @@ class MyConfigs extends BaseConfigs {
 class MyHttpoverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
 Future<void> _initSingletons() async {
-  GetIt.instance.registerLazySingleton<UserController>(() => UserController()..onInitData());
-  GetIt.instance.registerLazySingleton<DioNetworkService>(() => DioNetworkService());
-  GetIt.instance.registerSingleton<SettingController>(SettingController()..onInitData());
+  GetIt.instance.registerLazySingleton<UserController>(
+    () => UserController()..onInitData(),
+  );
+  GetIt.instance.registerLazySingleton<DioNetworkService>(
+    () => DioNetworkService(),
+  );
+  GetIt.instance.registerSingleton<SettingController>(
+    SettingController()..onInitData(),
+  );
 }
 
 Future<void> _initFirebase() async {

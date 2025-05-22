@@ -5,7 +5,8 @@ import '../utils/get_utils.dart';
 
 extension StringExtension on String {
   // bool get isEmail => RegExp(r'\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*').hasMatch(this);
-  bool get isHexColor => RegExp(r'^#([0-9a-fA-F]{6})|([0-9a-fA-F]{8})$').hasMatch(this);
+  bool get isHexColor =>
+      RegExp(r'^#([0-9a-fA-F]{6})|([0-9a-fA-F]{8})$').hasMatch(this);
 
   int toInt() => int.tryParse(replaceAll(',', '')) ?? 0;
 
@@ -19,8 +20,12 @@ extension StringExtension on String {
     return base64UrlEncode(values);
   }
 
-  String toCapitalized() => length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
-  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String toTitleCase() => replaceAll(
+    RegExp(' +'),
+    ' ',
+  ).split(' ').map((str) => str.toCapitalized()).join(' ');
 
   // from GetX
   bool get isNum => GetUtils.isNum(this);
@@ -85,9 +90,11 @@ extension StringExtension on String {
 
   bool get isCnpj => GetUtils.isCnpj(this);
 
-  bool isCaseInsensitiveContains(String b) => GetUtils.isCaseInsensitiveContains(this, b);
+  bool isCaseInsensitiveContains(String b) =>
+      GetUtils.isCaseInsensitiveContains(this, b);
 
-  bool isCaseInsensitiveContainsAny(String b) => GetUtils.isCaseInsensitiveContainsAny(this, b);
+  bool isCaseInsensitiveContainsAny(String b) =>
+      GetUtils.isCaseInsensitiveContainsAny(this, b);
 
   String? get capitalize => GetUtils.capitalize(this);
 
@@ -99,7 +106,8 @@ extension StringExtension on String {
 
   String? get paramCase => GetUtils.paramCase(this);
 
-  String numericOnly({bool firstWordOnly = false}) => GetUtils.numericOnly(this, firstWordOnly: firstWordOnly);
+  String numericOnly({bool firstWordOnly = false}) =>
+      GetUtils.numericOnly(this, firstWordOnly: firstWordOnly);
 
   String createPath([Iterable? segments]) {
     final path = startsWith('/') ? this : '/$this';

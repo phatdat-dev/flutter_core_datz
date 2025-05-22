@@ -3,7 +3,8 @@ import 'package:flutter_core_datz/flutter_core_datz.dart';
 
 import '../../../generated/env.g.dart';
 
-class DioNetworkService extends BaseDioNetworkService with DioNetworkServiceMixin, NetworkExceptionHandleMixin {
+class DioNetworkService extends BaseDioNetworkService
+    with DioNetworkServiceMixin, NetworkExceptionHandleMixin {
   //instance iniit dio
   DioNetworkService() {
     onInit();

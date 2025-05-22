@@ -10,9 +10,11 @@ abstract class BaseConfigs {
   AssetsPath get assetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
   TranslationController get translationController => TranslationController();
-  ResponsiveScreenSettings get responsiveScreenSettings => const ResponsiveScreenSettings();
+  ResponsiveScreenSettings get responsiveScreenSettings =>
+      const ResponsiveScreenSettings();
   StorageService get storageService => StorageService();
-  NetworkConnectivityService get networkConnectivityService => NetworkConnectivityService();
+  NetworkConnectivityService get networkConnectivityService =>
+      NetworkConnectivityService();
 }
 
 class AssetsPath {
@@ -29,7 +31,12 @@ class AssetsPath {
   });
 
   // copyWith
-  AssetsPath copyWith({String? localization, String? loadding, String? errorWidget, String? imageError}) {
+  AssetsPath copyWith({
+    String? localization,
+    String? loadding,
+    String? errorWidget,
+    String? imageError,
+  }) {
     return AssetsPath(
       localization: localization ?? this.localization,
       loadding: loadding ?? this.loadding,

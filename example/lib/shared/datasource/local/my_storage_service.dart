@@ -40,7 +40,9 @@ mixin BaseTable {
 
   Future<void> createTable() async {
     // check if table exists
-    final tables = await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='$tableName'");
+    final tables = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='$tableName'",
+    );
     if (tables.isNotEmpty) return;
     final columns = this.columns.entries
         .map((e) {
@@ -58,13 +60,12 @@ mixin BaseTable {
     if (data == null) return;
     //
     final columns = data.keys.join(", ");
-    final values =
-        data.values.map((e) {
-          if (e is bool) return "${e ? 1 : 0}";
-          if (e is DateTime) return e.toIso8601String();
-          if (e is Iterable || e is Map) return jsonEncode(e);
-          return e.toString();
-        }).toList();
+    final values = data.values.map((e) {
+      if (e is bool) return "${e ? 1 : 0}";
+      if (e is DateTime) return e.toIso8601String();
+      if (e is Iterable || e is Map) return jsonEncode(e);
+      return e.toString();
+    }).toList();
     final query = 'INSERT INTO $tableName ($columns) VALUES (${values.map((e) => "?").join(", ")})';
     await db.rawInsert(query, values);
   }
@@ -80,7 +81,12 @@ mixin BaseTable {
         return MapEntry(e, data[e]);
       }),
     );
-    await db.update(tableName, values, where: "$primaryKey = ?", whereArgs: [data[primaryKey]]);
+    await db.update(
+      tableName,
+      values,
+      where: "$primaryKey = ?",
+      whereArgs: [data[primaryKey]],
+    );
   }
 
   Future<void> delete([String? id]) async {
@@ -89,10 +95,15 @@ mixin BaseTable {
     await db.delete(tableName, where: "$primaryKey = ?", whereArgs: [id]);
   }
 
-  Future<List<Map<String, dynamic>>> select({String? where, List<String>? columns}) async {
+  Future<List<Map<String, dynamic>>> select({
+    String? where,
+    List<String>? columns,
+  }) async {
     final cols = columns != null ? columns.join(", ") : "*";
     final whereClause = where != null ? "WHERE $where" : "";
-    final result = await db.rawQuery('SELECT $cols FROM $tableName $whereClause');
+    final result = await db.rawQuery(
+      'SELECT $cols FROM $tableName $whereClause',
+    );
     // cast data boolean and datetime
     return result.map((e) {
       final data = Map<String, dynamic>.from(e);

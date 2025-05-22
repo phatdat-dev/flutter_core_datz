@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../shared/widgets/circle_avatar_hoyolab_widget.dart';
 
 class CircleAvatarOutlineEdit extends StatelessWidget {
-  const CircleAvatarOutlineEdit({super.key, this.backgroundColor, this.radius = 30});
+  const CircleAvatarOutlineEdit({
+    super.key,
+    this.backgroundColor,
+    this.radius = 30,
+  });
   final Color? backgroundColor;
   final double radius;
 

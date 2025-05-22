@@ -16,7 +16,9 @@ class NotifyCardWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.fromBorderSide(BorderSide(color: Colors.grey, width: 0.5)),
+            border: Border.fromBorderSide(
+              BorderSide(color: Colors.grey, width: 0.5),
+            ),
           ),
           child: const Icon(Icons.notifications_outlined),
         ),
@@ -25,7 +27,11 @@ class NotifyCardWidget extends StatelessWidget {
             if (!isRead)
               Padding(
                 padding: const EdgeInsets.only(right: 5),
-                child: Icon(Icons.circle, color: Colors.green, size: Theme.of(context).textTheme.bodySmall?.fontSize),
+                child: Icon(
+                  Icons.circle,
+                  color: Colors.green,
+                  size: Theme.of(context).textTheme.bodySmall?.fontSize,
+                ),
               ),
             Text(
               'Title',
@@ -43,7 +49,9 @@ class NotifyCardWidget extends StatelessWidget {
           maxLines: 3,
         ),
         titleTextStyle: Theme.of(context).textTheme.titleSmall,
-        subtitleTextStyle: Theme.of(context).textTheme.bodySmall?.apply(fontSizeFactor: 0.9),
+        subtitleTextStyle: Theme.of(
+          context,
+        ).textTheme.bodySmall?.apply(fontSizeFactor: 0.9),
       ),
     );
   }

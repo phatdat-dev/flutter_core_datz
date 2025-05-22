@@ -10,7 +10,9 @@ mixin class ColorConstants {
   static Color? disableFillColor(BuildContext context) {
     final fillColor = Theme.of(context).inputDecorationTheme.fillColor;
     if (fillColor == null) return null;
-    return ColorConstants.getMaterialColor(fillColor).shade600.withValues(alpha: 0.4);
+    return ColorConstants.getMaterialColor(
+      fillColor,
+    ).shade600.withValues(alpha: 0.4);
   }
 
   //
@@ -18,7 +20,10 @@ mixin class ColorConstants {
   static Color hexToColor(String hex) {
     assert(hex.isHexColor, 'hex color must be #rrggbb or #rrggbbaa');
 
-    return Color(int.parse(hex.substring(1), radix: 16) + (hex.length == 7 ? 0xff000000 : 0x00000000));
+    return Color(
+      int.parse(hex.substring(1), radix: 16) +
+          (hex.length == 7 ? 0xff000000 : 0x00000000),
+    );
   }
 
   //
@@ -49,7 +54,12 @@ mixin class ColorConstants {
   }
 
   static Color shadeColor(Color color, double factor) {
-    return Color.fromRGBO((color.redd * (1 - factor)).round(), (color.greenn * (1 - factor)).round(), (color.bluee * (1 - factor)).round(), 1);
+    return Color.fromRGBO(
+      (color.redd * (1 - factor)).round(),
+      (color.greenn * (1 - factor)).round(),
+      (color.bluee * (1 - factor)).round(),
+      1,
+    );
   }
 }
 

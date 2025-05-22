@@ -61,11 +61,21 @@ class PageTransition<T> extends PageRouteBuilder<T> {
     this.matchingBuilder = const CupertinoPageTransitionsBuilder(),
     this.maintainStateData,
     super.settings,
-  }) : assert(inheritTheme ? ctx != null : true, "'ctx' cannot be null when 'inheritTheme' is true, set ctx: context"),
+  }) : assert(
+         inheritTheme ? ctx != null : true,
+         "'ctx' cannot be null when 'inheritTheme' is true, set ctx: context",
+       ),
        super(
-         pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-           return inheritTheme ? InheritedTheme.captureAll(ctx!, child) : child;
-         },
+         pageBuilder:
+             (
+               BuildContext context,
+               Animation<double> animation,
+               Animation<double> secondaryAnimation,
+             ) {
+               return inheritTheme
+                   ? InheritedTheme.captureAll(ctx!, child)
+                   : child;
+             },
          maintainState: maintainStateData ?? true,
        );
 
@@ -77,7 +87,12 @@ class PageTransition<T> extends PageRouteBuilder<T> {
   Duration get reverseTransitionDuration => reverseDuration;
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) => buildTransitionss(
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) => buildTransitionss(
     context,
     animation,
     secondaryAnimation,
@@ -101,20 +116,37 @@ Widget buildTransitionss(
   PageRoute? route,
   bool isIos = false,
   Alignment? alignment,
-  PageTransitionsBuilder matchingBuilder = const CupertinoPageTransitionsBuilder(),
+  PageTransitionsBuilder matchingBuilder =
+      const CupertinoPageTransitionsBuilder(),
   Widget? childCurrent,
   Curve curve = Curves.linear,
 }) {
   childCurrent ??= Container(color: Colors.transparent);
   switch (type) {
     case PageTransitionType.theme:
-      if (route != null) return Theme.of(context).pageTransitionsTheme.buildTransitions(route, context, animation, secondaryAnimation, child);
+      if (route != null) {
+        return Theme.of(context).pageTransitionsTheme.buildTransitions(
+          route,
+          context,
+          animation,
+          secondaryAnimation,
+          child,
+        );
+      }
       return child;
 
     case PageTransitionType.fade:
       if (isIos) {
         var fade = FadeTransition(opacity: animation, child: child);
-        if (route != null) return matchingBuilder.buildTransitions(route, context, animation, secondaryAnimation, fade);
+        if (route != null) {
+          return matchingBuilder.buildTransitions(
+            route,
+            context,
+            animation,
+            secondaryAnimation,
+            fade,
+          );
+        }
         return fade;
       }
       return FadeTransition(opacity: animation, child: child);
@@ -123,9 +155,21 @@ Widget buildTransitionss(
 
     /// PageTransitionType.rightToLeft which is the give us right to left transition
     case PageTransitionType.rightToLeft:
-      var slideTransition = SlideTransition(position: Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero).animate(animation), child: child);
+      var slideTransition = SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(1, 0),
+          end: Offset.zero,
+        ).animate(animation),
+        child: child,
+      );
       if (isIos && route != null) {
-        return matchingBuilder.buildTransitions(route, context, animation, secondaryAnimation, child);
+        return matchingBuilder.buildTransitions(
+          route,
+          context,
+          animation,
+          secondaryAnimation,
+          child,
+        );
       }
       return slideTransition;
       // ignore: dead_code
@@ -133,15 +177,33 @@ Widget buildTransitionss(
 
     /// PageTransitionType.leftToRight which is the give us left to right transition
     case PageTransitionType.leftToRight:
-      return SlideTransition(position: Tween<Offset>(begin: const Offset(-1, 0), end: Offset.zero).animate(animation), child: child);
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(-1, 0),
+          end: Offset.zero,
+        ).animate(animation),
+        child: child,
+      );
       // ignore: dead_code
       break;
 
     /// PageTransitionType.topToBottom which is the give us up to down transition
     case PageTransitionType.topToBottom:
-      var topBottom = SlideTransition(position: Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero).animate(animation), child: child);
+      var topBottom = SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0, -1),
+          end: Offset.zero,
+        ).animate(animation),
+        child: child,
+      );
       if (isIos && route != null) {
-        return matchingBuilder.buildTransitions(route, context, animation, secondaryAnimation, topBottom);
+        return matchingBuilder.buildTransitions(
+          route,
+          context,
+          animation,
+          secondaryAnimation,
+          topBottom,
+        );
       }
       return topBottom;
       // ignore: dead_code
@@ -149,7 +211,13 @@ Widget buildTransitionss(
 
     /// PageTransitionType.downToUp which is the give us down to up transition
     case PageTransitionType.bottomToTop:
-      return SlideTransition(position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(animation), child: child);
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0, 1),
+          end: Offset.zero,
+        ).animate(animation),
+        child: child,
+      );
       // ignore: dead_code
       break;
 
@@ -160,13 +228,28 @@ Widget buildTransitionss(
                 When using type "scale" you need argument: 'alignment'
                 """);
       if (isIos) {
-        var scale = ScaleTransition(alignment: alignment!, scale: animation, child: child);
-        if (route != null) return matchingBuilder.buildTransitions(route, context, animation, secondaryAnimation, scale);
+        var scale = ScaleTransition(
+          alignment: alignment!,
+          scale: animation,
+          child: child,
+        );
+        if (route != null) {
+          return matchingBuilder.buildTransitions(
+            route,
+            context,
+            animation,
+            secondaryAnimation,
+            scale,
+          );
+        }
         return scale;
       }
       return ScaleTransition(
         alignment: alignment!,
-        scale: CurvedAnimation(parent: animation, curve: Interval(0.00, 0.50, curve: curve)),
+        scale: CurvedAnimation(
+          parent: animation,
+          curve: Interval(0.00, 0.50, curve: curve),
+        ),
         child: child,
       );
       // ignore: dead_code
@@ -181,7 +264,11 @@ Widget buildTransitionss(
       return RotationTransition(
         alignment: alignment!,
         turns: animation,
-        child: ScaleTransition(alignment: alignment, scale: animation, child: FadeTransition(opacity: animation, child: child)),
+        child: ScaleTransition(
+          alignment: alignment,
+          scale: animation,
+          child: FadeTransition(opacity: animation, child: child),
+        ),
       );
       // ignore: dead_code
       break;
@@ -192,7 +279,13 @@ Widget buildTransitionss(
       assert(alignment != null, """
                 When using type "size" you need argument: 'alignment'
                 """);
-      return Align(alignment: alignment!, child: SizeTransition(sizeFactor: CurvedAnimation(parent: animation, curve: curve), child: child));
+      return Align(
+        alignment: alignment!,
+        child: SizeTransition(
+          sizeFactor: CurvedAnimation(parent: animation, curve: curve),
+          child: child,
+        ),
+      );
       // ignore: dead_code
       break;
 
@@ -200,10 +293,19 @@ Widget buildTransitionss(
 
     case PageTransitionType.rightToLeftWithFade:
       return SlideTransition(
-        position: Tween<Offset>(begin: const Offset(1.0, 0.0), end: Offset.zero).animate(animation),
+        position: Tween<Offset>(
+          begin: const Offset(1.0, 0.0),
+          end: Offset.zero,
+        ).animate(animation),
         child: FadeTransition(
           opacity: animation,
-          child: SlideTransition(position: Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero).animate(animation), child: child),
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          ),
         ),
       );
       // ignore: dead_code
@@ -213,10 +315,19 @@ Widget buildTransitionss(
 
     case PageTransitionType.leftToRightWithFade:
       return SlideTransition(
-        position: Tween<Offset>(begin: const Offset(-1.0, 0.0), end: Offset.zero).animate(CurvedAnimation(parent: animation, curve: curve)),
+        position: Tween<Offset>(
+          begin: const Offset(-1.0, 0.0),
+          end: Offset.zero,
+        ).animate(CurvedAnimation(parent: animation, curve: curve)),
         child: FadeTransition(
           opacity: animation,
-          child: SlideTransition(position: Tween<Offset>(begin: const Offset(-1, 0), end: Offset.zero).animate(animation), child: child),
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          ),
         ),
       );
       // ignore: dead_code
@@ -233,7 +344,10 @@ Widget buildTransitionss(
             child: childCurrent,
           ),
           SlideTransition(
-            position: Tween<Offset>(begin: const Offset(1.0, 0.0), end: Offset.zero).animate(CurvedAnimation(parent: animation, curve: curve)),
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(parent: animation, curve: curve)),
             child: child,
           ),
         ],

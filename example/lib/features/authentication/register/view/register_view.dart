@@ -35,9 +35,12 @@ class _RegisterViewState extends State<RegisterView> {
       // appBar: AppBar(),
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          onTap: () =>
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingContent),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppConstants.paddingContent,
+            ),
             child: CustomScrollView(
               slivers: [
                 SliverFillRemaining(
@@ -46,10 +49,18 @@ class _RegisterViewState extends State<RegisterView> {
                     key: controller.formKey,
                     child: Column(
                       children: [
-                        HelperWidget.imageWidget(Assets.images.logo.logo512x512.path, width: context.width * 0.5),
+                        HelperWidget.imageWidget(
+                          Assets.images.logo.logo512x512.path,
+                          width: context.width * 0.5,
+                        ),
                         Align(
                           alignment: Alignment.center,
-                          child: Text("Đăng ký".tr(), style: context.textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w500)),
+                          child: Text(
+                            "Đăng ký".tr(),
+                            style: context.textTheme.headlineLarge?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 30),
                         // SizedBox(height: context.height * 0.12),
@@ -64,10 +75,16 @@ class _RegisterViewState extends State<RegisterView> {
                                 enableSuggestions: true,
                                 name: "phone",
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.phone_outlined, color: context.theme.unselectedWidgetColor),
+                                  prefixIcon: Icon(
+                                    Icons.phone_outlined,
+                                    color: context.theme.unselectedWidgetColor,
+                                  ),
                                   labelText: "Số điện thoại (Username)",
                                 ),
-                                validator: FormBuilderValidators.compose([FormBuilderValidators.required(), FormBuilderValidators.phoneNumber()]),
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(),
+                                  FormBuilderValidators.phoneNumber(),
+                                ]),
                               ),
                             ),
                             const SizedBox(height: 10),
@@ -75,20 +92,31 @@ class _RegisterViewState extends State<RegisterView> {
                               enableSuggestions: true,
                               name: "name",
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.person_outline, color: context.theme.unselectedWidgetColor),
+                                prefixIcon: Icon(
+                                  Icons.person_outline,
+                                  color: context.theme.unselectedWidgetColor,
+                                ),
                                 labelText: "Họ tên",
                               ),
-                              validator: FormBuilderValidators.compose([FormBuilderValidators.required()]),
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
                             ),
                             const SizedBox(height: 10),
                             FormBuilderTextField(
                               enableSuggestions: true,
                               name: "email",
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.email_outlined, color: context.theme.unselectedWidgetColor),
+                                prefixIcon: Icon(
+                                  Icons.email_outlined,
+                                  color: context.theme.unselectedWidgetColor,
+                                ),
                                 labelText: "Email",
                               ),
-                              validator: FormBuilderValidators.compose([FormBuilderValidators.required(), FormBuilderValidators.email()]),
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                                FormBuilderValidators.email(),
+                              ]),
                             ),
                             const SizedBox(height: 10),
                             const FormBuilderTextFieldPasswordWidget(),
@@ -99,14 +127,18 @@ class _RegisterViewState extends State<RegisterView> {
                               child: FilledButton.icon(
                                 onPressed: controller.onRegister,
                                 icon: controller.isLoadding.builder(
-                                  (context, isLoaddingValue) =>
-                                      isLoaddingValue
-                                          ? SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                            child: CircularProgressIndicator(color: Theme.of(context).colorScheme.surface, strokeWidth: 3),
-                                          )
-                                          : const SizedBox.shrink(),
+                                  (context, isLoaddingValue) => isLoaddingValue
+                                      ? SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: CircularProgressIndicator(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.surface,
+                                            strokeWidth: 3,
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
                                 ),
                                 label: Text(LocaleKeys.Register.tr()),
                               ),

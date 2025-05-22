@@ -44,7 +44,9 @@ mixin DioNetworkServiceMixin on BaseDioNetworkService {
               // contentType: Headers.jsonContentType,
               // responseType: ResponseType.json,
             ),
-            queryParameters: queryParam?.map((key, value) => MapEntry(key, value.toString())),
+            queryParameters: queryParam?.map(
+              (key, value) => MapEntry(key, value.toString()),
+            ),
           )
           .then((value) {
             //decoder

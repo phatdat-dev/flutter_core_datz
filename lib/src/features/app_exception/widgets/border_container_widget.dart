@@ -20,7 +20,12 @@ class BorderContainerWidget extends StatelessWidget {
         border: Border.all(color: color),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, top: 5, right: 16.0, bottom: 5),
+        padding: const EdgeInsets.only(
+          left: 16.0,
+          top: 5,
+          right: 16.0,
+          bottom: 5,
+        ),
         child: Text(
           title,
           textAlign: TextAlign.center,

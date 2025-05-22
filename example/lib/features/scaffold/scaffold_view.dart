@@ -41,39 +41,50 @@ class _ScaffoldViewState extends State<ScaffoldView> {
   Widget build(BuildContext context) {
     return CheckAppView(
       child: AutoTabsRouter.builder(
-        routes: [const HomeRoute(), const WalletRoute(), const TrackRoute(), const AccountRoute()],
-        builder:
-            (context, children, tabsRouter) => GestureDetector(
-              //huy keyboard khi bam ngoai man hinh
-              onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
-              child: Scaffold(
-                // resizeToAvoidBottomInset: true,
-                // extendBody: true,
-                extendBodyBehindAppBar: true,
-                extendBody: true,
-                body: Stack(
-                  children:
-                      children.mapIndexed((int index, Widget navigator) {
-                        final isCurrent = index == tabsRouter.activeIndex;
-                        return AnimatedScale(
-                          scale: isCurrent ? 1 : 1.5,
-                          duration: const Duration(milliseconds: 150),
-                          child: AnimatedOpacity(
-                            opacity: isCurrent ? 1 : 0,
-                            duration: const Duration(milliseconds: 150),
-                            child: IgnorePointer(ignoring: !isCurrent, child: TickerMode(enabled: isCurrent, child: navigator)),
-                          ),
-                        );
-                      }).toList(),
-                ),
-                //Footer
-                floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-                floatingActionButton: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Card(elevation: 3, child: BottomNavigationWidget(tabsRouter)),
-                ),
+        routes: [
+          const HomeRoute(),
+          const WalletRoute(),
+          const TrackRoute(),
+          const AccountRoute(),
+        ],
+        builder: (context, children, tabsRouter) => GestureDetector(
+          //huy keyboard khi bam ngoai man hinh
+          onTap: () =>
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          child: Scaffold(
+            // resizeToAvoidBottomInset: true,
+            // extendBody: true,
+            extendBodyBehindAppBar: true,
+            extendBody: true,
+            body: Stack(
+              children: children.mapIndexed((int index, Widget navigator) {
+                final isCurrent = index == tabsRouter.activeIndex;
+                return AnimatedScale(
+                  scale: isCurrent ? 1 : 1.5,
+                  duration: const Duration(milliseconds: 150),
+                  child: AnimatedOpacity(
+                    opacity: isCurrent ? 1 : 0,
+                    duration: const Duration(milliseconds: 150),
+                    child: IgnorePointer(
+                      ignoring: !isCurrent,
+                      child: TickerMode(enabled: isCurrent, child: navigator),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+            //Footer
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Card(
+                elevation: 3,
+                child: BottomNavigationWidget(tabsRouter),
               ),
             ),
+          ),
+        ),
       ),
     );
   }
@@ -98,16 +109,36 @@ class BottomNavigationWidget extends StatelessWidget {
         //selectedItemColor: Colors.indigo,
         onTap: (index) => tabsRouter.setActiveIndex(index),
         items: [
-          bottomNavBarItem(context, label: 'Trang chủ', iconData: Icons.home_outlined),
-          bottomNavBarItem(context, label: 'Khám phá', iconData: Icons.play_arrow_outlined),
-          bottomNavBarItem(context, label: 'Đặt chổ của tôi', iconData: Icons.receipt_long_outlined),
-          bottomNavBarItem(context, label: 'Tài khoản', iconData: Icons.person_outline),
+          bottomNavBarItem(
+            context,
+            label: 'Trang chủ',
+            iconData: Icons.home_outlined,
+          ),
+          bottomNavBarItem(
+            context,
+            label: 'Khám phá',
+            iconData: Icons.play_arrow_outlined,
+          ),
+          bottomNavBarItem(
+            context,
+            label: 'Đặt chổ của tôi',
+            iconData: Icons.receipt_long_outlined,
+          ),
+          bottomNavBarItem(
+            context,
+            label: 'Tài khoản',
+            iconData: Icons.person_outline,
+          ),
         ],
       ),
     );
   }
 
-  BottomNavigationBarItem bottomNavBarItem(BuildContext context, {required String label, required IconData iconData}) {
+  BottomNavigationBarItem bottomNavBarItem(
+    BuildContext context, {
+    required String label,
+    required IconData iconData,
+  }) {
     final colorScheme = context.theme.colorScheme;
     return BottomNavigationBarItem(
       // backgroundColor: colorScheme.surface,
@@ -123,7 +154,10 @@ class BottomNavigationWidget extends StatelessWidget {
         height: 30,
         padding: const EdgeInsets.all(5),
         // margin: const EdgeInsets.all(5),
-        decoration: BoxDecoration(color: colorScheme.primary, shape: BoxShape.circle),
+        decoration: BoxDecoration(
+          color: colorScheme.primary,
+          shape: BoxShape.circle,
+        ),
         child: Icon(iconData, color: colorScheme.surface),
       ),
     );

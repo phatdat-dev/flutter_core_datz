@@ -17,10 +17,12 @@ class ScaffoldCurvedBottomnavView extends StatefulWidget {
   const ScaffoldCurvedBottomnavView({super.key});
 
   @override
-  State<ScaffoldCurvedBottomnavView> createState() => _ScaffoldCurvedBottomnavViewState();
+  State<ScaffoldCurvedBottomnavView> createState() =>
+      _ScaffoldCurvedBottomnavViewState();
 }
 
-class _ScaffoldCurvedBottomnavViewState extends State<ScaffoldCurvedBottomnavView> {
+class _ScaffoldCurvedBottomnavViewState
+    extends State<ScaffoldCurvedBottomnavView> {
   @override
   void initState() {
     GetIt.instance.refresh(() => HomeController()..onInitData());
@@ -75,35 +77,42 @@ class _ScaffoldCurvedBottomnavViewState extends State<ScaffoldCurvedBottomnavVie
   Widget build(BuildContext context) {
     return CheckAppView(
       child: AutoTabsRouter.builder(
-        routes: [const HomeRoute(), const WalletRoute(), const TrackRoute(), const AccountRoute()],
-        builder:
-            (context, children, tabsRouter) => GestureDetector(
-              //huy keyboard khi bam ngoai man hinh
-              onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
-              child: Scaffold(
-                // resizeToAvoidBottomInset: true,
-                // extendBody: true,
-                extendBodyBehindAppBar: true,
-                extendBody: true,
-                body: Stack(
-                  children:
-                      children.mapIndexed((int index, Widget navigator) {
-                        final isCurrent = index == tabsRouter.activeIndex;
-                        return AnimatedScale(
-                          scale: isCurrent ? 1 : 1.5,
-                          duration: const Duration(milliseconds: 150),
-                          child: AnimatedOpacity(
-                            opacity: isCurrent ? 1 : 0,
-                            duration: const Duration(milliseconds: 150),
-                            child: IgnorePointer(ignoring: !isCurrent, child: TickerMode(enabled: isCurrent, child: navigator)),
-                          ),
-                        );
-                      }).toList(),
-                ),
-                //Footer
-                bottomNavigationBar: BottomNavigationWidget(tabsRouter),
-              ),
+        routes: [
+          const HomeRoute(),
+          const WalletRoute(),
+          const TrackRoute(),
+          const AccountRoute(),
+        ],
+        builder: (context, children, tabsRouter) => GestureDetector(
+          //huy keyboard khi bam ngoai man hinh
+          onTap: () =>
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          child: Scaffold(
+            // resizeToAvoidBottomInset: true,
+            // extendBody: true,
+            extendBodyBehindAppBar: true,
+            extendBody: true,
+            body: Stack(
+              children: children.mapIndexed((int index, Widget navigator) {
+                final isCurrent = index == tabsRouter.activeIndex;
+                return AnimatedScale(
+                  scale: isCurrent ? 1 : 1.5,
+                  duration: const Duration(milliseconds: 150),
+                  child: AnimatedOpacity(
+                    opacity: isCurrent ? 1 : 0,
+                    duration: const Duration(milliseconds: 150),
+                    child: IgnorePointer(
+                      ignoring: !isCurrent,
+                      child: TickerMode(enabled: isCurrent, child: navigator),
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
+            //Footer
+            bottomNavigationBar: BottomNavigationWidget(tabsRouter),
+          ),
+        ),
       ),
     );
   }
@@ -124,11 +133,21 @@ class BottomNavigationWidget extends StatelessWidget {
       height: AppGlobals.isIos ? 80 : 65,
       onTap: (index) => tabsRouter.setActiveIndex(index),
       items:
-          {"Home": MingCute.home_5_line, "Wallet": MingCute.wallet_4_line, "Track": MingCute.car_line, "Account": MingCute.user_3_line}.entries
+          {
+                "Home": MingCute.home_5_line,
+                "Wallet": MingCute.wallet_4_line,
+                "Track": MingCute.car_line,
+                "Account": MingCute.user_3_line,
+              }.entries
               .map(
                 (e) => CurvedNavigationBarItem(
                   icon: Icon(e.value, color: Colors.white, size: 30),
-                  label: Text(e.key, style: const TextStyle(color: Colors.white, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  label: Text(
+                    e.key,
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               )
               .toList(),

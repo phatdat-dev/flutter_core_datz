@@ -16,7 +16,8 @@ class RegisterController extends BaseController {
   final _remoteDataSource = AuthenticationRemoteDataSource();
   // final _enterpriseRepository = EnterpriseRepository();
 
-  Map<String, FormBuilderFieldState> get _fields => formKey.currentState!.fields;
+  Map<String, FormBuilderFieldState> get _fields =>
+      formKey.currentState!.fields;
 
   @override
   Future<void> onInitData() async {}

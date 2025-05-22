@@ -16,7 +16,11 @@ class UltilRemoteDatasource extends BaseRemoteDataSource {
   // );
   // Future<String?> _generateContentWithGemini(String prompt) async => (await _model.generateContent([Content.text(prompt)])).text;
 
-  FutureEitherAppException<String?> generateContent(String prompt, {bool useGemini = false, List<Message> messages = const []}) async {
+  FutureEitherAppException<String?> generateContent(
+    String prompt, {
+    bool useGemini = false,
+    List<Message> messages = const [],
+  }) async {
     final result = AppException().handleExceptionAsync(() async {
       // if (useGemini) return _generateContentWithGemini(prompt);
       final response = await apiCall.onRequest(
@@ -28,7 +32,14 @@ class UltilRemoteDatasource extends BaseRemoteDataSource {
           "method": "call",
           "params": {
             "prompt": prompt,
-            "conversation_history": messages.map((e) => {"role": e.sentBy == "1" ? "user" : "assistant", "content": e.message}).toList(),
+            "conversation_history": messages
+                .map(
+                  (e) => {
+                    "role": e.sentBy == "1" ? "user" : "assistant",
+                    "content": e.message,
+                  },
+                )
+                .toList(),
             "database_id": "b172e8aa-591c-11ef-8bf0-04bf1bad20dd",
           },
           "id": "432e6ccd5acb4b5895ae27f88df32f85", // uuid.v4().hex
@@ -46,7 +57,10 @@ class UltilRemoteDatasource extends BaseRemoteDataSource {
     return result.toRight();
   }
 
-  FutureEitherAppException<List<String>?> getImageFromGoogle(String prompt, {int take = 10}) async {
+  FutureEitherAppException<List<String>?> getImageFromGoogle(
+    String prompt, {
+    int take = 10,
+  }) async {
     // prompt = "imageSize 500x500: $prompt";
     final result = AppException().handleExceptionAsync(() async {
       final response = await apiCall.onRequest(
@@ -56,7 +70,12 @@ class UltilRemoteDatasource extends BaseRemoteDataSource {
         isShowLoading: false,
       );
       final doc = parse(response);
-      final images = doc.querySelectorAll("img").take(take).map((e) => e.attributes["src"]!).where((e) => e.contains('http')).toList();
+      final images = doc
+          .querySelectorAll("img")
+          .take(take)
+          .map((e) => e.attributes["src"]!)
+          .where((e) => e.contains('http'))
+          .toList();
       return images;
     }, showToastError: false);
     return result;

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ListtitleOnlyBorderWidget extends StatelessWidget {
-  const ListtitleOnlyBorderWidget({super.key, required this.title, this.subTitle, required this.iconData, this.iconColor, this.onTap});
+  const ListtitleOnlyBorderWidget({
+    super.key,
+    required this.title,
+    this.subTitle,
+    required this.iconData,
+    this.iconColor,
+    this.onTap,
+  });
   final String title;
   final String? subTitle;
   final IconData iconData;
@@ -16,10 +23,20 @@ class ListtitleOnlyBorderWidget extends StatelessWidget {
       leading: Icon(iconData, color: iconColor),
       title: Text(title),
       subtitle: subTitle != null ? Text(subTitle!) : null,
-      titleTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w400),
-      subtitleTextStyle: Theme.of(context).textTheme.bodySmall?.apply(fontSizeFactor: 0.9),
-      trailing: Icon(Icons.keyboard_arrow_right, color: Theme.of(context).hintColor),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: Theme.of(context).hintColor, width: 0.2)),
+      titleTextStyle: Theme.of(
+        context,
+      ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w400),
+      subtitleTextStyle: Theme.of(
+        context,
+      ).textTheme.bodySmall?.apply(fontSizeFactor: 0.9),
+      trailing: Icon(
+        Icons.keyboard_arrow_right,
+        color: Theme.of(context).hintColor,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Theme.of(context).hintColor, width: 0.2),
+      ),
     );
   }
 }

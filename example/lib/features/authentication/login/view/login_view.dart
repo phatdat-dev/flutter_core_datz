@@ -32,9 +32,12 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          onTap: () =>
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingContent),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppConstants.paddingContent,
+            ),
             child: Stack(
               children: [
                 CustomScrollView(
@@ -43,7 +46,10 @@ class _LoginViewState extends State<LoginView> {
                       hasScrollBody: false,
                       child: Column(
                         children: [
-                          Assets.images.logo.logo512x512.image(width: 200, height: 200),
+                          Assets.images.logo.logo512x512.image(
+                            width: 200,
+                            height: 200,
+                          ),
                           // Text(
                           //   AppConstants.appName,
                           //   style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -58,21 +64,35 @@ class _LoginViewState extends State<LoginView> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(20),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       FormBuilderTextField(
                                         enableSuggestions: true,
                                         name: "username",
                                         decoration: InputDecoration(
-                                          prefixIcon: Icon(Icons.person_outline, color: context.theme.unselectedWidgetColor),
-                                          labelText: LocaleKeys.LoginView_Username.tr(),
+                                          prefixIcon: Icon(
+                                            Icons.person_outline,
+                                            color: context
+                                                .theme
+                                                .unselectedWidgetColor,
+                                          ),
+                                          labelText: LocaleKeys
+                                              .LoginView_Username.tr(),
                                         ),
-                                        validator: FormBuilderValidators.compose([FormBuilderValidators.required()]),
+                                        validator:
+                                            FormBuilderValidators.compose([
+                                              FormBuilderValidators.required(),
+                                            ]),
                                         initialValue: "Guest",
                                       ),
                                       SizedBox(height: context.height * 0.02),
-                                      FormBuilderTextFieldPasswordWidget(initialValue: "123", labelText: LocaleKeys.LoginView_Password.tr()),
+                                      FormBuilderTextFieldPasswordWidget(
+                                        initialValue: "123",
+                                        labelText:
+                                            LocaleKeys.LoginView_Password.tr(),
+                                      ),
                                       SizedBox(height: context.height * 0.02),
                                       SizedBox(
                                         width: double.infinity,
@@ -82,12 +102,18 @@ class _LoginViewState extends State<LoginView> {
                                           icon: controller.isLoadding.builder(
                                             (context, isLoaddingValue) =>
                                                 isLoaddingValue
-                                                    ? SizedBox(
-                                                      width: 20,
-                                                      height: 20,
-                                                      child: CircularProgressIndicator(color: Theme.of(context).colorScheme.surface, strokeWidth: 3),
-                                                    )
-                                                    : const SizedBox.shrink(),
+                                                ? SizedBox(
+                                                    width: 20,
+                                                    height: 20,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                          color: Theme.of(
+                                                            context,
+                                                          ).colorScheme.surface,
+                                                          strokeWidth: 3,
+                                                        ),
+                                                  )
+                                                : const SizedBox.shrink(),
                                           ),
                                           label: Text(LocaleKeys.Login.tr()),
                                         ),
@@ -95,8 +121,14 @@ class _LoginViewState extends State<LoginView> {
                                       Center(
                                         child: TextButton(
                                           onPressed: () {},
-                                          style: TextButton.styleFrom(foregroundColor: context.theme.colorScheme.error),
-                                          child: Text(LocaleKeys.LoginView_ForgotPassword.tr()),
+                                          style: TextButton.styleFrom(
+                                            foregroundColor:
+                                                context.theme.colorScheme.error,
+                                          ),
+                                          child: Text(
+                                            LocaleKeys
+                                                .LoginView_ForgotPassword.tr(),
+                                          ),
                                         ),
                                       ),
                                     ],

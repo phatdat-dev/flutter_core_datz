@@ -33,8 +33,12 @@ mixin BaseResponsiveMixin on Diagnosticable {
         /// Nếu đang ở trạng thái bình thường (nằm dọc-mobile)
         // isMobile = isPortrait && (width < settings.mobileChangePoint);
         isWatch = (width < settings.mobileChangePoint);
-        isMobile = (width >= settings.mobileChangePoint) && (width < settings.tabletChangePoint);
-        isTablet = (width >= settings.tabletChangePoint) && (width < settings.desktopChangePoint);
+        isMobile =
+            (width >= settings.mobileChangePoint) &&
+            (width < settings.tabletChangePoint);
+        isTablet =
+            (width >= settings.tabletChangePoint) &&
+            (width < settings.desktopChangePoint);
         isDesktop = (width >= settings.desktopChangePoint);
 
         Widget? widget;
@@ -50,11 +54,12 @@ mixin BaseResponsiveMixin on Diagnosticable {
         }
 
         widget ??= const Center(
-            child: Text(
-          'Screen size not suitable !',
-          style: TextStyle(color: Colors.red, fontSize: 16),
-          textAlign: TextAlign.center,
-        ));
+          child: Text(
+            'Screen size not suitable !',
+            style: TextStyle(color: Colors.red, fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+        );
 
         return wrapWidget(context, widget) ?? widget;
       },

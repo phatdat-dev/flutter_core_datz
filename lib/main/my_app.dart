@@ -30,27 +30,42 @@ class MyApp extends StatelessWidget {
       startLocale: translationController.startLocale,
       child: ListenableBuilder(
         listenable: theme,
-        builder:
-            (context, child) => MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              title: configs.appTitle,
-              routerConfig: configs.routerConfig(context),
-              //theme
-              theme: theme.state.lightTheme,
-              darkTheme: theme.state.darkTheme,
-              themeMode: theme.state.themeMode,
-              //language
-              locale: context.locale,
-              supportedLocales: context.supportedLocales,
-              localizationsDelegates: [...context.localizationDelegates, FormBuilderLocalizations.delegate],
-              scrollBehavior: const MaterialScrollBehavior().copyWith(
-                dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch, PointerDeviceKind.stylus, PointerDeviceKind.unknown},
-              ),
-              builder: (context, child) {
-                //builder fix first context
-                return Overlay(initialEntries: [if (child != null) OverlayEntry(builder: (context) => builder?.call(context, child) ?? child)]);
-              },
-            ),
+        builder: (context, child) => MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: configs.appTitle,
+          routerConfig: configs.routerConfig(context),
+          //theme
+          theme: theme.state.lightTheme,
+          darkTheme: theme.state.darkTheme,
+          themeMode: theme.state.themeMode,
+          //language
+          locale: context.locale,
+          supportedLocales: context.supportedLocales,
+          localizationsDelegates: [
+            ...context.localizationDelegates,
+            FormBuilderLocalizations.delegate,
+          ],
+          scrollBehavior: const MaterialScrollBehavior().copyWith(
+            dragDevices: {
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.touch,
+              PointerDeviceKind.stylus,
+              PointerDeviceKind.unknown,
+            },
+          ),
+          builder: (context, child) {
+            //builder fix first context
+            return Overlay(
+              initialEntries: [
+                if (child != null)
+                  OverlayEntry(
+                    builder: (context) =>
+                        builder?.call(context, child) ?? child,
+                  ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -7,13 +7,20 @@ final class MyHelper {
     return (await getApplicationCacheDirectory()).path;
   }
 
-  static String indexQueryNameItemBuilder(int index, String queryName) => "${index + 1} - $queryName";
+  static String indexQueryNameItemBuilder(int index, String queryName) =>
+      "${index + 1} - $queryName";
 
   static List<String> getDaysOfWeek([String? locale]) {
     // var days = DateFormat.EEEE().dateSymbols.STANDALONEWEEKDAYS;
     final now = DateTime.now();
     final firstDayOfWeek = now.subtract(Duration(days: now.weekday - 1));
-    return List.generate(7, (index) => index).map((value) => DateFormat.E(locale).format(firstDayOfWeek.add(Duration(days: value)))).toList();
+    return List.generate(7, (index) => index)
+        .map(
+          (value) => DateFormat.E(
+            locale,
+          ).format(firstDayOfWeek.add(Duration(days: value))),
+        )
+        .toList();
   }
 
   static String generateVietQR({
@@ -29,7 +36,8 @@ final class MyHelper {
     // final url = "https://img.vietqr.io/image/$nganHang-$soTaiKhoan-qr_only.png?amount=$soTien&addInfo=$noiDung&accountName=$tenTaiKhoan";
     final code = "";
 
-    final url = "https://api.vietqr.io/image/$nganHang-$soTaiKhoan-$code.jpg?amount=$soTien&addInfo=$noiDung";
+    final url =
+        "https://api.vietqr.io/image/$nganHang-$soTaiKhoan-$code.jpg?amount=$soTien&addInfo=$noiDung";
 
     Printt.white(url);
     return url;

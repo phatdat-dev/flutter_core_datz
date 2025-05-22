@@ -11,7 +11,10 @@ class AuthenticationLocalDataSource extends BaseLocalDataSource {
   FutureEitherAppException<bool> saveUserToStorage(UserModel? user) async {
     final result = AppException().handleExceptionAsync(() async {
       if (user == null) return false;
-      return await sharedPrefs.setString(StorageConstants.user, jsonEncode(user.toJson()));
+      return await sharedPrefs.setString(
+        StorageConstants.user,
+        jsonEncode(user.toJson()),
+      );
     });
     return result;
   }

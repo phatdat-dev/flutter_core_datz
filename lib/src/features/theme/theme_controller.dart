@@ -17,7 +17,6 @@ class ThemeController extends ChangeNotifier {
 
   BaseConfigs get _configs => GetIt.instance<BaseConfigs>();
 
-
   ThemeController() {
     _state = loadThemeStorage(); // getDefaultTheme();
     notifyListeners();

@@ -1,7 +1,9 @@
 import 'list_extensions.dart';
 
 extension MapExtension<K, V> on Map<K, V> {
-  Iterable<MapEntry<K, V>> _filterr(bool Function(MapEntry<K, V> entry) f) sync* {
+  Iterable<MapEntry<K, V>> _filterr(
+    bool Function(MapEntry<K, V> entry) f,
+  ) sync* {
     for (final entry in entries) {
       if (f(entry)) yield entry;
     }
@@ -10,7 +12,8 @@ extension MapExtension<K, V> on Map<K, V> {
   //get list value with key
   List<V?> getValues(List<K> keys) => keys.map((key) => this[key]).toList();
   //get map value with key
-  Map<K, V> getMap(List<K> keys) => Map.fromEntries(_filterr((entry) => keys.contains(entry.key)));
+  Map<K, V> getMap(List<K> keys) =>
+      Map.fromEntries(_filterr((entry) => keys.contains(entry.key)));
 
   //filter
   Map<K, V> filter(bool Function(K key, V value) test) {
@@ -52,10 +55,15 @@ extension MapExtension<K, V> on Map<K, V> {
   /// // {"1": "newKey1", "2": "key2"}
   /// ```
   ///
-  Map<K, V> copyWith(Map<K, V> copy, {bool addNew = false, bool noCopyIfIsEmpty = false}) {
+  Map<K, V> copyWith(
+    Map<K, V> copy, {
+    bool addNew = false,
+    bool noCopyIfIsEmpty = false,
+  }) {
     final result = Map<K, V>.from(this);
     for (final entry in copy.entries) {
-      if (!(noCopyIfIsEmpty && (entry.value == null || entry.value == '')) && (containsKey(entry.key) || addNew)) {
+      if (!(noCopyIfIsEmpty && (entry.value == null || entry.value == '')) &&
+          (containsKey(entry.key) || addNew)) {
         result[entry.key] = entry.value;
       }
     }

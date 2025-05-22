@@ -6,7 +6,11 @@ import 'package:get_it/get_it.dart';
 import '../shared/extensions/get_it/get_it_extensions.dart';
 import 'controller/base_controller.dart';
 
-mixin RegisterBaseControllerStateMixin<T extends StatefulWidget, C extends BaseController> on State<T> {
+mixin RegisterBaseControllerStateMixin<
+  T extends StatefulWidget,
+  C extends BaseController
+>
+    on State<T> {
   late final C controller;
 
   @override
@@ -25,12 +29,18 @@ mixin RegisterBaseControllerStateMixin<T extends StatefulWidget, C extends BaseC
 
   C createController();
 }
-mixin GetOrRegisterBaseControllerStateMixin<T extends StatefulWidget, C extends BaseController> on State<T> {
+mixin GetOrRegisterBaseControllerStateMixin<
+  T extends StatefulWidget,
+  C extends BaseController
+>
+    on State<T> {
   late final C controller;
 
   @override
   void initState() {
-    controller = GetIt.instance.getOrRegisterSingleton(() => createController()..onInitData());
+    controller = GetIt.instance.getOrRegisterSingleton(
+      () => createController()..onInitData(),
+    );
     super.initState();
   }
 
@@ -73,5 +83,6 @@ mixin BaseRoleView<T extends Enum> on Diagnosticable {
   /// ```
   Widget? wrapWidget(BuildContext context, Widget child) => null;
 
-  Widget buildDefault(BuildContext context) => Center(child: Text("UnderDevelopment".tr()));
+  Widget buildDefault(BuildContext context) =>
+      Center(child: Text("UnderDevelopment".tr()));
 }

@@ -6,7 +6,8 @@ class RequestWrapper extends BaseModel<RequestWrapper> {
   RequestWrapper({required this.params});
 
   @override
-  RequestWrapper fromJson(Map<String, dynamic> json) => RequestWrapper(params: json['params']);
+  RequestWrapper fromJson(Map<String, dynamic> json) =>
+      RequestWrapper(params: json['params']);
 
   @override
   Map<String, dynamic> toJson() => {'params': params};

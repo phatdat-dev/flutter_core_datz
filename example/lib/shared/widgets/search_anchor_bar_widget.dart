@@ -32,12 +32,16 @@ class SearchAnchorBarWidget extends StatefulWidget {
 class _SearchAnchorBarWidgetState extends State<SearchAnchorBarWidget> {
   double _scrollPosition = 0;
 
-  void updateScrollPosition() => _scrollPosition = Scrollable.of(context).position.pixels;
+  void updateScrollPosition() =>
+      _scrollPosition = Scrollable.of(context).position.pixels;
 
   Future<void> _handleOnTapAndScrollToTop() async {
     final currentPosition = Scrollable.of(context).position.pixels;
 
-    await Scrollable.ensureVisible(context, duration: const Duration(milliseconds: 100));
+    await Scrollable.ensureVisible(
+      context,
+      duration: const Duration(milliseconds: 100),
+    );
     if (widget.searchController.isOpen) return;
 
     if (currentPosition != _scrollPosition || currentPosition == 0) {
@@ -60,7 +64,11 @@ class _SearchAnchorBarWidgetState extends State<SearchAnchorBarWidget> {
       );
     }
     if (widget.onTap != null) {
-      return GestureDetector(behavior: HitTestBehavior.translucent, onTap: widget.onTap, child: IgnorePointer(child: _buildSearchBar()));
+      return GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: widget.onTap,
+        child: IgnorePointer(child: _buildSearchBar()),
+      );
     }
     return _buildSearchBar();
   }
@@ -68,24 +76,42 @@ class _SearchAnchorBarWidgetState extends State<SearchAnchorBarWidget> {
   Widget _buildSearchBar() => SearchAnchor.bar(
     searchController: widget.searchController,
     isFullScreen: false,
-    barBackgroundColor: WidgetStatePropertyAll(Theme.of(context).inputDecorationTheme.fillColor),
+    barBackgroundColor: WidgetStatePropertyAll(
+      Theme.of(context).inputDecorationTheme.fillColor,
+    ),
     barShape: WidgetStatePropertyAll(widget.barShape ?? _getShape(context)),
     barElevation: const WidgetStatePropertyAll(0),
     barLeading: widget.barLeading,
-    barPadding: const WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 12)),
+    barPadding: const WidgetStatePropertyAll(
+      EdgeInsets.symmetric(horizontal: 12),
+    ),
     barTrailing: widget.barTrailing,
     barHintText: widget.barHintText,
     //
     viewShape: widget.viewShape ?? _getShape(context),
-    viewTrailing: widget.viewTrailing ?? [IconButton(icon: const Icon(Icons.close), onPressed: widget.searchController.clear)],
-    viewConstraints: MediaQuery.sizeOf(context).height > 1000 ? null : const BoxConstraints(maxHeight: 300),
+    viewTrailing:
+        widget.viewTrailing ??
+        [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: widget.searchController.clear,
+          ),
+        ],
+    viewConstraints: MediaQuery.sizeOf(context).height > 1000
+        ? null
+        : const BoxConstraints(maxHeight: 300),
     suggestionsBuilder: (context, searchController) {
       (searchController as SelectedSearchController);
       return [
         if (widget.searchController.searchHistory.isNotEmpty)
           ...widget.searchController.getHistoryList()
         else
-          const Center(child: Text('No search history.', style: TextStyle(color: Colors.grey))),
+          const Center(
+            child: Text(
+              'No search history.',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
         const Divider(),
         ...widget.searchController.getSuggestions(),
       ];

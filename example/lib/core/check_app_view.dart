@@ -35,7 +35,8 @@ class _CheckAppViewState extends State<CheckAppView> {
   }
 
   Future<bool> isVPNDetected() async {
-    final List<ConnectivityResult> connectivityResult = await (Connectivity().checkConnectivity());
+    final List<ConnectivityResult> connectivityResult = await (Connectivity()
+        .checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.vpn)) return true;
 
     return false;
@@ -43,8 +44,12 @@ class _CheckAppViewState extends State<CheckAppView> {
 
   bool isProxyDetected() {
     final env = Platform.environment;
-    String? httpProxy = HttpClient.findProxyFromEnvironment(Uri.parse("http://www.example.com"));
-    return env.containsKey('http_proxy') || env.containsKey('https_proxy') || httpProxy != "DIRECT";
+    String? httpProxy = HttpClient.findProxyFromEnvironment(
+      Uri.parse("http://www.example.com"),
+    );
+    return env.containsKey('http_proxy') ||
+        env.containsKey('https_proxy') ||
+        httpProxy != "DIRECT";
   }
 
   Future<bool> checkProxyAndVPN() async {
@@ -56,7 +61,10 @@ class _CheckAppViewState extends State<CheckAppView> {
   @override
   Widget build(BuildContext context) {
     // DashboardView(widget.navigationShell, widget.children)
-    return buildCheckProxyAndVPN(context, buildCheckVersion(context, widget.child));
+    return buildCheckProxyAndVPN(
+      context,
+      buildCheckVersion(context, widget.child),
+    );
   }
 
   Widget _buildLoadding() => Scaffold(
@@ -65,7 +73,11 @@ class _CheckAppViewState extends State<CheckAppView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text("Waiting to check VPN & Version..."),
-          CircleAvatar(radius: 150, backgroundImage: AssetImage(Assets.images.logo.logo.keyName), backgroundColor: Colors.transparent),
+          CircleAvatar(
+            radius: 150,
+            backgroundImage: AssetImage(Assets.images.logo.logo.keyName),
+            backgroundColor: Colors.transparent,
+          ),
         ],
       ),
     ),
@@ -86,7 +98,11 @@ class _CheckAppViewState extends State<CheckAppView> {
                     padding: const EdgeInsets.all(10),
                     child: const Text(
                       'Please turn off VPN and Proxy to use the app',
-                      style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 24),
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),

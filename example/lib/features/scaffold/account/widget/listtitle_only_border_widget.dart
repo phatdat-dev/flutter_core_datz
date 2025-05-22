@@ -23,9 +23,16 @@ class ListtitleOnlyBorderWidget extends StatelessWidget {
       leading: Icon(iconData, color: iconColor),
       title: Text(title),
       subtitle: subTitle != null ? Text(subTitle!) : null,
-      titleTextStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w400),
-      subtitleTextStyle: Theme.of(context).textTheme.bodySmall?.apply(fontSizeFactor: 0.9),
-      trailing: Icon(Icons.keyboard_arrow_right, color: Theme.of(context).hintColor),
+      titleTextStyle: Theme.of(
+        context,
+      ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w400),
+      subtitleTextStyle: Theme.of(
+        context,
+      ).textTheme.bodySmall?.apply(fontSizeFactor: 0.9),
+      trailing: Icon(
+        Icons.keyboard_arrow_right,
+        color: Theme.of(context).hintColor,
+      ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(color: Theme.of(context).hintColor, width: 0.2),

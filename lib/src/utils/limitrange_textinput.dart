@@ -24,7 +24,10 @@ class LimitRangeTextInput extends TextInputFormatter {
   }) : assert(minRange <= maxRange);
 
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     int count = 0;
     for (int i = 0; i < newValue.text.length; i++) {
       if (newValue.text[i] == '.') {
@@ -45,7 +48,10 @@ class LimitRangeTextInput extends TextInputFormatter {
     // return value > maxRange ? oldValue : newValue;
     if (value > maxRange) {
       final format = Helper.formatNumber(maxRange, decimalRound);
-      return oldValue.copyWith(text: format, selection: TextSelection.collapsed(offset: format.length));
+      return oldValue.copyWith(
+        text: format,
+        selection: TextSelection.collapsed(offset: format.length),
+      );
     }
     String format;
     try {
@@ -53,6 +59,9 @@ class LimitRangeTextInput extends TextInputFormatter {
     } catch (e) {
       format = '';
     }
-    return newValue.copyWith(text: format, selection: TextSelection.collapsed(offset: format.length));
+    return newValue.copyWith(
+      text: format,
+      selection: TextSelection.collapsed(offset: format.length),
+    );
   }
 }

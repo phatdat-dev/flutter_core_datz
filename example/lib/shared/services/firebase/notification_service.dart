@@ -2,7 +2,8 @@ part of 'firebase_service.dart';
 
 mixin NotificationService {
   final localNotification = FlutterLocalNotificationsPlugin();
-  AndroidNotificationChannel get androidNotifiChannel => const AndroidNotificationChannel(
+  AndroidNotificationChannel
+  get androidNotifiChannel => const AndroidNotificationChannel(
     'default-channel-id',
     'default-channel-name',
     description: 'default description',
@@ -27,13 +28,20 @@ mixin NotificationService {
 
   Future<void> _initLocalNotification() async {
     // ở android, tạo channel cho notification
-    await localNotification.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(
-      androidNotifiChannel,
-    );
+    await localNotification
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.createNotificationChannel(
+          androidNotifiChannel,
+        );
     //
 
     //setting notification
-    const settings = InitializationSettings(android: AndroidInitializationSettings('@mipmap/ic_launcher'), iOS: DarwinInitializationSettings());
+    const settings = InitializationSettings(
+      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      iOS: DarwinInitializationSettings(),
+    );
 
     //add setting
     localNotification.initialize(
@@ -42,7 +50,8 @@ mixin NotificationService {
         //bắt sự kiện click vào notification đẩy nó vào stream
         Printt.white('onDidReceiveNotificationResponse ${details.payload}');
       },
-      onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
+      onDidReceiveBackgroundNotificationResponse:
+          onDidReceiveBackgroundNotificationResponse,
     );
   }
 
@@ -68,9 +77,13 @@ mixin NotificationService {
   Future<void> showNotification(RemoteMessage message) async {
     ByteArrayAndroidBitmap? imageBitMap;
     if (message.data['image'] != null) {
-      Uint8List bodyBytes = (await NetworkAssetBundle(Uri.parse(message.data['image'])).load(message.data['image'])).buffer.asUint8List();
+      Uint8List bodyBytes = (await NetworkAssetBundle(
+        Uri.parse(message.data['image']),
+      ).load(message.data['image'])).buffer.asUint8List();
 
-      imageBitMap = ByteArrayAndroidBitmap.fromBase64String(base64Encode(bodyBytes));
+      imageBitMap = ByteArrayAndroidBitmap.fromBase64String(
+        base64Encode(bodyBytes),
+      );
     }
 
     return localNotification.show(
@@ -91,7 +104,9 @@ mixin NotificationService {
           icon: '@drawable/splash',
           // largeIcon: const DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
           largeIcon: imageBitMap,
-          styleInformation: imageBitMap != null ? BigPictureStyleInformation(imageBitMap) : null,
+          styleInformation: imageBitMap != null
+              ? BigPictureStyleInformation(imageBitMap)
+              : null,
         ),
         // iOS: const DarwinNotificationDetails(),
       ),
@@ -109,7 +124,9 @@ mixin NotificationService {
   }
 
   @pragma('vm:entry-point')
-  static Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  static Future<void> firebaseMessagingBackgroundHandler(
+    RemoteMessage message,
+  ) async {
     // If you're going to use other Firebase services in the background, such as Firestore,
     // make sure you call `initializeApp` before using other Firebase services.
     //TODO: Firebase
@@ -118,11 +135,18 @@ mixin NotificationService {
     Printt.white('Handling a background messagee: ${message.messageId}');
   }
 
-  static void onDidReceiveBackgroundNotificationResponse(NotificationResponse details) {
-    Printt.white('onDidReceiveBackgroundNotificationResponse ${details.payload}');
+  static void onDidReceiveBackgroundNotificationResponse(
+    NotificationResponse details,
+  ) {
+    Printt.white(
+      'onDidReceiveBackgroundNotificationResponse ${details.payload}',
+    );
   }
 
-  Future<void> firebaseMessagingSubscribeTopic(String topic, bool enable) async {
+  Future<void> firebaseMessagingSubscribeTopic(
+    String topic,
+    bool enable,
+  ) async {
     if (enable) {
       await FirebaseMessaging.instance.subscribeToTopic(topic);
     } else {

@@ -22,10 +22,26 @@ class ForgotPassword3NewPassView extends StatelessWidget {
         defaultSize: false,
         child: Column(
           children: [
-            Padding(padding: const EdgeInsets.only(right: 15), child: HelperWidget.imageWidget(Assets.svg.shieldSuccess, width: 150)),
-            Text("Chúc mừng".tr(), style: context.textTheme.headlineMedium?.copyWith(color: Colors.green.shade300, fontWeight: FontWeight.w500)),
+            Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: HelperWidget.imageWidget(
+                Assets.svg.shieldSuccess,
+                width: 150,
+              ),
+            ),
+            Text(
+              "Chúc mừng".tr(),
+              style: context.textTheme.headlineMedium?.copyWith(
+                color: Colors.green.shade300,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             const SizedBox(height: 15),
-            Text("Bạn đã tạo mật khẩu thành công. Sẽ tự động chuyển về màn hình chính trong 3 giây.".tr(), textAlign: TextAlign.center),
+            Text(
+              "Bạn đã tạo mật khẩu thành công. Sẽ tự động chuyển về màn hình chính trong 3 giây."
+                  .tr(),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       );
@@ -38,9 +54,12 @@ class ForgotPassword3NewPassView extends StatelessWidget {
       appBar: AppBar(title: Text("Tạo mật khẩu mới".tr())),
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          onTap: () =>
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingContent),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppConstants.paddingContent,
+            ),
             child: CustomScrollView(
               slivers: [
                 SliverFillRemaining(
@@ -49,29 +68,49 @@ class ForgotPassword3NewPassView extends StatelessWidget {
                     key: formKey,
                     child: Column(
                       children: [
-                        HelperWidget.imageWidget(Assets.images.authenication.newPassword.path, height: 200),
+                        HelperWidget.imageWidget(
+                          Assets.images.authenication.newPassword.path,
+                          height: 200,
+                        ),
                         Padding(
-                          padding: const EdgeInsets.all(AppConstants.paddingTextField * 2),
+                          padding: const EdgeInsets.all(
+                            AppConstants.paddingTextField * 2,
+                          ),
                           child: Text(
                             "Tạo mật khẩu mới",
-                            style: context.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                            style: context.textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),
                         const Expanded(
                           child: Column(
                             children: [
-                              FormBuilderTextFieldPasswordWidget(name: "newPassword", labelText: "Mật khẩu mới", validators: []),
+                              FormBuilderTextFieldPasswordWidget(
+                                name: "newPassword",
+                                labelText: "Mật khẩu mới",
+                                validators: [],
+                              ),
                               SizedBox(height: AppConstants.paddingTextField),
-                              FormBuilderTextFieldPasswordWidget(name: "confirmNewPassword", labelText: "Xác nhận mật khẩu mới", validators: []),
+                              FormBuilderTextFieldPasswordWidget(
+                                name: "confirmNewPassword",
+                                labelText: "Xác nhận mật khẩu mới",
+                                validators: [],
+                              ),
                               SizedBox(height: AppConstants.paddingTextField),
                             ],
                           ),
                         ),
                         Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.only(bottom: kToolbarHeight / 3),
-                          child: FilledButton(onPressed: onPressed, child: Text("Tiếp tục".tr())),
+                          padding: const EdgeInsets.only(
+                            bottom: kToolbarHeight / 3,
+                          ),
+                          child: FilledButton(
+                            onPressed: onPressed,
+                            child: Text("Tiếp tục".tr()),
+                          ),
                         ),
                       ],
                     ),

@@ -57,7 +57,9 @@ class SearchBarWidget extends StatelessWidget {
     suffixIconButton: suffixIconButton,
   );
 
-  static final Debouncer debouncer = Debouncer(delay: const Duration(milliseconds: 200));
+  static final Debouncer debouncer = Debouncer(
+    delay: const Duration(milliseconds: 200),
+  );
   static final BorderRadius defaultBorderRadius = BorderRadius.circular(25);
 
   @override
@@ -73,18 +75,33 @@ class SearchBarWidget extends StatelessWidget {
         fillColor: fillColor,
         //
         border: OutlineInputBorder(borderRadius: defaultBorderRadius),
-        enabledBorder: OutlineInputBorder(borderRadius: defaultBorderRadius, borderSide: BorderSide(color: Theme.of(context).hintColor, width: 0.1)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: defaultBorderRadius,
+          borderSide: BorderSide(
+            color: Theme.of(context).hintColor,
+            width: 0.1,
+          ),
+        ),
         focusedBorder: OutlineInputBorder(
           borderRadius: defaultBorderRadius,
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 0.5),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.primary,
+            width: 0.5,
+          ),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: defaultBorderRadius,
-          borderSide: BorderSide(color: Theme.of(context).hintColor, width: 0.05),
+          borderSide: BorderSide(
+            color: Theme.of(context).hintColor,
+            width: 0.05,
+          ),
         ),
         //
         hintText: hintText ?? "${"Search".tr()}...",
-        hintStyle: TextStyle(color: Colors.grey.withValues(alpha: 0.7), fontSize: 16),
+        hintStyle: TextStyle(
+          color: Colors.grey.withValues(alpha: 0.7),
+          fontSize: 16,
+        ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         prefixIcon: prefixIcon ?? Icon(Icons.search, color: Theme.of(context).primaryColor),
         suffixIcon: buildSuffixIcon(),
@@ -99,24 +116,22 @@ class SearchBarWidget extends StatelessWidget {
   Widget buildSuffixIcon() {
     return ValueListenableBuilder(
       valueListenable: controller!,
-      builder:
-          (context, value, child) => InkWell(
-            onTap:
-                (controller!.text.isEmpty)
-                    ? null
-                    : () {
-                      if (suffixIconButton != null) {
-                        suffixIconButton?.onTap();
-                      } else {
-                        controller!.clear();
-                        onChanged != null ? onChanged!('') : null;
-                      }
-                    },
-            borderRadius: defaultBorderRadius,
-            child: (suffixIconButton?.icon ?? const Icon(Icons.close)).copyWith(
-              color: (controller!.text.isEmpty) ? Theme.of(context).disabledColor : null,
-            ),
-          ),
+      builder: (context, value, child) => InkWell(
+        onTap: (controller!.text.isEmpty)
+            ? null
+            : () {
+                if (suffixIconButton != null) {
+                  suffixIconButton?.onTap();
+                } else {
+                  controller!.clear();
+                  onChanged != null ? onChanged!('') : null;
+                }
+              },
+        borderRadius: defaultBorderRadius,
+        child: (suffixIconButton?.icon ?? const Icon(Icons.close)).copyWith(
+          color: (controller!.text.isEmpty) ? Theme.of(context).disabledColor : null,
+        ),
+      ),
     );
   }
 }
@@ -141,7 +156,9 @@ class _SearchBarWithCardWidget extends SearchBarWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: SearchBarWidget.defaultBorderRadius),
+      shape: RoundedRectangleBorder(
+        borderRadius: SearchBarWidget.defaultBorderRadius,
+      ),
       elevation: elevation,
       color: fillColor,
       child: TextField(
@@ -157,10 +174,17 @@ class _SearchBarWithCardWidget extends SearchBarWidget {
             borderSide: const BorderSide(width: 0, style: BorderStyle.none),
           ),
           hintText: hintText ?? "${"Search".tr()}...",
-          hintStyle: TextStyle(color: Colors.grey.withValues(alpha: 0.7), fontSize: 16),
+          hintStyle: TextStyle(
+            color: Colors.grey.withValues(alpha: 0.7),
+            fontSize: 16,
+          ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           prefixIcon: prefixIcon ?? Icon(Icons.search, color: Theme.of(context).primaryColor),
-          suffixIcon: Material(elevation: 0.5, borderRadius: SearchBarWidget.defaultBorderRadius, child: buildSuffixIcon()),
+          suffixIcon: Material(
+            elevation: 0.5,
+            borderRadius: SearchBarWidget.defaultBorderRadius,
+            child: buildSuffixIcon(),
+          ),
         ),
         onChanged: (value) {
           if (onChanged != null) SearchBarWidget.debouncer(() async => onChanged!(value));

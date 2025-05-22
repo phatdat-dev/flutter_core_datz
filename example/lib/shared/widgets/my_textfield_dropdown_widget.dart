@@ -80,10 +80,9 @@ class MyTextFieldDropdownWidget<T extends SearchDelegateQueryName> extends State
     T? initialValue;
 
     void setDefault() {
-      initialValue =
-          (listData is ValueNotifier<Iterable<T>>)
-              ? (listData as ValueNotifier<Iterable<T>>).value.firstOrNull
-              : (listData as Iterable<T>).firstOrNull;
+      initialValue = (listData is ValueNotifier<Iterable<T>>)
+          ? (listData as ValueNotifier<Iterable<T>>).value.firstOrNull
+          : (listData as Iterable<T>).firstOrNull;
       fieldd?.setValue(initialValue);
     }
 
@@ -117,32 +116,31 @@ class MyTextFieldDropdownWidget<T extends SearchDelegateQueryName> extends State
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) => field.setValue(currentSelected));
         }
         return InkWell(
-          onTap:
-              enabled
-                  ? () async {
-                    T? value;
-                    if (builderDialog != null) {
-                      value = await MyHelperWidget.showSearchDropDownWithCustomCallBack<T>(
-                        data: listData,
-                        builder: builderDialog!,
-                        // context: context,
-                        currentSelected: currentSelected,
-                        queryNameItemBuilder: indexQueryNameItemBuilder,
-                      );
-                    } else {
-                      value = await HelperWidget.showSearchDropDown<T>(
-                        data: listData,
-                        // context: context,
-                        currentSelected: currentSelected,
-                        queryNameItemBuilder: indexQueryNameItemBuilder,
-                      );
-                    }
-                    if (value != null) {
-                      field.didChange(value);
-                      onChanged?.call(value);
-                    }
+          onTap: enabled
+              ? () async {
+                  T? value;
+                  if (builderDialog != null) {
+                    value = await MyHelperWidget.showSearchDropDownWithCustomCallBack<T>(
+                      data: listData,
+                      builder: builderDialog!,
+                      // context: context,
+                      currentSelected: currentSelected,
+                      queryNameItemBuilder: indexQueryNameItemBuilder,
+                    );
+                  } else {
+                    value = await HelperWidget.showSearchDropDown<T>(
+                      data: listData,
+                      // context: context,
+                      currentSelected: currentSelected,
+                      queryNameItemBuilder: indexQueryNameItemBuilder,
+                    );
                   }
-                  : null,
+                  if (value != null) {
+                    field.didChange(value);
+                    onChanged?.call(value);
+                  }
+                }
+              : null,
           child: InputDecorator(
             decoration: InputDecoration(
               prefixIcon: getPrefixIcon(prefixIcon, context),
@@ -164,8 +162,10 @@ class MyTextFieldDropdownWidget<T extends SearchDelegateQueryName> extends State
     );
   }
 
-  Widget buildSuffixIcon(BuildContext context) =>
-      Icon(Icons.keyboard_arrow_down_outlined, color: (enabled ? Theme.of(context).unselectedWidgetColor : Theme.of(context).disabledColor));
+  Widget buildSuffixIcon(BuildContext context) => Icon(
+    Icons.keyboard_arrow_down_outlined,
+    color: (enabled ? Theme.of(context).unselectedWidgetColor : Theme.of(context).disabledColor),
+  );
 }
 
 // ignore: must_be_immutable
@@ -192,8 +192,9 @@ class _MyTextFieldDropdownSearchBarWidget<T extends SearchDelegateQueryName> ext
   Widget build(BuildContext context) {
     T? initialValue = this.initialValue ?? _getInitValue();
     controller ??= SelectedSearchController<T>();
-    controller!.listData =
-        (listData is ValueNotifier<Iterable<T>>) ? (listData as ValueNotifier<Iterable<T>>).value.toList() : (listData as Iterable<T>).toList();
+    controller!.listData = (listData is ValueNotifier<Iterable<T>>)
+        ? (listData as ValueNotifier<Iterable<T>>).value.toList()
+        : (listData as Iterable<T>).toList();
 
     return FormBuilderField(
       name: fieldName,
@@ -219,19 +220,28 @@ class _MyTextFieldDropdownSearchBarWidget<T extends SearchDelegateQueryName> ext
               child,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Text(field.errorText!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+                child: Text(
+                  field.errorText!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
               ),
             ],
           );
         }
 
-        return SizedBox(height: 48, child: enabled ? child : IgnorePointer(child: Opacity(opacity: 0.5, child: child)));
+        return SizedBox(
+          height: 48,
+          child: enabled ? child : IgnorePointer(child: Opacity(opacity: 0.5, child: child)),
+        );
       },
       validator: validators != null ? FormBuilderValidators.compose(validators!) : null,
     );
   }
 
-  Widget buildSearchBar(BuildContext context, SelectedSearchController<T> searchController) => SearchAnchorBarWidget(
+  Widget buildSearchBar(
+    BuildContext context,
+    SelectedSearchController<T> searchController,
+  ) => SearchAnchorBarWidget(
     searchController: searchController,
     barLeading: getPrefixIcon(prefixIcon, context),
     barTrailing: [buildSuffixIcon(context)],
@@ -240,7 +250,11 @@ class _MyTextFieldDropdownSearchBarWidget<T extends SearchDelegateQueryName> ext
   );
 }
 
-Widget? getPrefixIcon(dynamic icon, BuildContext context, [double padding = 12]) {
+Widget? getPrefixIcon(
+  dynamic icon,
+  BuildContext context, [
+  double padding = 12,
+]) {
   if (icon is IconData) {
     return Icon(icon, color: context.theme.unselectedWidgetColor);
   } else if (icon is String) {
@@ -248,7 +262,10 @@ Widget? getPrefixIcon(dynamic icon, BuildContext context, [double padding = 12])
       width: 1,
       height: 1,
       padding: EdgeInsets.all(padding),
-      child: HelperWidget.imageWidget(icon, color: context.theme.unselectedWidgetColor),
+      child: HelperWidget.imageWidget(
+        icon,
+        color: context.theme.unselectedWidgetColor,
+      ),
     );
   } else if (icon is Widget) {
     return icon;

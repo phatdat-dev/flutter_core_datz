@@ -21,24 +21,36 @@ class ForgotPassword2PinView extends StatelessWidget {
       appBar: AppBar(title: Text("Quên mật khẩu".tr())),
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          onTap: () =>
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingContent),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppConstants.paddingContent,
+            ),
             child: Column(
               children: [
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      HelperWidget.imageWidget(Assets.images.authenication.forgotVerified.path, height: 200),
-                      Text("OTP đã được gửi tới số +849****21".tr(), style: context.textTheme.bodyLarge),
+                      HelperWidget.imageWidget(
+                        Assets.images.authenication.forgotVerified.path,
+                        height: 200,
+                      ),
+                      Text(
+                        "OTP đã được gửi tới số +849****21".tr(),
+                        style: context.textTheme.bodyLarge,
+                      ),
                       const SizedBox(height: 10),
                       Padding(
                         padding: const EdgeInsets.all(20),
                         child: Builder(
                           builder: (context) {
-                            final borderWidth = MyHelperWidget.borderSide(context).width; // 0.5
-                            final fillColor = context.theme.inputDecorationTheme.fillColor;
+                            final borderWidth = MyHelperWidget.borderSide(
+                              context,
+                            ).width; // 0.5
+                            final fillColor =
+                                context.theme.inputDecorationTheme.fillColor;
                             return PinCodeTextField(
                               appContext: context,
                               length: 4,
@@ -59,9 +71,11 @@ class ForgotPassword2PinView extends StatelessWidget {
                                 disabledBorderWidth: borderWidth,
                                 errorBorderWidth: borderWidth,
                                 //
-                                selectedColor: context.theme.colorScheme.primary,
+                                selectedColor:
+                                    context.theme.colorScheme.primary,
                                 inactiveColor: context.theme.hintColor,
-                                activeColor: context.theme.hintColor, // màu đã nhập
+                                activeColor:
+                                    context.theme.hintColor, // màu đã nhập
                                 //
                                 inactiveFillColor: fillColor, // chưa nhập
                                 selectedFillColor: fillColor, // đang nhập
@@ -79,7 +93,10 @@ class ForgotPassword2PinView extends StatelessWidget {
                             const Text("Gửi lại trong "),
                             CountDownTimer(
                               secondsRemaining: 100,
-                              style: TextStyle(fontWeight: FontWeight.bold, color: context.theme.colorScheme.primary),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: context.theme.colorScheme.primary,
+                              ),
                             ),
                             const Text(" giây"),
                           ],
@@ -111,10 +128,12 @@ class ForgotPassword2PinViewFast extends StatefulWidget {
   const ForgotPassword2PinViewFast({super.key});
 
   @override
-  State<ForgotPassword2PinViewFast> createState() => _ForgotPassword2PinViewFastState();
+  State<ForgotPassword2PinViewFast> createState() =>
+      _ForgotPassword2PinViewFastState();
 }
 
-class _ForgotPassword2PinViewFastState extends State<ForgotPassword2PinViewFast> {
+class _ForgotPassword2PinViewFastState
+    extends State<ForgotPassword2PinViewFast> {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   bool waitToResend = false;
 
@@ -124,9 +143,12 @@ class _ForgotPassword2PinViewFastState extends State<ForgotPassword2PinViewFast>
       appBar: AppBar(title: Text("Quên mật khẩu".tr())),
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          onTap: () =>
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingContent),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppConstants.paddingContent,
+            ),
             child: Column(
               children: [
                 Expanded(
@@ -135,12 +157,23 @@ class _ForgotPassword2PinViewFastState extends State<ForgotPassword2PinViewFast>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        HelperWidget.imageWidget(Assets.images.authenication.forgotVerified.path, height: 200),
-                        Text("Nhập tài khoản của bạn", style: context.textTheme.bodyLarge),
+                        HelperWidget.imageWidget(
+                          Assets.images.authenication.forgotVerified.path,
+                          height: 200,
+                        ),
+                        Text(
+                          "Nhập tài khoản của bạn",
+                          style: context.textTheme.bodyLarge,
+                        ),
                         const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.all(20),
-                          child: FormBuilderTextField(name: "username", decoration: const InputDecoration(prefixIcon: Icon(Icons.person_outline))),
+                          child: FormBuilderTextField(
+                            name: "username",
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.person_outline),
+                            ),
+                          ),
                         ),
                         if (waitToResend)
                           DefaultTextStyle(
@@ -151,8 +184,12 @@ class _ForgotPassword2PinViewFastState extends State<ForgotPassword2PinViewFast>
                                 const Text("Gửi lại trong "),
                                 CountDownTimer(
                                   secondsRemaining: 60,
-                                  style: TextStyle(fontWeight: FontWeight.bold, color: context.theme.colorScheme.primary),
-                                  whenTimeExpires: () => setState(() => waitToResend = false),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: context.theme.colorScheme.primary,
+                                  ),
+                                  whenTimeExpires: () =>
+                                      setState(() => waitToResend = false),
                                 ),
                                 const Text(" giây"),
                               ],
@@ -167,7 +204,8 @@ class _ForgotPassword2PinViewFastState extends State<ForgotPassword2PinViewFast>
                   padding: const EdgeInsets.only(bottom: kToolbarHeight / 3),
                   child: FilledButton(
                     onPressed: () async {
-                      if ((formKey.currentState?.saveAndValidate() ?? false) && waitToResend == false) {
+                      if ((formKey.currentState?.saveAndValidate() ?? false) &&
+                          waitToResend == false) {
                         // setState(() => waitToResend = true);
                         // final result = await AuthenticationRemoteDataSource().resetPassword(formKey.currentState!.value["username"] as String);
                         // result.fold((error) => null, (data) {
@@ -176,7 +214,9 @@ class _ForgotPassword2PinViewFastState extends State<ForgotPassword2PinViewFast>
                         // });
                       }
                     },
-                    style: waitToResend ? MyHelperWidget.greyButtonStyle(context) : null,
+                    style: waitToResend
+                        ? MyHelperWidget.greyButtonStyle(context)
+                        : null,
                     child: Text("Tiếp tục".tr()),
                   ),
                 ),

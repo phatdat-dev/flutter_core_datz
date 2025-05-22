@@ -1,11 +1,11 @@
 library;
 
 export 'main/main.dart';
-export 'src/app/globals.dart';
 export 'src/app/app_storage_constants.dart';
 export 'src/app/base_configs.dart';
 export 'src/app/base_responsive_view.dart';
 export 'src/app/color_constants.dart';
+export 'src/app/globals.dart';
 export 'src/datasource/local/storage_service.dart';
 export 'src/datasource/network/network.dart';
 export 'src/extensions/app_extensions.dart';

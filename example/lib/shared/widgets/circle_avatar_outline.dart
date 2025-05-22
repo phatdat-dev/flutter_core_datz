@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'circle_avatar_hoyolab_widget.dart';
 
-
 class CircleAvatarOutline extends StatelessWidget {
   const CircleAvatarOutline({
     super.key,

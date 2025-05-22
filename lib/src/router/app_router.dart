@@ -7,10 +7,9 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page|Screen|View,Route')
 class DAppRouter extends RootStackRouter {
-
- @override
- List<AutoRoute> get routes => [
+  @override
+  List<AutoRoute> get routes => [
     AutoRoute(page: AppExceptionRoute.page),
     AutoRoute(page: TestThemeRoute.page),
- ];
+  ];
 }

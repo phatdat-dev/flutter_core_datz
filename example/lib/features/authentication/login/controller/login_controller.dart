@@ -22,7 +22,8 @@ class LoginController extends BaseController {
   final _remoteDataSource = AuthenticationRemoteDataSource();
   // final _enterpriseRepository = EnterpriseRepository();
 
-  static Map<String, FormBuilderFieldState> get _fields => formKey.currentState!.fields;
+  static Map<String, FormBuilderFieldState> get _fields =>
+      formKey.currentState!.fields;
 
   @override
   Future<void> onInitData() async {
@@ -47,9 +48,16 @@ class LoginController extends BaseController {
       isLoadding.value = true;
 
       String password = _fields['password']!.value.toString();
-      password = (await SecretCommandController(password).onLoginPasswordCommand());
+      password = (await SecretCommandController(
+        password,
+      ).onLoginPasswordCommand());
 
-      final either = await _remoteDataSource.login(UserModel(userName: _fields['username']!.value.toString(), password: password));
+      final either = await _remoteDataSource.login(
+        UserModel(
+          userName: _fields['username']!.value.toString(),
+          password: password,
+        ),
+      );
 
       either.fold(
         (error) {
@@ -92,7 +100,9 @@ class LoginController extends BaseController {
   }
 
   /// check user account not null, if not null, call callback
-  static Future<T?> onUserNotNull<T>(Future<T> Function(UserModel user) callback) async {
+  static Future<T?> onUserNotNull<T>(
+    Future<T> Function(UserModel user) callback,
+  ) async {
     final userController = GetIt.instance<UserController>();
     final user = userController.state.value;
 

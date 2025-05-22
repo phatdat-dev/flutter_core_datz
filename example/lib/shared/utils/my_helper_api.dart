@@ -36,18 +36,28 @@ class MyHelperApi {
   Future<void> _call_hoyolab_avatar_set() async {
     if (avatarSet.value == null) {
       final apiCall = GetIt.instance.get<DioNetworkService>();
-      avatarSet.value = (await apiCall.onRequest('https://bbs-api-os.hoyolab.com/community/misc/api/avatar_set', RequestMethod.GET));
+      avatarSet.value = (await apiCall.onRequest(
+        'https://bbs-api-os.hoyolab.com/community/misc/api/avatar_set',
+        RequestMethod.GET,
+      ));
     }
   }
 
-  String generateListQueryParameter({required String url, required String key, required Iterable<String>? listValue}) {
+  String generateListQueryParameter({
+    required String url,
+    required String key,
+    required Iterable<String>? listValue,
+  }) {
     String? listQueryString;
     if (listValue != null) listQueryString = listValue.map((e) => "$key=$e").join("&");
     if (listQueryString != null) url += "?$listQueryString";
     return url;
   }
 
-  Future<Either<List<BaseModel>, Map<String, List<BaseModel>>>?> fetchCacheData(CacheKeyHelperApi cacheKey, String? cacheKey2) async {
+  Future<Either<List<BaseModel>, Map<String, List<BaseModel>>>?> fetchCacheData(
+    CacheKeyHelperApi cacheKey,
+    String? cacheKey2,
+  ) async {
     if (cacheData[cacheKey.name] == null) {
       switch (cacheKey) {
         case CacheKeyHelperApi.country:
@@ -98,7 +108,9 @@ class MyHelperApi {
               final List items = [];
 
               for (var con in valueCondition) {
-                final item = data.firstWhereOrNull((e) => e.toJson()[keyCondition] == con);
+                final item = data.firstWhereOrNull(
+                  (e) => e.toJson()[keyCondition] == con,
+                );
                 if (item != null) {
                   items.add(item.toJson()[keyNameReturn]);
                 } else {
@@ -109,7 +121,9 @@ class MyHelperApi {
 
               return items;
             } else {
-              final item = data.firstWhereOrNull((e) => e.toJson()[keyCondition].toString() == valueCondition.toString());
+              final item = data.firstWhereOrNull(
+                (e) => e.toJson()[keyCondition].toString() == valueCondition.toString(),
+              );
               return item?.toJson()[keyNameReturn] ?? '';
             }
           })
