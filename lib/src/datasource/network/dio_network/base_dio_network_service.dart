@@ -12,24 +12,23 @@ import 'my_log_interceptor.dart';
 
 part 'dio_network_service_mixin.dart';
 
-abstract class BaseDioNetworkService
-    implements NetworkService, NetworkExceptionHandleMixin {
+abstract class BaseDioNetworkService implements NetworkService, NetworkExceptionHandleMixin {
   //create dio
   late final Dio dio;
+
+  bool _isShowLoading = false;
+
+  bool get addLogInterceptor => kDebugMode;
 
   @override
   Map<String, Object> get headers => {
     "Accept": "application/json, text/plain, */*",
     "Access-Control-Allow-Origin": "*",
-    // "Access-Control-Allow-Methods": "GET,PUT,PATCH,POST,DELETE",
-    // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-    "Content-Type":
-        "application/json;charset=UTF-8", // HttpHeaders.contentTypeHeader
+    "Content-Type": "application/json;charset=UTF-8", // HttpHeaders.contentTypeHeader
   };
+
   @override
   int get timeOutSecond => 60;
-
-  bool _isShowLoading = false;
 
   void onInit() {
     dio = Dio(
@@ -74,7 +73,7 @@ abstract class BaseDioNetworkService
       ),
     );
 
-    if (kDebugMode) {
+    if (addLogInterceptor) {
       dio.interceptors.add(MyLogInterceptor());
     }
   }
