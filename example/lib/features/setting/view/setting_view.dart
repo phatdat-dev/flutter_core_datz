@@ -202,7 +202,7 @@ class SettingView extends StatelessWidget {
                               },
                             ),
                             SettingMenuWidget(
-                              title: "Xem lỗi",
+                              title: "View Error",
                               subTitle: devMode,
                               icon: Icons.error_outline,
                               iconColor: Colors.red,

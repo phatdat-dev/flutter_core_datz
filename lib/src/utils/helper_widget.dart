@@ -15,7 +15,7 @@ final class HelperWidget {
       type: ToastificationType.error,
       style: ToastificationStyle.flatColored,
       alignment: Alignment.topCenter,
-      title: const Text("Lỗi !"),
+      title: const Text("Error !"),
       description: Text(message),
       showProgressBar: true,
       autoCloseDuration: const Duration(seconds: 5),
@@ -60,9 +60,7 @@ final class HelperWidget {
   static ImageProvider imageProviderFrom(String imagePath) {
     final configs = GetIt.instance<BaseConfigs>();
     if (imagePath.isEmpty) return AssetImage(configs.assetsPath.imageError);
-    return (imagePath.isURL)
-        ? CachedNetworkImageProvider(imagePath)
-        : AssetImage(imagePath) as ImageProvider;
+    return (imagePath.isURL) ? CachedNetworkImageProvider(imagePath) : AssetImage(imagePath) as ImageProvider;
   }
 
   static Widget imageWidget(
@@ -156,8 +154,7 @@ final class HelperWidget {
         final size = context.mediaQuerySize;
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius:
-                borderRadius ?? const BorderRadius.all(Radius.circular(10)),
+            borderRadius: borderRadius ?? const BorderRadius.all(Radius.circular(10)),
           ),
           titlePadding: EdgeInsets.zero,
           contentPadding: EdgeInsets.zero,
@@ -192,15 +189,12 @@ final class HelperWidget {
                 itemBuilder: (context, index) {
                   final isSelected = currentSelected == searchValue[index];
                   String queryName = searchValue[index].queryName;
-                  queryName =
-                      queryNameItemBuilder?.call(index, queryName) ?? queryName;
+                  queryName = queryNameItemBuilder?.call(index, queryName) ?? queryName;
                   return ListTile(
                     title: txtController.text.isEmpty
                         ? Text(
                             queryName,
-                            style: isSelected
-                                ? const TextStyle(fontWeight: FontWeight.bold)
-                                : null,
+                            style: isSelected ? const TextStyle(fontWeight: FontWeight.bold) : null,
                           )
                         : RichText(
                             text: TextSpan(

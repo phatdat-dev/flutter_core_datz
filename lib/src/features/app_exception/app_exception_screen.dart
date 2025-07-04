@@ -21,7 +21,7 @@ class AppExceptionScreen extends StatelessWidget {
           //resizeToAvoidBottomInset: false,
           //backgroundColor: Colors.white,
           appBar: AppBar(
-            title: const Text('Xem lỗi'),
+            title: const Text('View Error'),
             actions: const [
               Text(
                 'filter here...(update later)',
