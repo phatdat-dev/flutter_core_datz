@@ -13,10 +13,7 @@ class Loadding {
       builder: (context) => GestureDetector(
         onTap: () => dismiss(),
         child: Container(
-          color:
-              DialogTheme.of(context).barrierColor ??
-              Theme.of(context).dialogTheme.barrierColor ??
-              Colors.black54,
+          color: DialogTheme.of(context).barrierColor ?? Theme.of(context).dialogTheme.barrierColor ?? Colors.black54,
           child: const LoaddingWidget(),
         ),
       ),
@@ -39,11 +36,11 @@ class LoaddingWidget extends StatefulWidget {
 }
 
 class LoaddingWidgetState extends State<LoaddingWidget> {
+  final configs = GetIt.instance<BaseConfigs>();
   late final AssetImage imageLoadding;
 
   @override
   void initState() {
-    final configs = GetIt.instance<BaseConfigs>();
     imageLoadding = AssetImage(configs.assetsPath.loadding);
     super.initState();
   }
@@ -55,29 +52,36 @@ class LoaddingWidgetState extends State<LoaddingWidget> {
   }
 
   @override
+  Widget build(BuildContext context) => IgnorePointer(child: configs.loaddingWidget.call(imageLoadding));
+}
+
+class DefaultLoaddingWidget extends StatelessWidget {
+  final AssetImage imageLoadding;
+
+  const DefaultLoaddingWidget(this.imageLoadding, {super.key});
+
+  @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: Dialog(
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: Colors.transparent,
-        child: Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10.0,
-                  offset: Offset(0.0, 10.0),
-                ),
-              ],
-            ),
-            child: ClipOval(
-              child: Image(image: imageLoadding, width: 200, height: 200),
-            ),
+    return Dialog(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      backgroundColor: Colors.transparent,
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 10.0),
+              ),
+            ],
+          ),
+          child: ClipOval(
+            child: Image(image: imageLoadding, width: 200, height: 200),
           ),
         ),
       ),

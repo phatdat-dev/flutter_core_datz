@@ -20,4 +20,4 @@ export 'src/utils/helper_reflect.dart';
 export 'src/utils/helper_widget.dart';
 export 'src/utils/limitrange_textinput.dart';
 export 'src/utils/utils.dart';
-export 'src/widgets/loadding_widget.dart';
+export 'src/widgets/loadding_widget.dart' hide DefaultLoaddingWidget;

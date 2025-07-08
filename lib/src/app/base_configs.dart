@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../flutter_core_datz.dart';
+import '../widgets/loadding_widget.dart';
 
 abstract class BaseConfigs {
   String get appTitle;
@@ -10,11 +11,19 @@ abstract class BaseConfigs {
   AssetsPath get assetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
   TranslationController get translationController => TranslationController();
-  ResponsiveScreenSettings get responsiveScreenSettings =>
-      const ResponsiveScreenSettings();
+  ResponsiveScreenSettings get responsiveScreenSettings => const ResponsiveScreenSettings();
   StorageService get storageService => StorageService();
-  NetworkConnectivityService get networkConnectivityService =>
-      NetworkConnectivityService();
+  NetworkConnectivityService get networkConnectivityService => NetworkConnectivityService();
+
+  /// This is a default overlay loadding widget. (dialog)
+  ///
+  /// You can override this method to provide your own loadding widget.
+  ///
+  /// Using [Loadding.show()] to show the loadding widget.
+  ///
+  /// Using [Loadding.dismiss()] to dismiss the loadding widget.
+  Widget Function(AssetImage imageLoadding) get loaddingWidget =>
+      (imageLoadding) => DefaultLoaddingWidget(imageLoadding);
 }
 
 class AssetsPath {
