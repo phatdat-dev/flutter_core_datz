@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -60,7 +62,14 @@ final class HelperWidget {
   static ImageProvider imageProviderFrom(String imagePath) {
     final configs = GetIt.instance<BaseConfigs>();
     if (imagePath.isEmpty) return AssetImage(configs.assetsPath.imageError);
-    return (imagePath.isURL) ? CachedNetworkImageProvider(imagePath) : AssetImage(imagePath) as ImageProvider;
+    if (imagePath.isURL || imagePath.contains('http')) {
+      return CachedNetworkImageProvider(imagePath);
+    } else if (imagePath.contains('assets')) {
+      return AssetImage(imagePath) as ImageProvider;
+    } else if (File(imagePath).existsSync()) {
+      return FileImage(File(imagePath));
+    }
+    return AssetImage(configs.assetsPath.imageError);
   }
 
   static Widget imageWidget(
@@ -89,6 +98,8 @@ final class HelperWidget {
       );
     } else if (imagePath.contains('assets')) {
       return Image.asset(imagePath, width: width, height: height, fit: fit);
+    } else if (File(imagePath).existsSync()) {
+      return Image.file(File(imagePath), width: width, height: height, fit: fit);
     }
     return const SizedBox.shrink();
   }
