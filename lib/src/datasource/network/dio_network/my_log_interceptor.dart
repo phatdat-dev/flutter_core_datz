@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
-import '../../../utils/print.dart';
+import '../../../../flutter_core_datz.dart';
 
 /// [MyLogInterceptor] is used to print logs during network requests.
 /// It should be the last interceptor added,
@@ -22,6 +23,7 @@ import '../../../utils/print.dart';
 /// ```
 class MyLogInterceptor extends Interceptor {
   MyLogInterceptor({
+    this.showTimeStamp = true,
     this.request = false,
     this.requestHeader = false,
     this.requestBody = true,
@@ -31,6 +33,9 @@ class MyLogInterceptor extends Interceptor {
     //
     this.error = true,
   });
+
+  /// show TimeStamp in logs
+  bool showTimeStamp;
 
   /// Print request [Options]
   bool request;
@@ -55,53 +60,57 @@ class MyLogInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    Printt.defaultt('*** Request ***');
-    _printKV(options.method, options.uri, Printt.yellow);
-    //options.headers;
+    final buffer = StringBuffer();
+
+    buffer.writeln(StringPrintColor.defaultt('*** Request ***'));
+    buffer.writeln(
+      StringPrintColor.yellow('${showTimeStampString()}${options.method}: ${options.uri}'),
+    );
 
     if (request) {
-      _printKV('responseType', options.responseType.toString());
-      _printKV('followRedirects', options.followRedirects);
-      _printKV('persistentConnection', options.persistentConnection);
-      _printKV('connectTimeout', options.connectTimeout);
-      _printKV('sendTimeout', options.sendTimeout);
-      _printKV('receiveTimeout', options.receiveTimeout);
-      _printKV(
-        'receiveDataWhenStatusError',
-        options.receiveDataWhenStatusError,
-      );
-      _printKV('extra', options.extra);
+      buffer.writeln(StringPrintColor.defaultt('responseType: ${options.responseType.toString()}'));
+      buffer.writeln(StringPrintColor.defaultt('followRedirects: ${options.followRedirects}'));
+      buffer.writeln(StringPrintColor.defaultt('persistentConnection: ${options.persistentConnection}'));
+      buffer.writeln(StringPrintColor.defaultt('connectTimeout: ${options.connectTimeout}'));
+      buffer.writeln(StringPrintColor.defaultt('sendTimeout: ${options.sendTimeout}'));
+      buffer.writeln(StringPrintColor.defaultt('receiveTimeout: ${options.receiveTimeout}'));
+      buffer.writeln(StringPrintColor.defaultt('receiveDataWhenStatusError: ${options.receiveDataWhenStatusError}'));
+      buffer.writeln(StringPrintColor.defaultt('extra: ${options.extra}'));
     }
+
     if (requestHeader) {
-      Printt.defaultt('headers:');
-      options.headers.forEach((key, v) => _printKV(' $key', v));
+      buffer.writeln(StringPrintColor.defaultt('headers:'));
+      options.headers.forEach((key, v) => buffer.writeln(StringPrintColor.defaultt(' $key: $v')));
     }
+
     if (requestBody) {
-      Printt.defaultt('Data Request:');
+      buffer.writeln(StringPrintColor.defaultt('Data Request:'));
       if (options.data is FormData) {
-        _printAll(
-          jsonEncode(
-            Map.fromEntries([
-              ...(options.data as FormData).fields,
-              ...(options.data as FormData).files.map(
-                (e) => MapEntry(e.key, e.value.filename),
-              ),
-            ]),
-          ),
-          Printt.green,
+        final formDataJson = jsonEncode(
+          Map.fromEntries([
+            ...(options.data as FormData).fields,
+            ...(options.data as FormData).files.map(
+              (e) => MapEntry(e.key, e.value.filename),
+            ),
+          ]),
         );
+        formDataJson.split('\n').forEach((line) => buffer.writeln(StringPrintColor.green(line)));
       } else {
-        _printAll(jsonEncode(options.data), Printt.green);
+        final dataJson = jsonEncode(options.data);
+        dataJson.split('\n').forEach((line) => buffer.writeln(StringPrintColor.green(line)));
       }
     }
-    Printt.defaultt('');
+
+    buffer.writeln(StringPrintColor.defaultt(''));
+
+    // Print all at once
+    log(buffer.toString());
 
     handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
-    Printt.defaultt('*** Response ***');
     _printResponse(response);
     handler.next(response);
   }
@@ -109,53 +118,62 @@ class MyLogInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (error) {
-      Printt.red('*** DioException ***:');
-      _printKV(
-        err.requestOptions.method,
-        err.requestOptions.uri,
-        Printt.yellow,
-      );
-      Printt.red('$err');
+      final buffer = StringBuffer();
+
+      buffer.writeln(StringPrintColor.red('*** DioException ***:'));
+      buffer.writeln(StringPrintColor.yellow('${showTimeStampString()}${err.requestOptions.method}: ${err.requestOptions.uri}'));
+      buffer.writeln(StringPrintColor.red('$err'));
+
       if (err.response != null) {
+        buffer.writeln(StringPrintColor.red(''));
+
+        // Print all at once
+        log(buffer.toString());
+
         _printResponse(err.response!);
+      } else {
+        buffer.writeln(StringPrintColor.red(''));
+
+        // Print all at once
+        log(buffer.toString());
       }
-      Printt.red('');
     }
 
     handler.next(err);
   }
 
   void _printResponse(Response response) {
-    _printKV(
-      response.requestOptions.method,
-      response.requestOptions.uri,
-      Printt.yellow,
-    );
+    final buffer = StringBuffer();
+    buffer.writeln(StringPrintColor.defaultt('*** Response ***'));
+    // Add method and URI with yellow color
+    buffer.writeln(StringPrintColor.yellow('${showTimeStampString()}${response.requestOptions.method}: ${response.requestOptions.uri}'));
+
     if (responseHeader) {
-      _printKV('statusCode', response.statusCode);
+      buffer.writeln(StringPrintColor.defaultt('statusCode: ${response.statusCode}'));
       if (response.isRedirect == true) {
-        _printKV('redirect', response.realUri);
+        buffer.writeln(StringPrintColor.defaultt('redirect: ${response.realUri}'));
       }
 
-      Printt.defaultt('headers:');
-      response.headers.forEach((key, v) => _printKV(' $key', v.join('\r\n\t')));
+      buffer.writeln(StringPrintColor.defaultt('headers:'));
+      response.headers.forEach((key, v) => buffer.writeln(StringPrintColor.defaultt(' $key: ${v.join('\r\n\t')}')));
     }
+
     if (responseBody) {
-      Printt.defaultt('Data Response:');
+      buffer.writeln(StringPrintColor.defaultt('Data Response:'));
       try {
-        _printAll(jsonEncode(response.data), Printt.magenta);
+        final jsonData = jsonEncode(response.data);
+        jsonData.split('\n').forEach((line) => buffer.writeln(StringPrintColor.magenta(line)));
       } catch (e) {
-        _printAll(response.data.toString(), Printt.magenta);
+        final dataString = response.data.toString();
+        dataString.split('\n').forEach((line) => buffer.writeln(StringPrintColor.magenta(line)));
       }
     }
-    Printt.defaultt('');
+
+    buffer.writeln(StringPrintColor.defaultt(''));
+
+    // Print all at once
+    log(buffer.toString());
   }
 
-  void _printKV(String key, Object? v, [PrinttLog? printt]) {
-    (printt ?? Printt.defaultt)('$key: $v');
-  }
-
-  void _printAll(String msg, [PrinttLog? printt]) {
-    msg.split('\n').forEach(printt ?? Printt.defaultt);
-  }
+  String showTimeStampString() => showTimeStamp ? '[${Helper.defaultFormatDateTime(DateTime.now())}] ' : '';
 }
