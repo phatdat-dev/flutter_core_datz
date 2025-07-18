@@ -52,7 +52,8 @@ mixin DioNetworkServiceMixin on BaseDioNetworkService {
             //decoder
             if (baseModel == null) return value.data; //return Response<dynamic>
             if (value.data is List) return (value.data as List).map((e) => baseModel.fromJson(e)).toList();
-            return baseModel.fromJson(value.data);
+            if (value.data is Map<String, dynamic>) return baseModel.fromJson(value.data);
+            return value.data;
           });
       return res;
     }
