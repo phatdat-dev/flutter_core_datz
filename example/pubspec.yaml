@@ -6,7 +6,7 @@ version: 1.0.0+1
 
 environment:
   sdk: "3.8.1"
-  flutter: "3.32.5"
+  flutter: "3.32.7"
 
 dependencies:
   flutter:
@@ -118,13 +118,11 @@ dev_dependencies:
   flutter_native_splash: any
   flutter_launcher_icons: any # flutter pub run flutter_launcher_icons
   auto_route_generator: any
-  flutter_gen_runner: any # dart pub global activate flutter_gen
 
-# For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 dependency_overrides:
-  intl: ^0.20.0
+  intl: ^0.20.2
 
 flutter_gen:
   output: lib/generated/ # Optional (default: lib/gen/)

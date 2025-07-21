@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
       EasyLocalization.logger.enableBuildModes = [];
     }
     return EasyLocalization(
-      path: configs.assetsPath.localization, //
+      path: configs.assetsPath.localization,
+      assetLoader: configs.localizationAssetLoader,
       supportedLocales: translationController.locales,
       fallbackLocale: translationController.fallbackLocale,
       startLocale: translationController.startLocale,
@@ -59,8 +60,7 @@ class MyApp extends StatelessWidget {
               initialEntries: [
                 if (child != null)
                   OverlayEntry(
-                    builder: (context) =>
-                        builder?.call(context, child) ?? child,
+                    builder: (context) => builder?.call(context, child) ?? child,
                   ),
               ],
             );

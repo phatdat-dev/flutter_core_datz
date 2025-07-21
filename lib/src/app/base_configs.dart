@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use_from_same_package
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../flutter_core_datz.dart';
@@ -14,6 +15,9 @@ abstract class BaseConfigs {
   ResponsiveScreenSettings get responsiveScreenSettings => const ResponsiveScreenSettings();
   StorageService get storageService => StorageService();
   NetworkConnectivityService get networkConnectivityService => NetworkConnectivityService();
+
+  /// from easy_localization
+  AssetLoader get localizationAssetLoader => const RootBundleAssetLoader();
 
   /// This is a default overlay loadding widget. (dialog)
   ///
