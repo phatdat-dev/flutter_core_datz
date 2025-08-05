@@ -79,11 +79,11 @@ final class Helper {
         switch (defaultTargetPlatform) {
           case TargetPlatform.android:
             final info = (await deviceInfo.androidInfo);
-            _infoDevice = '${info.manufacturer} - ${info.model} - ${info.version.incremental}';
+            _infoDevice = '[${info.manufacturer}] - [${info.model}] - [${info.device}] - [${info.id}]';
             break;
           case TargetPlatform.iOS:
             final info = (await deviceInfo.iosInfo);
-            _infoDevice = '${info.name} - ${info.systemVersion}';
+            _infoDevice = '[${info.modelName}] - [${info.systemVersion}] - [${info.identifierForVendor}]';
             break;
           default:
             break;
