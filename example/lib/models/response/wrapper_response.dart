@@ -2,8 +2,7 @@
 
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 
-class WrapperResponse<T extends BaseModel>
-    extends BaseModel<WrapperResponse<T>> {
+class WrapperResponse<T extends BaseModel> extends BaseModel<WrapperResponse<T>> {
   final dynamic _data;
   final int? code;
   final String? message;
@@ -43,12 +42,8 @@ class WrapperResponse<T extends BaseModel>
     }
 
     return WrapperResponse<T>(
-      data: wrapKey
-          .map((e) => getData(e))
-          .firstWhere((element) => element != null, orElse: () => null),
-      code:
-          (json['ResultCode'] as num?)?.toInt() ??
-          (json['code'] as num?)?.toInt(),
+      data: wrapKey.map((e) => getData(e)).firstWhere((element) => element != null, orElse: () => null),
+      code: (json['ResultCode'] as num?)?.toInt() ?? (json['code'] as num?)?.toInt(),
       message: json['ResultInfo'] ?? json['message'],
       baseModel: baseModel,
     );
@@ -57,14 +52,11 @@ class WrapperResponse<T extends BaseModel>
   @override
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    if (this._data != null) {
-      if (this._data is List) {
-        for (var element in wrapKey)
-          data[element] = (this._data as List<T>)
-              .map((v) => v.toJson())
-              .toList();
+    if (_data != null) {
+      if (_data is List) {
+        for (var element in wrapKey) data[element] = (_data as List<T>).map((v) => v.toJson()).toList();
       } else {
-        for (var element in wrapKey) data[element] = (this._data as T).toJson();
+        for (var element in wrapKey) data[element] = (_data as T).toJson();
       }
     }
     if (code != null) {
@@ -82,9 +74,9 @@ class WrapperResponse<T extends BaseModel>
     String? resultInfo,
   }) {
     return WrapperResponse<T>(
-      data: data ?? this._data,
-      code: resultCode ?? this.code,
-      message: resultInfo ?? this.message,
+      data: data ?? _data,
+      code: resultCode ?? code,
+      message: resultInfo ?? message,
       baseModel: baseModel,
     );
   }

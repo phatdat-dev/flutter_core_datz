@@ -70,12 +70,7 @@ class UltilRemoteDatasource extends BaseRemoteDataSource {
         isShowLoading: false,
       );
       final doc = parse(response);
-      final images = doc
-          .querySelectorAll("img")
-          .take(take)
-          .map((e) => e.attributes["src"]!)
-          .where((e) => e.contains('http'))
-          .toList();
+      final images = doc.querySelectorAll("img").take(take).map((e) => e.attributes["src"]!).where((e) => e.contains('http')).toList();
       return images;
     }, showToastError: false);
     return result;

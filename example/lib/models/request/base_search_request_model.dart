@@ -20,20 +20,15 @@ class BaseSearchRequestModel extends BaseModel<BaseSearchRequestModel> {
   });
 
   @override
-  BaseSearchRequestModel fromJson(Map<String, dynamic> json) =>
-      BaseSearchRequestModel(
-        query: json['query'],
-        page: (json['page'] as num).toInt(),
-        pageSize: (json['pageSize'] as num).toInt(),
-        sortBy: json['sortBy'],
-        isSortDescending: json['isSortDescending'],
-        fromDate: json['fromDate'] != null
-            ? DateTime.tryParse(json['fromDate'])
-            : null,
-        toDate: json['toDate'] != null
-            ? DateTime.tryParse(json['toDate'])
-            : null,
-      );
+  BaseSearchRequestModel fromJson(Map<String, dynamic> json) => BaseSearchRequestModel(
+    query: json['query'],
+    page: (json['page'] as num).toInt(),
+    pageSize: (json['pageSize'] as num).toInt(),
+    sortBy: json['sortBy'],
+    isSortDescending: json['isSortDescending'],
+    fromDate: json['fromDate'] != null ? DateTime.tryParse(json['fromDate']) : null,
+    toDate: json['toDate'] != null ? DateTime.tryParse(json['toDate']) : null,
+  );
 
   @override
   Map<String, dynamic> toJson() {

@@ -78,9 +78,7 @@ final class MyHelperWidget {
         )
       : EdgeInsets.symmetric(horizontal: horizontal);
 
-  static BorderSide borderSide(BuildContext context) =>
-      Theme.of(context).inputDecorationTheme.enabledBorder?.borderSide ??
-      BorderSide.none;
+  static BorderSide borderSide(BuildContext context) => Theme.of(context).inputDecorationTheme.enabledBorder?.borderSide ?? BorderSide.none;
 
   static ButtonStyle? greyButtonStyle(BuildContext context) {
     return Theme.of(context).filledButtonTheme.style?.copyWith(
@@ -118,8 +116,7 @@ final class MyHelperWidget {
   }
 
   // clone from flutter_core_datz
-  static Future<T?>
-  showSearchDropDownWithCustomCallBack<T extends SearchDelegateQueryName>({
+  static Future<T?> showSearchDropDownWithCustomCallBack<T extends SearchDelegateQueryName>({
     required ValueNotifier<Iterable<T>> data,
     required Function(Widget callBack) builder,
     BuildContext? context,
@@ -177,52 +174,48 @@ final class MyHelperWidget {
                       Expanded(
                         child: ValueListenableBuilder(
                           valueListenable: search,
-                          builder: (context, searchValue, child) =>
-                              ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: searchValue.length,
-                                itemBuilder: (context, index) {
-                                  final isSelected =
-                                      currentSelected == searchValue[index];
+                          builder: (context, searchValue, child) => ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: searchValue.length,
+                            itemBuilder: (context, index) {
+                              final isSelected = currentSelected == searchValue[index];
 
-                                  String queryName =
-                                      searchValue[index].queryName;
-                                  queryName =
-                                      queryNameItemBuilder?.call(
-                                        index,
+                              String queryName = searchValue[index].queryName;
+                              queryName =
+                                  queryNameItemBuilder?.call(
+                                    index,
+                                    queryName,
+                                  ) ??
+                                  queryName;
+                              return ListTile(
+                                title: txtController.text.isEmpty
+                                    ? Text(
                                         queryName,
-                                      ) ??
-                                      queryName;
-                                  return ListTile(
-                                    title: txtController.text.isEmpty
-                                        ? Text(
+                                        style: isSelected
+                                            ? const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )
+                                            : null,
+                                      )
+                                    : RichText(
+                                        text: TextSpan(
+                                          children: HelperWidget.highlightOccurrences(
                                             queryName,
-                                            style: isSelected
-                                                ? const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                  )
-                                                : null,
-                                          )
-                                        : RichText(
-                                            text: TextSpan(
-                                              children:
-                                                  HelperWidget.highlightOccurrences(
-                                                    queryName,
-                                                    txtController.text,
-                                                  ),
-                                              style: TextStyle(
-                                                color: Theme.of(
-                                                  context,
-                                                ).colorScheme.onSurface,
-                                              ),
-                                            ),
+                                            txtController.text,
                                           ),
-                                    onTap: () => Navigator.of(
-                                      context,
-                                    ).pop(searchValue[index]),
-                                  );
-                                },
-                              ),
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.onSurface,
+                                          ),
+                                        ),
+                                      ),
+                                onTap: () => Navigator.of(
+                                  context,
+                                ).pop(searchValue[index]),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],

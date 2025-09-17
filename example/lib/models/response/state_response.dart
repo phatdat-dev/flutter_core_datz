@@ -1,19 +1,16 @@
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 
-class StateResponse extends BaseModel<StateResponse>
-    implements SearchDelegateQueryName {
+class StateResponse extends BaseModel<StateResponse> implements SearchDelegateQueryName {
   int? id;
   String? name;
   String? code;
 
   StateResponse({this.id, this.name, this.code});
 
-  factory StateResponse.fromJson(Map<String, dynamic> json) =>
-      StateResponse(id: json['id'], name: json['name'], code: json['code']);
+  factory StateResponse.fromJson(Map<String, dynamic> json) => StateResponse(id: json['id'], name: json['name'], code: json['code']);
 
   @override
-  StateResponse fromJson(Map<String, dynamic> json) =>
-      StateResponse.fromJson(json);
+  StateResponse fromJson(Map<String, dynamic> json) => StateResponse.fromJson(json);
 
   @override
   Map<String, dynamic> toJson() {

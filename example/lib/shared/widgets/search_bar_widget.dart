@@ -4,6 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 
+import '../../generated/locale_keys.g.dart';
+
 class SearchBarWidget extends StatelessWidget {
   final String? hintText;
   final ValueChanged<String>? onChanged;
@@ -97,7 +99,7 @@ class SearchBarWidget extends StatelessWidget {
           ),
         ),
         //
-        hintText: hintText ?? "${"Search".tr()}...",
+        hintText: hintText ?? "${LocaleKeys.Search.tr()}...",
         hintStyle: TextStyle(
           color: Colors.grey.withValues(alpha: 0.7),
           fontSize: 16,
@@ -173,7 +175,7 @@ class _SearchBarWithCardWidget extends SearchBarWidget {
             borderRadius: SearchBarWidget.defaultBorderRadius,
             borderSide: const BorderSide(width: 0, style: BorderStyle.none),
           ),
-          hintText: hintText ?? "${"Search".tr()}...",
+          hintText: hintText ?? "${LocaleKeys.Search.tr()}...",
           hintStyle: TextStyle(
             color: Colors.grey.withValues(alpha: 0.7),
             fontSize: 16,

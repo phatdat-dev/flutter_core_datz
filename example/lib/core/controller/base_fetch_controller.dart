@@ -4,9 +4,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/authentication/login/controller/login_controller.dart';
 import '../../models/request/base_search_request_model.dart';
 import '../../models/response/wrapper_response.dart';
 import '../../shared/datasource/network/dio_network_service.dart';
+import '../../shared/extensions/scroll_controller_extension.dart';
 import '../base_datasource.dart';
 import 'base_controller.dart';
 
@@ -17,41 +19,46 @@ abstract class BaseFetchController<T> extends BaseController {
   /// if is set String, get data from json with key
   /// if is set BaseModel, get data from BaseModel
   dynamic get parseObjectData => null;
+  bool get isWrapUserAccount => false;
   bool get isShowLoading => false;
   bool get allowShowToastError => false;
   DioNetworkService get apiCall => GetIt.instance<DioNetworkService>();
 
+  /// Threshold for triggering load more (pixels from bottom)
+  double get loadMoreThreshold => 5000.0;
   //
   BaseSearchRequestModel searchQueryParams = BaseSearchRequestModel();
   Object? searchQueryBody;
   //
-  bool dataResponseIsMaximum = false;
+  final dataResponseIsMaximum = ValueNotifier<bool>(false);
   //
   List<T>? listOrigin;
   ValueNotifier<List<T>?> state = ValueNotifier(null); // mainState
 
   @override
-  Future<void> onInitData() async {
-    call_fetchData();
-  }
+  Future<void> onInitData() async => call_fetchData();
 
   Future<void> call_fetchData() async {
     Future<void> main() async {
       (await remoteDataSource()).fold(
         (error) {
-          dataResponseIsMaximum = true;
+          dataResponseIsMaximum.value = true;
         },
         (data) {
           if (data != null) {
             listOrigin = state.value = [...listOrigin ?? [], ...data];
           } else {
-            dataResponseIsMaximum = true;
+            dataResponseIsMaximum.value = true;
           }
         },
       );
     }
 
-    await main();
+    if (isWrapUserAccount) {
+      LoginController.onUserNotNull((user) async => await main());
+    } else {
+      await main();
+    }
   }
 
   void loadMoreData() {
@@ -63,11 +70,11 @@ abstract class BaseFetchController<T> extends BaseController {
 
   void resetSearchRequestModel() {
     searchQueryParams = BaseSearchRequestModel();
-    dataResponseIsMaximum = false;
+    dataResponseIsMaximum.value = false;
   }
 
   Future<void> resetAndFetchData() async {
-    dataResponseIsMaximum = false;
+    dataResponseIsMaximum.value = false;
     listOrigin = state.value = null; // Selector ko hieu ham Clear()
     await call_fetchData();
   }
@@ -75,15 +82,21 @@ abstract class BaseFetchController<T> extends BaseController {
   // bởi vì có thể sẽ dùng NestedScrollView, nên ko thể chính xác được sử dụng cái nào để lấy scrollColtroller
   /// return true if isScrollBottom
   bool onListenScrollToBottom(ScrollController scrollController) {
-    bool isScrollBottom =
-        scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent;
-    //nếu scroll đến cuối danh sách
-    if ((!dataResponseIsMaximum) && isScrollBottom) {
+    if (!scrollController.hasClients) return false;
+
+    final bool shouldLoadMore = scrollController.isNearBottomByThreshold(loadMoreThreshold);
+
+    //nếu scroll đến gần cuối danh sách và không có lỗi
+    if (!dataResponseIsMaximum.value && shouldLoadMore) {
       loadMoreData();
       return true;
     }
     return false;
+  }
+
+  Future<void> pullToRefresh() async {
+    resetSearchRequestModel();
+    resetAndFetchData();
   }
 
   FutureEitherAppException<List?> remoteDataSource() {

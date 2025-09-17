@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../app/app_constants.dart';
 import '../../core/controller/selected_search_controller.dart';
 
 class SearchAnchorBarWidget extends StatefulWidget {
@@ -32,8 +33,7 @@ class SearchAnchorBarWidget extends StatefulWidget {
 class _SearchAnchorBarWidgetState extends State<SearchAnchorBarWidget> {
   double _scrollPosition = 0;
 
-  void updateScrollPosition() =>
-      _scrollPosition = Scrollable.of(context).position.pixels;
+  void updateScrollPosition() => _scrollPosition = Scrollable.of(context).position.pixels;
 
   Future<void> _handleOnTapAndScrollToTop() async {
     final currentPosition = Scrollable.of(context).position.pixels;
@@ -97,9 +97,7 @@ class _SearchAnchorBarWidgetState extends State<SearchAnchorBarWidget> {
             onPressed: widget.searchController.clear,
           ),
         ],
-    viewConstraints: MediaQuery.sizeOf(context).height > 1000
-        ? null
-        : const BoxConstraints(maxHeight: 300),
+    viewConstraints: MediaQuery.sizeOf(context).height > 1000 ? null : const BoxConstraints(maxHeight: 300),
     suggestionsBuilder: (context, searchController) {
       (searchController as SelectedSearchController);
       return [
@@ -119,7 +117,7 @@ class _SearchAnchorBarWidgetState extends State<SearchAnchorBarWidget> {
   );
 
   OutlinedBorder _getShape(BuildContext context) => RoundedRectangleBorder(
-    borderRadius: const BorderRadius.all(Radius.circular(15)),
+    borderRadius: AppConstants.borderRadius,
     side: BorderSide(color: Theme.of(context).hintColor, width: 0.1),
   );
 }

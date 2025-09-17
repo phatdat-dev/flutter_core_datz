@@ -5,8 +5,8 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: "3.9.0"
-  flutter: "3.35.1"
+  sdk: "3.9.2"
+  flutter: "3.35.4"
 
 dependencies:
   flutter:
@@ -49,6 +49,7 @@ dependencies:
   image_picker: any
   file_picker: any
   connectivity_plus: any
+  app_tracking_transparency: any
   # open_file_plus:
   #   git:
   #     url: https://github.com/postflow/open_file_plus.git

@@ -7,7 +7,7 @@
 - TranslationController: Support translate multi language
 - ThemeController: Support change theme light/dark
 - AppException: Handle exception and log to ErrorScreen
-- BaseConfigs: Configs ThemeState, GoRouter, AssetsPath, more default app need
+- BaseConfigs: Configs ThemeState, AutoRouter, AssetsPath, more default app need
 - BaseResponsiveMixin: You can implement responsive for your app
 - Helper:
 
@@ -57,7 +57,7 @@ class MyConfigs extends BaseConfigs {
   String get appTitle => AppConstants.appName;
 
   @override
-  GoRouter router(BuildContext context) => goRouterProvider;
+  RouterConfig<Object>? routerConfig(BuildContext context) => appRouter.config();
 
   @override
   AssetsPath get assetsPath => AssetsPath(imageError: Assets.images.logo.logoRemovebg.path);

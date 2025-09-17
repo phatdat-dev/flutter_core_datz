@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_core_datz/flutter_core_datz.dart';
 
 // https://api.flutter.dev/flutter/material/SearchAnchor-class.html
-class SelectedSearchController<T extends SearchDelegateQueryName>
-    extends SearchController {
+class SelectedSearchController<T extends SearchDelegateQueryName> extends SearchController {
   SelectedSearchController({this.maxHistory = 5});
   List<T> listData = []; //nên để final
   ValueChanged<T>? onSelectionChanged;
@@ -53,8 +52,7 @@ class SelectedSearchController<T extends SearchDelegateQueryName>
   Iterable<Widget> getSuggestions() {
     return listData
         .where(
-          (element) =>
-              element.queryName.toLowerCase().contains(text.toLowerCase()),
+          (element) => element.queryName.toLowerCase().contains(text.toLowerCase()),
         )
         .map(
           (item) => ListTile(

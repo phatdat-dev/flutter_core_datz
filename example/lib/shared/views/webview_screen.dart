@@ -19,8 +19,7 @@ class WebViewScreen extends StatelessWidget {
 
   /// HTML Content Data
   final String? data;
-  final Widget Function(BuildContext context, Widget inAppWebViewWidget)?
-  builder;
+  final Widget Function(BuildContext context, Widget inAppWebViewWidget)? builder;
 
   @override
   Widget build(BuildContext context) {

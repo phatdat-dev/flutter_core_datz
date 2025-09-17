@@ -16,13 +16,10 @@ class BaseListViewSearchWithTabBar extends StatefulWidget {
   final void Function(String searchText, int index)? onChangedSearchBar;
 
   @override
-  State<BaseListViewSearchWithTabBar> createState() =>
-      _BaseListViewSearchWithTabBarState();
+  State<BaseListViewSearchWithTabBar> createState() => _BaseListViewSearchWithTabBarState();
 }
 
-class _BaseListViewSearchWithTabBarState
-    extends State<BaseListViewSearchWithTabBar>
-    with SingleTickerProviderStateMixin {
+class _BaseListViewSearchWithTabBarState extends State<BaseListViewSearchWithTabBar> with SingleTickerProviderStateMixin {
   late final TabController tabBarController;
 
   @override
@@ -42,8 +39,7 @@ class _BaseListViewSearchWithTabBarState
       extendBodyBehindAppBar: true,
       body: SafeArea(
         child: GestureDetector(
-          onTap: () =>
-              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
           child: NestedScrollView(
             floatHeaderSlivers: true,
             headerSliverBuilder: (context, innerBoxIsScrolled) => [

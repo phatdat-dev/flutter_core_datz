@@ -24,9 +24,7 @@ class UserModel extends BaseModel<UserModel> {
     userName: json['user_name'],
     password: json['password'] ?? json['pwd'],
     userId: (json['user_id'] as num?)?.toInt(),
-    resPartner: json['res_partner'] != null
-        ? ResPartner().fromJson(json['res_partner'])
-        : null,
+    resPartner: json['res_partner'] != null ? ResPartner().fromJson(json['res_partner']) : null,
   );
 
   @override
@@ -97,9 +95,7 @@ class ResPartner extends BaseModel<ResPartner> {
     yob: json['yob']?.toString(),
     gender: json['gender'],
     email: json['email'],
-    countryId: json['country_id'] != null
-        ? StateResponse(id: json['country_id'][0], name: json['country_id'][1])
-        : null,
+    countryId: json['country_id'] != null ? StateResponse(id: json['country_id'][0], name: json['country_id'][1]) : null,
   );
 
   @override

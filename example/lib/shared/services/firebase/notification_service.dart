@@ -2,8 +2,7 @@ part of 'firebase_service.dart';
 
 mixin NotificationService {
   final localNotification = FlutterLocalNotificationsPlugin();
-  AndroidNotificationChannel
-  get androidNotifiChannel => const AndroidNotificationChannel(
+  AndroidNotificationChannel get androidNotifiChannel => const AndroidNotificationChannel(
     'default-channel-id',
     'default-channel-name',
     description: 'default description',
@@ -28,13 +27,9 @@ mixin NotificationService {
 
   Future<void> _initLocalNotification() async {
     // ở android, tạo channel cho notification
-    await localNotification
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.createNotificationChannel(
-          androidNotifiChannel,
-        );
+    await localNotification.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(
+      androidNotifiChannel,
+    );
     //
 
     //setting notification
@@ -50,8 +45,7 @@ mixin NotificationService {
         //bắt sự kiện click vào notification đẩy nó vào stream
         Printt.white('onDidReceiveNotificationResponse ${details.payload}');
       },
-      onDidReceiveBackgroundNotificationResponse:
-          onDidReceiveBackgroundNotificationResponse,
+      onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
     );
   }
 
@@ -104,9 +98,7 @@ mixin NotificationService {
           icon: '@drawable/splash',
           // largeIcon: const DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
           largeIcon: imageBitMap,
-          styleInformation: imageBitMap != null
-              ? BigPictureStyleInformation(imageBitMap)
-              : null,
+          styleInformation: imageBitMap != null ? BigPictureStyleInformation(imageBitMap) : null,
         ),
         // iOS: const DarwinNotificationDetails(),
       ),

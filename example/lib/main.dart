@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_core_datz/flutter_core_datz.dart';
@@ -36,8 +37,7 @@ class MyConfigs extends BaseConfigs {
   String get appTitle => AppConstants.appName;
 
   @override
-  RouterConfig<Object>? routerConfig(BuildContext context) =>
-      appRouter.config();
+  RouterConfig<Object>? routerConfig(BuildContext context) => appRouter.config();
 
   @override
   ThemeState get themeState => ThemeState(
@@ -57,8 +57,7 @@ class MyConfigs extends BaseConfigs {
   );
 
   @override
-  AssetsPath get assetsPath =>
-      AssetsPath(imageError: Assets.images.logo.logo512x512.path);
+  AssetsPath get assetsPath => AssetsPath(imageError: Assets.images.logo.logo512x512.path);
 
   @override
   StorageService get storageService => MyStorageService();
@@ -68,9 +67,7 @@ class MyConfigs extends BaseConfigs {
 class MyHttpoverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => kDebugMode;
   }
 }
 
