@@ -14,6 +14,7 @@ final class TranslationController {
   final Locale startLocale;
   // các Locale được support
   final List<Locale> locales;
+  final AssetLoader assetLoader;
   TranslationController({
     this.fallbackLocale = const Locale('en', 'US'),
     this.startLocale = const Locale('vi', 'VN'),
@@ -22,6 +23,7 @@ final class TranslationController {
       Locale('vi', 'VN'),
       Locale('ja', 'JP'),
     ],
+    this.assetLoader = const RootBundleAssetLoader(),
   });
 
   final _sharedPrefs = GetIt.instance.get<StorageService>().sharedPreferences!;
@@ -46,9 +48,7 @@ final class TranslationController {
   }
 
   Future<void> init() async {
-    final String name = (startLocale.countryCode?.isEmpty ?? true)
-        ? startLocale.languageCode
-        : startLocale.toString();
+    final String name = (startLocale.countryCode?.isEmpty ?? true) ? startLocale.languageCode : startLocale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
     Intl.defaultLocale = localeName;

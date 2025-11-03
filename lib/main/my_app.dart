@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     }
     return EasyLocalization(
       path: configs.assetsPath.localization,
-      assetLoader: configs.localizationAssetLoader,
+      assetLoader: translationController.assetLoader,
       supportedLocales: translationController.locales,
       fallbackLocale: translationController.fallbackLocale,
       startLocale: translationController.startLocale,
