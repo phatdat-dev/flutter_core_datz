@@ -241,7 +241,7 @@ To set up this application on your local machine, follow these steps:
 
 2. Install project dependencies:
    ```bash
-   flutter clean && flutter pub cache clean --force && rm pubspec.lock && flutter pub get --no-example
+   flutter clean && flutter pub cache clean --force && rm pubspec.lock && flutter pub get --no-example && dart pub global activate flutterfire_cli
    ```
 3. Generate LocaleKeys:
 
@@ -288,17 +288,17 @@ get file .bat from `%USERPROFILE%\AppData\Local\Pub\Cache\bin`
 
 ### Commit message
 
-- Feat (feature): một chức năng mới của dự án
-- Fix: fix bug của dự án
-- Chore: từ này dịch ra tiếng Việt là việc "lặt vặt" nên mình đoán là nó để chỉ những thay đổi không đáng kể trong code (ví dụ như thay đổi text chẳng hạn), vì mình cũng ít khi sử dụng type này.
-- Refactor: refactor lại code hiện tại của dự án (refactor hiểu đơn giản là việc "làm sạch" code, loại bỏ code smells, mà không làm thay đổi chức năng hiện có)
-- Docs: thêm/sửa đổi document của dự án (update readme)
-- Style: thay đổi UI của dự án mà không ảnh hưởng đến logic.
-- Test: thêm/sửa đổi test của dự án
-- Perf: cải thiện hiệu năng của dự án (VD: loại bỏ duplicate query, ...)
-- CI: cấu hình CI/CD cho dự án
-- Build: những thay đổi ảnh hưởng đến hệ thống xây dựng hoặc các phần phụ thuộc bên ngoài
-- Vendor: cập nhật phiên bản cho các packages, dependencies mà dự án đang sử dụng.
+- Feat (feature): a new function of the project
+- Fix: fix the project's bug
+- Chore: this word is translated into Vietnamese as "trivial" so I guess it refers to insignificant changes in the code (for example, changing the text), because I rarely use this type.
+- Refactor: refactor the current code of the project (refactor is simply understood as "cleaning" the code, removing code smells, without changing the existing function)
+- Docs: add/modify the project's document (update readme)
+- Style: change the project's UI without affecting the logic.
+- Test: add/modify the project's test
+- Perf: improve the project's performance (eg: remove duplicate queries, ...)
+- CI: configure CI/CD for the project
+- Build: changes that affect the build system or external dependencies
+- Vendor: update the version for the packages, dependencies that the project is using.
 
 ## Update
 
@@ -316,12 +316,10 @@ get file .bat from `%USERPROFILE%\AppData\Local\Pub\Cache\bin`
 [Click](https://stackoverflow.com/questions/59362862/flutter-ios-build-failed-an-error-of-pod-files-podfile-is-out-of-date)
 
 ```bash
-# cd ios
-# pod install --repo-update
-# pod repo update
-# pod install
-
 # cd ios && pod install --repo-update && cd ..
+
+# find . -type f -name '*.png' -exec xattr -c {} \;    # remove all xattr image error
+# flutter clean && rm -rf ios/Pods ios/Podfile.lock ios/Runner.xcworkspace && flutter pub get --no-example && cd ios && pod install --repo-update && cd ..
 ```
 
 ## Build

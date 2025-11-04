@@ -16,7 +16,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.phatdat.dev.newproject"
-    compileSdk = 35 //flutter.compileSdkVersion
+    compileSdk = 36 //flutter.compileSdkVersion
     ndkVersion = "29.0.13113456" //flutter.ndkVersion
 
     compileOptions {

@@ -65,8 +65,7 @@ class AppException implements Exception, BaseModel<AppException> {
   );
 
   @override
-  AppException fromJson(Map<String, dynamic> json) =>
-      AppException.fromJson(json);
+  AppException fromJson(Map<String, dynamic> json) => AppException.fromJson(json);
 
   @override
   Map<String, dynamic> toJson() => {
@@ -86,16 +85,11 @@ class AppException implements Exception, BaseModel<AppException> {
 
   static String toMessageError(dynamic errorMessage) {
     if (errorMessage is Map) {
-      if (errorMessage.containsKey('error') ||
-          errorMessage.containsKey('message')) {
+      if (errorMessage.containsKey('error') || errorMessage.containsKey('message')) {
         final error = errorMessage['error'];
-        return error is Map
-            ? error['message'] ?? ''
-            : (errorMessage['message'] ?? error).toString();
+        return error is Map ? error['message'] ?? '' : (errorMessage['message'] ?? error).toString();
       }
-      return errorMessage.entries
-          .map((e) => e.value is List ? e.value.join('\n') : e.value.toString())
-          .join('\n');
+      return errorMessage.entries.map((e) => e.value is List ? e.value.join('\n') : e.value.toString()).join('\n');
     }
     return errorMessage.toString();
   }
@@ -110,7 +104,7 @@ class AppException implements Exception, BaseModel<AppException> {
       timeProcess = stopWatch.elapsedMilliseconds;
       return Right(val);
     } catch (ex) {
-      return onException(ex, stopWatch, showToastError);
+      return onExceptionWithToast(ex, stopWatch, showToastError);
     }
   }
 
@@ -124,28 +118,32 @@ class AppException implements Exception, BaseModel<AppException> {
       timeProcess = stopWatch.elapsedMilliseconds;
       return Right(val);
     } catch (ex) {
-      return onException(ex, stopWatch, showToastError);
+      return onExceptionWithToast(ex, stopWatch, showToastError);
     }
   }
 
-  Either<AppException, T> onException<T>(
+  Either<AppException, T> onExceptionWithToast<T>(
     Object ex,
     Stopwatch stopWatch,
     bool showToastError,
   ) {
     stopWatch.stop();
     timeProcess = stopWatch.elapsedMilliseconds;
-    message = onExtractMessageFromException(ex);
-    identifier = (identifier ?? "") + ex.runtimeType.toString();
 
-    if (showToastError &&
-        GetIt.instance<NetworkConnectivityService>().isOnline) {
+    if (showToastError && GetIt.instance<NetworkConnectivityService>().isOnline) {
       HelperWidget.showToastError('[$statusCode]:\n$message');
     }
 
+    onException<T>(ex);
+
+    return Left(this);
+  }
+
+  Either<AppException, T> onException<T>(Object ex) {
+    message = onExtractMessageFromException(ex);
+    identifier = (identifier ?? "") + ex.runtimeType.toString();
     Printt.red(Helper.formatJsonString(toString()));
     GetIt.instance<AppExceptionController>().state.insert(0, this);
-
     return Left(this);
   }
 

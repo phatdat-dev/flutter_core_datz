@@ -14,8 +14,14 @@ subprojects {
     afterEvaluate {
         if (plugins.hasPlugin("com.android.application") || plugins.hasPlugin("com.android.library")) {
             extensions.configure<com.android.build.gradle.BaseExtension>("android") {
-                compileSdkVersion(35)
-                buildToolsVersion = "35.0.0"
+                compileSdkVersion(36)
+                buildToolsVersion = "36.0.0"
+                
+                // Fix JVM target compatibility
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_11
+                    targetCompatibility = JavaVersion.VERSION_11
+                }
             }
         }
 
@@ -24,6 +30,13 @@ subprojects {
                 if (namespace == null) {
                     namespace = project.group.toString()
                 }
+            }
+        }
+        
+        // Ensure Kotlin JVM target is consistent across all subprojects
+        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+            kotlinOptions {
+                jvmTarget = "11"
             }
         }
     }

@@ -48,14 +48,21 @@ void errorWidget() {
   if (!Globals.kTestMode) {
     // tránh lỗi integration test
     ErrorWidget.builder = (FlutterErrorDetails details) {
+      // Log lỗi
+      AppException().onException(details.exception);
       if (kDebugMode) return ErrorWidget(details.exception);
-      return Container(
-        alignment: Alignment.center,
-        color: Colors.transparent,
-        child: Image.asset(
-          GetIt.instance<BaseConfigs>().assetsPath.errorWidget,
-          width: 100,
-          height: 100,
+      return Builder(
+        builder: (context) => GestureDetector(
+          onTap: () => const AppExceptionRoute().push(context),
+          child: Container(
+            alignment: Alignment.center,
+            color: Colors.transparent,
+            child: Image.asset(
+              GetIt.instance<BaseConfigs>().assetsPath.errorWidget,
+              width: 100,
+              height: 100,
+            ),
+          ),
         ),
       );
     };
