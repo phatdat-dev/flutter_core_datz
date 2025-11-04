@@ -22,8 +22,7 @@ class LoginController extends BaseController {
   final _remoteDataSource = AuthenticationRemoteDataSource();
   // final _enterpriseRepository = EnterpriseRepository();
 
-  static Map<String, FormBuilderFieldState> get _fields =>
-      formKey.currentState!.fields;
+  static Map<String, FormBuilderFieldState> get _fields => formKey.currentState!.fields;
 
   @override
   Future<void> onInitData() async {
@@ -74,6 +73,7 @@ class LoginController extends BaseController {
     }
 
     _userController.state.value = user;
+    Globals.currentUserNameForException = user?.userName ?? "";
   }
 
   void redirectToHomeScreen() {

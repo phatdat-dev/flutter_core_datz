@@ -50,6 +50,7 @@ class AppException implements Exception, BaseModel<AppException> {
       route = Globals.lastCallUrlApi;
     }
     time = DateTime.now();
+    userName ??= Globals.currentUserNameForException;
   }
 
   factory AppException.fromJson(Map<String, dynamic> json) => AppException(

@@ -18,4 +18,5 @@ abstract class Globals {
   static final rootNavigatorKey = GlobalKey<NavigatorState>();
   static BuildContext get context => rootNavigatorKey.currentContext!;
   static String lastCallUrlApi = "";
+  static String currentUserNameForException = "";
 }
