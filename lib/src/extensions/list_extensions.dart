@@ -15,10 +15,8 @@ extension ListExtension<E> on List<E> {
   T multiphy<T extends num>(T first, T second) => (first * second) as T;
   //[100,5,2].reduce(divide);   //=10
   T divide<T extends num>(T first, T second) {
-    // ignore: unnecessary_type_check
-    return ((first ~/ second) is int)
-        ? (first ~/ second) as T
-        : (first / second) as T;
+    // ignore: unnecessary_type_check, dead_code
+    return ((first ~/ second) is int) ? (first ~/ second) as T : (first / second) as T;
   }
 
   //from GetX

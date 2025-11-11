@@ -180,7 +180,7 @@ extension ThemeDataExtension on ThemeData {
 
     return ThemeData(
       colorScheme: colorScheme,
-      primaryColor: Color(data['primaryColor'] ?? colorScheme.primary.value),
+      primaryColor: Color(data['primaryColor'] ?? colorScheme.primary.toARGB32()),
       appBarTheme: appBarTheme,
       textTheme: textTheme,
     );

@@ -98,7 +98,7 @@ class _CountDownTimerState extends State<CountDownTimer>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (_, __) {
+      builder: (context, child) {
         return Text(timerDisplayString, style: widget.style);
       },
     );

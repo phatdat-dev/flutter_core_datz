@@ -20,7 +20,7 @@ class ScaffoldView extends StatefulWidget {
   State<ScaffoldView> createState() => _ScaffoldViewState();
 }
 
-class _ScaffoldViewState extends State<ScaffoldView> {
+class _ScaffoldViewState extends State<ScaffoldView> with AppLifecycleMixin {
   @override
   void initState() {
     GetIt.instance<NetworkConnectivityService>().onInit();
@@ -49,8 +49,7 @@ class _ScaffoldViewState extends State<ScaffoldView> {
         ],
         builder: (context, children, tabsRouter) => GestureDetector(
           //huy keyboard khi bam ngoai man hinh
-          onTap: () =>
-              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
           child: Scaffold(
             // resizeToAvoidBottomInset: true,
             // extendBody: true,
@@ -74,8 +73,7 @@ class _ScaffoldViewState extends State<ScaffoldView> {
               }).toList(),
             ),
             //Footer
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             floatingActionButton: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Card(
@@ -161,5 +159,60 @@ class BottomNavigationWidget extends StatelessWidget {
         child: Icon(iconData, color: colorScheme.surface),
       ),
     );
+  }
+}
+
+/// Demo for add Custom Log when App Lifecycle change
+mixin AppLifecycleMixin<T extends StatefulWidget> on State<T> {
+  final appLifecycleService = GetIt.instance<AppLifecycleService>();
+
+  @override
+  void initState() {
+    _setupAppLifecycleManager();
+    super.initState();
+  }
+
+  void _setupAppLifecycleManager() {
+    // Initialize App Lifecycle Service
+    appLifecycleService.init();
+
+    // Register basic cleanup
+    appLifecycleService.registerBasicCleanup();
+
+    // Register custom callbacks
+    appLifecycleService.addOnAppExitCallback(_onAppExit);
+    appLifecycleService.addOnAppPausedCallback(_onAppPaused);
+    appLifecycleService.addOnAppResumedCallback(_onAppResumed);
+  }
+
+  void _onAppExit() {
+    // Logic when the app is closed
+    _addLogCurrentRoute();
+  }
+
+  void _onAppPaused() {
+    // Logic when the app is paused (switched to another app)
+    _addLogCurrentRoute();
+  }
+
+  void _onAppResumed() {
+    // Logic when the app is resumed
+    _addLogCurrentRoute();
+  }
+
+  void _addLogCurrentRoute() {
+    AppLogController.instance.debug(context.router.current.name, {
+      "lastCallUrlApi": Globals.lastCallUrlApi,
+    });
+  }
+
+  @override
+  void dispose() {
+    // Cleanup App Lifecycle Manager
+    appLifecycleService.removeOnAppExitCallback(_onAppExit);
+    appLifecycleService.removeOnAppPausedCallback(_onAppPaused);
+    appLifecycleService.removeOnAppResumedCallback(_onAppResumed);
+    appLifecycleService.dispose();
+    super.dispose();
   }
 }

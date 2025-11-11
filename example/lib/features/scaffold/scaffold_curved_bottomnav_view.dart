@@ -11,18 +11,17 @@ import '../../router/app_router.dart';
 import '../../shared/extensions/get_it/get_it_extensions.dart';
 import '../notification/controller/notification_controller.dart';
 import 'home/controller/home_controller.dart';
+import 'scaffold_view.dart';
 
 @RoutePage()
 class ScaffoldCurvedBottomnavView extends StatefulWidget {
   const ScaffoldCurvedBottomnavView({super.key});
 
   @override
-  State<ScaffoldCurvedBottomnavView> createState() =>
-      _ScaffoldCurvedBottomnavViewState();
+  State<ScaffoldCurvedBottomnavView> createState() => _ScaffoldCurvedBottomnavViewState();
 }
 
-class _ScaffoldCurvedBottomnavViewState
-    extends State<ScaffoldCurvedBottomnavView> {
+class _ScaffoldCurvedBottomnavViewState extends State<ScaffoldCurvedBottomnavView> with AppLifecycleMixin {
   @override
   void initState() {
     GetIt.instance.refresh(() => HomeController()..onInitData());
@@ -85,8 +84,7 @@ class _ScaffoldCurvedBottomnavViewState
         ],
         builder: (context, children, tabsRouter) => GestureDetector(
           //huy keyboard khi bam ngoai man hinh
-          onTap: () =>
-              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+          onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
           child: Scaffold(
             // resizeToAvoidBottomInset: true,
             // extendBody: true,
@@ -110,7 +108,7 @@ class _ScaffoldCurvedBottomnavViewState
               }).toList(),
             ),
             //Footer
-            bottomNavigationBar: BottomNavigationWidget(tabsRouter),
+            bottomNavigationBar: SafeArea(child: BottomNavigationWidget(tabsRouter)),
           ),
         ),
       ),

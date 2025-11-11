@@ -72,9 +72,7 @@ class PageTransition<T> extends PageRouteBuilder<T> {
                Animation<double> animation,
                Animation<double> secondaryAnimation,
              ) {
-               return inheritTheme
-                   ? InheritedTheme.captureAll(ctx!, child)
-                   : child;
+               return inheritTheme ? InheritedTheme.captureAll(ctx!, child) : child;
              },
          maintainState: maintainStateData ?? true,
        );
@@ -97,7 +95,7 @@ class PageTransition<T> extends PageRouteBuilder<T> {
     animation,
     secondaryAnimation,
     child,
-    type: this.type,
+    type: type,
     route: this,
     isIos: isIos,
     alignment: alignment,
@@ -116,8 +114,7 @@ Widget buildTransitionss(
   PageRoute? route,
   bool isIos = false,
   Alignment? alignment,
-  PageTransitionsBuilder matchingBuilder =
-      const CupertinoPageTransitionsBuilder(),
+  PageTransitionsBuilder matchingBuilder = const CupertinoPageTransitionsBuilder(),
   Widget? childCurrent,
   Curve curve = Curves.linear,
 }) {

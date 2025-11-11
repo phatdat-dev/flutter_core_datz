@@ -1,6 +1,6 @@
 name: flutter_core_datz
 description: "A new Flutter package project."
-version: 1.0.5+13
+version: 1.0.6+14
 homepage:
 
 environment:
@@ -26,6 +26,7 @@ dependencies:
   device_info_plus: any #get device infocollection: any #array, List method
   path_provider: any
   connectivity_plus: any
+  share_plus: any
   # LocalDB
   # sqflite: any
   shared_preferences: any

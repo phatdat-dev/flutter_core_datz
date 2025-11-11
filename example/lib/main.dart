@@ -46,6 +46,14 @@ class MyConfigs extends BaseConfigs {
   );
 
   @override
+  AssetsPath get assetsPath => AssetsPath(imageError: Assets.images.logo.logo512x512.path);
+
+  @override
+  BaseInitSingleton get baseInitSingleton => MyBaseInitSingleton();
+}
+
+class MyBaseInitSingleton extends BaseInitSingleton {
+  @override
   TranslationController get translationController => TranslationController(
     startLocale: const Locale('en', 'US'),
     locales: const [
@@ -55,10 +63,6 @@ class MyConfigs extends BaseConfigs {
       Locale('cs', 'CZ'),
     ],
   );
-
-  @override
-  AssetsPath get assetsPath => AssetsPath(imageError: Assets.images.logo.logo512x512.path);
-
   @override
   StorageService get storageService => MyStorageService();
 }
@@ -72,15 +76,9 @@ class MyHttpoverrides extends HttpOverrides {
 }
 
 Future<void> _initSingletons() async {
-  GetIt.instance.registerLazySingleton<UserController>(
-    () => UserController()..onInitData(),
-  );
-  GetIt.instance.registerLazySingleton<DioNetworkService>(
-    () => DioNetworkService(),
-  );
-  GetIt.instance.registerSingleton<SettingController>(
-    SettingController()..onInitData(),
-  );
+  GetIt.instance.registerLazySingleton<UserController>(() => UserController()..onInitData());
+  GetIt.instance.registerLazySingleton<DioNetworkService>(() => DioNetworkService());
+  GetIt.instance.registerSingleton<SettingController>(SettingController()..onInitData());
 }
 
 Future<void> _initFirebase() async {

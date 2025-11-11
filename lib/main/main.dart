@@ -37,9 +37,7 @@ Future<void> runMain({
   // ]);
   await onInit?.call();
 
-  runApp(
-    beforeAppBuilder?.call(MyApp(builder: builder)) ?? MyApp(builder: builder),
-  );
+  runApp(beforeAppBuilder?.call(MyApp(builder: builder)) ?? MyApp(builder: builder));
   errorWidget();
 }
 
@@ -71,26 +69,5 @@ void errorWidget() {
 
 Future<void> _initSingletons(BaseConfigs configs) async {
   GetIt.instance.registerSingleton<BaseConfigs>(configs);
-  // Services
-  GetIt.instance.registerLazySingleton<StorageService>(
-    () => configs.storageService,
-  );
-  GetIt.instance.registerLazySingleton<NetworkConnectivityService>(
-    () => configs.networkConnectivityService,
-  );
-  // Controllers
-  GetIt.instance.registerLazySingleton<TranslationController>(
-    () => configs.translationController,
-  );
-  GetIt.instance.registerLazySingleton<ThemeController>(
-    () => ThemeController(),
-  );
-  GetIt.instance.registerLazySingleton<AppExceptionController>(
-    () => AppExceptionController(),
-  );
-
-  // initiating db
-  await GetIt.instance<StorageService>().init();
-  // initiating Translation
-  await GetIt.instance<TranslationController>().init();
+  await configs.baseInitSingleton.init();
 }

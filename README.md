@@ -7,6 +7,7 @@
 - TranslationController: Support translate multi language
 - ThemeController: Support change theme light/dark
 - AppException: Handle exception and log to ErrorScreen
+- AppLogView, AppLogController: View log in app, add default log
 - BaseConfigs: Configs ThemeState, AutoRouter, AssetsPath, more default app need
 - BaseResponsiveMixin: You can implement responsive for your app
 - Helper:
@@ -162,6 +163,75 @@ class UserModel extends BaseModel<UserModel> {
       'password': password,
       'token': token,
     };
+  }
+}
+
+```
+
+## AppLifecycleService & AppLogController
+
+```dart
+// you can easy to add log anywhere in app
+// example:
+void _addLogCurrentRoute() {
+    AppLogController.instance.debug(context.router.current.name, {
+      "lastCallUrlApi": Globals.lastCallUrlApi,
+    });
+  }
+
+// full demo
+/// Demo for add Custom Log when App Lifecycle change
+mixin AppLifecycleMixin<T extends StatefulWidget> on State<T> {
+  final appLifecycleService = GetIt.instance<AppLifecycleService>();
+
+  @override
+  void initState() {
+    _setupAppLifecycleManager();
+    super.initState();
+  }
+
+  void _setupAppLifecycleManager() {
+    // Initialize App Lifecycle Service
+    appLifecycleService.init();
+
+    // Register basic cleanup
+    appLifecycleService.registerBasicCleanup();
+
+    // Register custom callbacks
+    appLifecycleService.addOnAppExitCallback(_onAppExit);
+    appLifecycleService.addOnAppPausedCallback(_onAppPaused);
+    appLifecycleService.addOnAppResumedCallback(_onAppResumed);
+  }
+
+  void _onAppExit() {
+    // Logic when the app is closed
+    _addLogCurrentRoute();
+  }
+
+  void _onAppPaused() {
+    // Logic when the app is paused (switched to another app)
+    _addLogCurrentRoute();
+  }
+
+  void _onAppResumed() {
+    // Logic when the app is resumed
+    _addLogCurrentRoute();
+  }
+
+  void _addLogCurrentRoute() {
+    AppLogController.instance.debug(context.router.current.name, {
+      "lastCallUrlApi": Globals.lastCallUrlApi,
+    });
+  }
+
+  @override
+  void dispose() {
+    // Cleanup App Lifecycle Manager
+    appLifecycleService.removeOnAppExitCallback(_onAppExit);
+    appLifecycleService.removeOnAppPausedCallback(_onAppPaused);
+    appLifecycleService.removeOnAppResumedCallback(_onAppResumed);
+    appLifecycleService.dispose();
+    super.dispose();
   }
 }
 

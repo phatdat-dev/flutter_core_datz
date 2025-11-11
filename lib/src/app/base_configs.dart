@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use_from_same_package
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../flutter_core_datz.dart';
 import '../widgets/loadding_widget.dart';
@@ -10,10 +11,8 @@ abstract class BaseConfigs {
   RouterConfig<Object>? routerConfig(BuildContext context);
   AssetsPath get assetsPath => AssetsPath();
   ThemeState get themeState => ThemeState();
-  TranslationController get translationController => TranslationController();
   ResponsiveScreenSettings get responsiveScreenSettings => const ResponsiveScreenSettings();
-  StorageService get storageService => StorageService();
-  NetworkConnectivityService get networkConnectivityService => NetworkConnectivityService();
+  BaseInitSingleton get baseInitSingleton => BaseInitSingleton();
 
   /// This is a default overlay loadding widget. (dialog)
   ///
@@ -52,5 +51,31 @@ class AssetsPath {
       errorWidget: errorWidget ?? this.errorWidget,
       imageError: imageError ?? this.imageError,
     );
+  }
+}
+
+class BaseInitSingleton {
+  StorageService get storageService => StorageService();
+  NetworkConnectivityService get networkConnectivityService => NetworkConnectivityService();
+  TranslationController get translationController => TranslationController();
+  ThemeController get themeController => ThemeController();
+  AppExceptionController get appExceptionController => AppExceptionController();
+  AppLifecycleService get appLifecycleController => AppLifecycleService();
+
+  @mustCallSuper
+  Future<void> init() async {
+    // Services
+    GetIt.instance.registerLazySingleton<StorageService>(() => storageService);
+    GetIt.instance.registerLazySingleton<NetworkConnectivityService>(() => networkConnectivityService);
+    GetIt.instance.registerLazySingleton<AppLifecycleService>(() => appLifecycleController);
+    // Controllers
+    GetIt.instance.registerLazySingleton<TranslationController>(() => translationController);
+    GetIt.instance.registerLazySingleton<ThemeController>(() => themeController);
+    GetIt.instance.registerLazySingleton<AppExceptionController>(() => appExceptionController);
+
+    // initiating db
+    await GetIt.instance<StorageService>().init();
+    // initiating Translation
+    await GetIt.instance<TranslationController>().init();
   }
 }

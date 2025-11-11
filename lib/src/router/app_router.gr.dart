@@ -27,6 +27,22 @@ class AppExceptionRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [AppLogView]
+class AppLogRoute extends PageRouteInfo<void> {
+  const AppLogRoute({List<PageRouteInfo>? children})
+    : super(AppLogRoute.name, initialChildren: children);
+
+  static const String name = 'AppLogRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AppLogView();
+    },
+  );
+}
+
+/// generated route for
 /// [TestThemeScreen]
 class TestThemeRoute extends PageRouteInfo<void> {
   const TestThemeRoute({List<PageRouteInfo>? children})

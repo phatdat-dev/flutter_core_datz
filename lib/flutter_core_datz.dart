@@ -10,6 +10,8 @@ export 'src/datasource/local/storage_service.dart';
 export 'src/datasource/network/network.dart';
 export 'src/extensions/app_extensions.dart';
 export 'src/features/app_exception/app_exception_controller.dart';
+export 'src/features/app_log/controller/app_lifecycle_service.dart';
+export 'src/features/app_log/controller/app_log_controller.dart';
 export 'src/features/theme/theme_controller.dart';
 export 'src/features/translation/translation_controller.dart';
 export 'src/models/app_exception.dart';

@@ -47,8 +47,7 @@ class SettingView extends StatelessWidget {
                       [
                             Builder(
                               builder: (context) {
-                                final translationController =
-                                    GetIt.instance<TranslationController>();
+                                final translationController = GetIt.instance<TranslationController>();
                                 return ExpansionTitleSettingMenuWidget(
                                   title: LocaleKeys.Language.tr(),
                                   subTitle: devMode,
@@ -65,9 +64,7 @@ class SettingView extends StatelessWidget {
                                             ).textTheme.bodyMedium,
                                           ),
                                           groupValue: context.locale,
-                                          onChanged: (value) =>
-                                              translationController
-                                                  .changeLocale(value!),
+                                          onChanged: (value) => translationController.changeLocale(value!),
                                         ),
                                       )
                                       .toList(),
@@ -76,8 +73,7 @@ class SettingView extends StatelessWidget {
                             ),
                             Builder(
                               builder: (context) {
-                                final themeController =
-                                    GetIt.instance<ThemeController>();
+                                final themeController = GetIt.instance<ThemeController>();
                                 return ExpansionTitleSettingMenuWidget(
                                   title: "Chủ đề",
                                   subTitle: devMode,
@@ -86,51 +82,33 @@ class SettingView extends StatelessWidget {
                                   children: [
                                     ListenableBuilder(
                                       listenable: themeController,
-                                      builder: (context, child) =>
-                                          SwitchListTile(
-                                            title: Row(
-                                              children: [
-                                                if (themeController
-                                                        .state
-                                                        .themeMode ==
-                                                    ThemeMode.light)
-                                                  const Icon(
-                                                    Icons.wb_sunny_outlined,
-                                                  )
-                                                else
-                                                  const Icon(
-                                                    Icons.nightlight_round,
-                                                  ),
-                                                const SizedBox(width: 10),
-                                                Text(
-                                                  themeController
-                                                      .state
-                                                      .themeMode
-                                                      .name,
-                                                ),
-                                              ],
+                                      builder: (context, child) => SwitchListTile(
+                                        title: Row(
+                                          children: [
+                                            if (themeController.state.themeMode == ThemeMode.light)
+                                              const Icon(
+                                                Icons.wb_sunny_outlined,
+                                              )
+                                            else
+                                              const Icon(
+                                                Icons.nightlight_round,
+                                              ),
+                                            const SizedBox(width: 10),
+                                            Text(
+                                              themeController.state.themeMode.name,
                                             ),
-                                            value:
-                                                themeController
-                                                    .state
-                                                    .themeMode ==
-                                                ThemeMode.light,
-                                            onChanged: (value) =>
-                                                themeController.state =
-                                                    themeController.state
-                                                        .copyWith(
-                                                          themeMode: value
-                                                              ? ThemeMode.light
-                                                              : ThemeMode.dark,
-                                                        ),
-                                          ),
+                                          ],
+                                        ),
+                                        value: themeController.state.themeMode == ThemeMode.light,
+                                        onChanged: (value) => themeController.state = themeController.state.copyWith(
+                                          themeMode: value ? ThemeMode.light : ThemeMode.dark,
+                                        ),
+                                      ),
                                     ),
                                     ListTile(
-                                      onTap: () =>
-                                          const TestThemeRoute().push(context),
+                                      onTap: () => const TestThemeRoute().push(context),
                                       title: Text(
-                                        LocaleKeys
-                                            .SettingView_ViewCurrentColorCode.tr(),
+                                        LocaleKeys.SettingView_ViewCurrentColorCode.tr(),
                                       ),
                                       trailing: Icon(
                                         Icons.keyboard_arrow_right,
@@ -144,48 +122,24 @@ class SettingView extends StatelessWidget {
                                               width: 75,
                                               child: CheckRadioCircleWidget<MaterialColor?>(
                                                 value: e,
-                                                groupValue:
-                                                    AppTheme.colorSchemeSeed,
+                                                groupValue: AppTheme.colorSchemeSeed,
                                                 onChanged: (value) {
-                                                  AppTheme.colorSchemeSeed =
-                                                      value;
+                                                  AppTheme.colorSchemeSeed = value;
                                                   if (value == null) {
-                                                    themeController
-                                                        .setDefaultTheme();
+                                                    themeController.setDefaultTheme();
                                                   } else {
-                                                    final brightness =
-                                                        Brightness.values
-                                                            .byName(
-                                                              themeController
-                                                                  .state
-                                                                  .themeMode
-                                                                  .name,
-                                                            );
-                                                    ThemeData newThemeDataSeed =
-                                                        ThemeData(
-                                                          colorSchemeSeed:
-                                                              value,
-                                                          brightness:
-                                                              brightness,
-                                                        );
+                                                    final brightness = Brightness.values.byName(
+                                                      themeController.state.themeMode.name,
+                                                    );
+                                                    ThemeData newThemeDataSeed = ThemeData(
+                                                      colorSchemeSeed: value,
+                                                      brightness: brightness,
+                                                    );
 
-                                                    themeController
-                                                        .state = themeController
-                                                        .state
-                                                        .copyWith(
-                                                          lightTheme:
-                                                              brightness ==
-                                                                  Brightness
-                                                                      .light
-                                                              ? newThemeDataSeed
-                                                              : null,
-                                                          darkTheme:
-                                                              brightness ==
-                                                                  Brightness
-                                                                      .dark
-                                                              ? newThemeDataSeed
-                                                              : null,
-                                                        );
+                                                    themeController.state = themeController.state.copyWith(
+                                                      lightTheme: brightness == Brightness.light ? newThemeDataSeed : null,
+                                                      darkTheme: brightness == Brightness.dark ? newThemeDataSeed : null,
+                                                    );
                                                   }
                                                 },
                                                 child: CircleAvatar(
@@ -206,9 +160,13 @@ class SettingView extends StatelessWidget {
                               subTitle: devMode,
                               icon: Icons.error_outline,
                               iconColor: Colors.red,
-                              onTap: () {
-                                const AppExceptionRoute().push(context);
-                              },
+                              onTap: () => const AppExceptionRoute().push(context),
+                            ),
+                            SettingMenuWidget(
+                              title: "App Logs Viewer",
+                              icon: Icons.list_alt,
+                              iconColor: Colors.teal,
+                              onTap: () => const AppLogRoute().push(context),
                             ),
                             // SettingMenuWidget(
                             //   title: "Test Link bank",
