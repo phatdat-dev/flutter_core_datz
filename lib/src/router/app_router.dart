@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 
-import '../features/app_exception/app_exception_screen.dart';
+import '../features/app_exception/app_exception_view.dart';
 import '../features/app_log/view/app_log_view.dart';
 import '../features/theme/test_theme_screen.dart';
 

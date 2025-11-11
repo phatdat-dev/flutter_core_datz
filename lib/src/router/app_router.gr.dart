@@ -11,7 +11,7 @@
 part of 'app_router.dart';
 
 /// generated route for
-/// [AppExceptionScreen]
+/// [AppExceptionView]
 class AppExceptionRoute extends PageRouteInfo<void> {
   const AppExceptionRoute({List<PageRouteInfo>? children})
     : super(AppExceptionRoute.name, initialChildren: children);
@@ -21,7 +21,7 @@ class AppExceptionRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AppExceptionScreen();
+      return const AppExceptionView();
     },
   );
 }

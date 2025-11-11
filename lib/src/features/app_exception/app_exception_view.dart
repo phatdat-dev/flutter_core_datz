@@ -6,8 +6,8 @@ import '../../../flutter_core_datz.dart';
 import 'widgets/task_animate_design_widget.dart';
 
 @RoutePage()
-class AppExceptionScreen extends StatelessWidget {
-  const AppExceptionScreen({super.key});
+class AppExceptionView extends StatelessWidget {
+  const AppExceptionView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +22,12 @@ class AppExceptionScreen extends StatelessWidget {
           //backgroundColor: Colors.white,
           appBar: AppBar(
             title: const Text('View Error'),
-            actions: const [
-              Text(
-                'filter here...(update later)',
-                style: TextStyle(color: Colors.pink),
-              ),
-            ],
+            // actions: const [
+            //   Text(
+            //     'filter here...(update later)',
+            //     style: TextStyle(color: Colors.pink),
+            //   ),
+            // ],
           ),
           body: Column(
             children: [
@@ -68,14 +68,12 @@ class AppExceptionScreen extends StatelessWidget {
                         "Message": 'message',
                       },
                       data: item.toJson(),
-                      imageAvatar:
-                          "https://www.plotterhpmilano.com/wp-content/uploads/2020/03/1200px-Error.svg.png",
+                      imageAvatar: "https://www.plotterhpmilano.com/wp-content/uploads/2020/03/1200px-Error.svg.png",
                     );
 
                     return Dismissible(
                       key: UniqueKey(),
-                      onDismissed: (direction) =>
-                          appExceptionController.onDelete(item),
+                      onDismissed: (direction) => appExceptionController.onDelete(item),
                       child: (index == 0)
                           ? Banner(
                               message: 'New',
