@@ -120,7 +120,6 @@ class AppLogController {
   Future<void> clearLogs() async {
     _logs.clear();
     await _saveLogsToStorage();
-    addLog(AppLogLevel.info, 'All logs cleared');
   }
 
   /// Export logs as string

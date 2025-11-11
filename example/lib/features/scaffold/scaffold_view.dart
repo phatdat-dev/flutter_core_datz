@@ -176,13 +176,11 @@ mixin AppLifecycleMixin<T extends StatefulWidget> on State<T> {
     // Initialize App Lifecycle Service
     appLifecycleService.init();
 
-    // Register basic cleanup
-    appLifecycleService.registerBasicCleanup();
-
-    // Register custom callbacks
-    appLifecycleService.addOnAppExitCallback(_onAppExit);
-    appLifecycleService.addOnAppPausedCallback(_onAppPaused);
-    appLifecycleService.addOnAppResumedCallback(_onAppResumed);
+    appLifecycleService.addMultipleAppLifecycleCallbacks({
+      AppLifecycleState.detached: [_onAppExit],
+      AppLifecycleState.paused: [_onAppPaused],
+      AppLifecycleState.resumed: [_onAppResumed],
+    });
   }
 
   void _onAppExit() {
@@ -209,9 +207,12 @@ mixin AppLifecycleMixin<T extends StatefulWidget> on State<T> {
   @override
   void dispose() {
     // Cleanup App Lifecycle Manager
-    appLifecycleService.removeOnAppExitCallback(_onAppExit);
-    appLifecycleService.removeOnAppPausedCallback(_onAppPaused);
-    appLifecycleService.removeOnAppResumedCallback(_onAppResumed);
+    // if you dont add this, it will auto remove all callbacks when dispose
+    // appLifecycleService.removeMultipleAppLifecycleCallbacks({
+    //   AppLifecycleState.detached: [_onAppExit],
+    //   AppLifecycleState.paused: [_onAppPaused],
+    //   AppLifecycleState.resumed: [_onAppResumed],
+    // });
     appLifecycleService.dispose();
     super.dispose();
   }
