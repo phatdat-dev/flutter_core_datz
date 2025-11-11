@@ -51,6 +51,7 @@ class AppLogController {
   static const String _logKey = 'app_logs';
   static const int _maxLogs = 1000; // Keep maximum 1000 logs
 
+  final _storage = GetIt.instance<StorageService>();
   final List<AppLogEntry> _logs = [];
 
   /// Initialize service and load logs from storage
@@ -135,9 +136,8 @@ class AppLogController {
   /// Save logs to storage
   Future<void> _saveLogsToStorage() async {
     try {
-      final storage = GetIt.instance<StorageService>();
       final jsonString = jsonEncode(_logs.map((log) => log.toJson()).toList());
-      await storage.sharedPreferences!.setString(_logKey, jsonString);
+      await _storage.sharedPreferences!.setString(_logKey, jsonString);
     } catch (e) {
       log('Error saving logs to storage: $e', name: 'AppLog');
     }
@@ -146,8 +146,7 @@ class AppLogController {
   /// Load logs from storage
   Future<void> _loadLogsFromStorage() async {
     try {
-      final storage = GetIt.instance<StorageService>();
-      final jsonString = storage.sharedPreferences!.getString(_logKey);
+      final jsonString = _storage.sharedPreferences!.getString(_logKey);
 
       if (jsonString != null && jsonString.isNotEmpty) {
         final List<dynamic> jsonList = jsonDecode(jsonString);

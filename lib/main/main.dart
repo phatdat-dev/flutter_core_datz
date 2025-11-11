@@ -48,6 +48,7 @@ void errorWidget() {
     ErrorWidget.builder = (FlutterErrorDetails details) {
       // Log lỗi
       AppException().onException(details.exception);
+      AppLogController.instance.error('ErrorWidget: ${details.exceptionAsString()}');
       if (kDebugMode) return ErrorWidget(details.exception);
       return Builder(
         builder: (context) => GestureDetector(
@@ -70,4 +71,5 @@ void errorWidget() {
 Future<void> _initSingletons(BaseConfigs configs) async {
   GetIt.instance.registerSingleton<BaseConfigs>(configs);
   await configs.baseInitSingleton.init();
+  AppLogController.instance.init();
 }

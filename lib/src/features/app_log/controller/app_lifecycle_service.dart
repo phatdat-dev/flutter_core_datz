@@ -17,8 +17,6 @@ class AppLifecycleService with WidgetsBindingObserver {
   /// Initialize listener
   Future<void> init() async {
     WidgetsBinding.instance.addObserver(this);
-    // Initialize AppLogController
-    AppLogController.instance.init();
     if (enableLogging) {
       Printt.defaultt('AppLifecycleService initialized');
       AppLogController.instance.info('AppLifecycleService initialized');
