@@ -4,10 +4,9 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../app/globals.dart';
 import '../../../models/base_model.dart';
-import '../../../widgets/loadding_widget.dart';
 import '../network_service.dart';
+import 'loading_interceptor.dart';
 import 'my_log_interceptor.dart';
 
 part 'dio_network_service_mixin.dart';
@@ -48,28 +47,10 @@ abstract class BaseDioNetworkService implements NetworkService, NetworkException
     );
 
     dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          if (_isShowLoading) Loadding.show();
-
-          // Gắn access_token vào header, gửi kèm access_token trong header mỗi khi call API
-          if (apiKey.isNotEmpty) {
-            options.headers["Authorization"] = apiKey;
-          }
-          // Update static lần cuối gọi API là gì...
-          Globals.lastCallUrlApi = options.path;
-
-          return handler.next(options);
-        },
-        onResponse: (Response response, handler) {
-          Loadding.dismiss();
-          return handler.next(response);
-        },
-        onError: (error, handler) async {
-          Loadding.dismiss();
-          await handleErrorStatus(error.response);
-          return handler.next(error);
-        },
+      LoadingInterceptor(
+        isShowLoading: _isShowLoading,
+        apiKey: apiKey,
+        handleErrorStatus: handleErrorStatus,
       ),
     );
 
