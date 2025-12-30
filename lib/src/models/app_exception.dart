@@ -51,6 +51,8 @@ class AppException implements Exception, BaseModel<AppException> {
     }
     time = DateTime.now();
     userName ??= Globals.currentUserNameForException;
+    statusCode = -1;
+    urlApi = Globals.lastCallUrlApi;
   }
 
   factory AppException.fromJson(Map<String, dynamic> json) => AppException(
@@ -162,8 +164,6 @@ class AppException implements Exception, BaseModel<AppException> {
       if (message == "null") message = ex.toString();
       return message;
     }
-    statusCode = -1;
-    urlApi = Globals.lastCallUrlApi;
     return ex.toString();
   }
 }
