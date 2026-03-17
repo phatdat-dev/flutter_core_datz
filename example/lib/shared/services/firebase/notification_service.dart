@@ -40,7 +40,7 @@ mixin NotificationService {
 
     //add setting
     localNotification.initialize(
-      settings,
+      settings: settings,
       onDidReceiveNotificationResponse: (details) async {
         //bắt sự kiện click vào notification đẩy nó vào stream
         Printt.white('onDidReceiveNotificationResponse ${details.payload}');
@@ -81,10 +81,10 @@ mixin NotificationService {
     }
 
     return localNotification.show(
-      message.messageId.hashCode,
-      message.notification?.title,
-      message.notification?.body,
-      NotificationDetails(
+      id: message.messageId.hashCode,
+      title: message.notification?.title,
+      body: message.notification?.body,
+      notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
           androidNotifiChannel.id,
           androidNotifiChannel.name,

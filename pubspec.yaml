@@ -4,8 +4,8 @@ version: 1.0.8+16
 homepage:
 
 environment:
-  sdk: ^3.10.4
-  flutter: ">=3.38.5"
+  sdk: ^3.11.1
+  flutter: ">=3.41.4"
 
 dependencies:
   flutter:
