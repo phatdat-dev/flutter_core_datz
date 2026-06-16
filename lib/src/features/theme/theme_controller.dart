@@ -128,17 +128,17 @@ extension ThemeDataExtension on ThemeData {
       'textTheme': {
         'headlineLarge': {
           'fontSize': textTheme.headlineLarge?.fontSize,
-          'fontWeight': textTheme.headlineLarge?.fontWeight?.index,
+          'fontWeight': textTheme.headlineLarge?.fontWeight?.value,
           'color': textTheme.headlineLarge?.color?.toARGB32(),
         },
         'bodyLarge': {
           'fontSize': textTheme.bodyLarge?.fontSize,
-          'fontWeight': textTheme.bodyLarge?.fontWeight?.index,
+          'fontWeight': textTheme.bodyLarge?.fontWeight?.value,
           'color': textTheme.bodyLarge?.color?.toARGB32(),
         },
         'bodyMedium': {
           'fontSize': textTheme.bodyMedium?.fontSize,
-          'fontWeight': textTheme.bodyMedium?.fontWeight?.index,
+          'fontWeight': textTheme.bodyMedium?.fontWeight?.value,
           'color': textTheme.bodyMedium?.color?.toARGB32(),
         },
       },

@@ -45,10 +45,8 @@ class ForgotPassword2PinView extends StatelessWidget {
                         padding: const EdgeInsets.all(20),
                         child: Builder(
                           builder: (context) {
-                            final borderWidth = MyHelperWidget.borderSide(
-                              context,
-                            ).width; // 0.5
-                            final fillColor = context.theme.inputDecorationTheme.fillColor;
+                            final borderWidth = MyHelperWidget.borderSide(context).width; // 0.5
+                            // final fillColor = context.theme.inputDecorationTheme.fillColor;
                             return MaterialPinField(
                               length: 4,
                               obscureText: false,
