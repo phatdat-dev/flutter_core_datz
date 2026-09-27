@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:get_it/get_it.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 import '../../app/app_globals.dart';
 import '../../core/check_app_view.dart';
@@ -132,10 +131,10 @@ class BottomNavigationWidget extends StatelessWidget {
       onTap: (index) => tabsRouter.setActiveIndex(index),
       items:
           {
-                "Home": MingCute.home_5_line,
-                "Wallet": MingCute.wallet_4_line,
-                "Track": MingCute.car_line,
-                "Account": MingCute.user_3_line,
+                "Home": Icons.home_outlined,
+                "Wallet": Icons.account_balance_wallet_outlined,
+                "Track": Icons.directions_car_outlined,
+                "Account": Icons.person_outline,
               }.entries
               .map(
                 (e) => CurvedNavigationBarItem(

@@ -13,6 +13,10 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
   errors:
     empty_catches: ignore
     invalid_annotation_target: ignore

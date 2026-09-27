@@ -1,15 +1,17 @@
 name: flutter_core_datz
 description: "A new Flutter package project."
-version: 1.0.8+16
+version: 1.0.9+17
 homepage:
 
 environment:
-  sdk: ^3.12.2
-  flutter: ">=3.44.2"
+  sdk: ^3.13.4
+  flutter: ">=3.47.5"
 
 dependencies:
   flutter:
     sdk: flutter
+  material_ui: any
+  cupertino_ui: any
   # Dio for Api Calling
   dio: any
   logger: any

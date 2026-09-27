@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../app/app_constants.dart';
 import '../widgets/search_bar_widget.dart';

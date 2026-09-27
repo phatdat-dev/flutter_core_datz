@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide ConfirmDismissCallback;
+import 'package:material_ui/material_ui.dart' hide ConfirmDismissCallback;
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class DismissibleDeleteWidget extends StatelessWidget {

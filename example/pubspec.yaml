@@ -5,13 +5,16 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.12.2
-  flutter: ">=3.44.2"
+  sdk: ^3.13.4
+  flutter: ">=3.47.5"
 
 dependencies:
   flutter:
     sdk: flutter
 
+  cupertino_ui: any
+  material_ui: any
+  html: any
   cupertino_icons: any
   #Dio for Api Calling
   dio: any
@@ -81,7 +84,6 @@ dependencies:
   # wolt_modal_sheet: any # better dialog
   chatview: ^2.4.0
   showcaseview: any
-  icons_plus: any
   #
   flutter_form_builder: any #bingding form
   form_builder_validators: any
@@ -92,7 +94,8 @@ dependencies:
   # pdf_image_renderer: any # pdf_to_image_converter
   # Link web
   url_launcher: any
-  flutter_inappwebview: any # webview
+  # 6.2.0-beta.3 includes the Android build-script migration required by AGP 9.
+  flutter_inappwebview: ^6.2.0-beta.3 # webview
   # google_generative_ai: any
   # syncfusion_flutter_datagrid: any
   # scrollable_positioned_list: any #scroll to index

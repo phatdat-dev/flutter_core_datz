@@ -1,7 +1,7 @@
 // ignore_for_file: unused_element
 
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../extensions/app_extensions.dart';
 import '../../../utils/helper.dart';

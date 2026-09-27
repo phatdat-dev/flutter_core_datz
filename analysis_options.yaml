@@ -13,6 +13,7 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - build/**
   errors:
     avoid_function_literals_in_foreach_calls: ignore
     empty_catches: ignore

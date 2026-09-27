@@ -11,12 +11,12 @@ class WrapperResponse<T extends BaseModel> extends BaseModel<WrapperResponse<T>>
   final List<String> wrapKey;
 
   WrapperResponse({
-    dynamic data,
+    this._data,
     this.code,
     this.message,
     required this.baseModel,
     this.wrapKey = const ['Data', 'data'],
-  }) : _data = data;
+  });
 
   List<T>? get listData => _data is List ? _data as List<T> : null;
   T? get data => _data is T ? _data : null;
